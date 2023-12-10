@@ -1,6 +1,10 @@
 <?php
 
+use App\Constants\RoleEnum;
 use App\Http\Controllers\ProfileController;
+use App\Models\Permission;
+use App\Services\Authorization\UserPermissions;
+use App\Services\DataSets\ProductData;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,5 +33,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
 
 require __DIR__.'/auth.php';
