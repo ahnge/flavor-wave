@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Distributor extends Model
 {
     use HasFactory;
+
+    public function preorder()
+    {
+        return $this->hasMany(Order::class);
+    }
 }

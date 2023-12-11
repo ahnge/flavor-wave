@@ -1,5 +1,7 @@
 <?php
 
+use App\Constants\RoleEnum;
+use App\Http\Controllers\PreorderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TruckController;
 use Illuminate\Support\Facades\Route;
@@ -29,10 +31,19 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::controller(PreorderController::class)->group(function () {
+    Route::get("preorder", "preorderLists")->name("preorder.preorderList");
+    Route::post("preorder/check-status", "checkStatus")->name("preorder.checkStatus");
+});
+
+Route::controller(PreorderController::class)->group(function () {
+    Route::get("preorder", "preorderLists")->name("preorder.preorderList");
+    Route::post("preorder/check-status", "checkStatus")->name("preorder.checkStatus");
+});
+
 
 Route::prefix('')
-    ->group(function ()
-    {
+    ->group(function () {
         \App\Services\RouteFile\RouteHelper::includedRouteFiles(__DIR__ . '/web');
     });
 
@@ -40,4 +51,4 @@ Route::prefix('')
 // Truck detail page
 Route::get('/trucks/{id}', [TruckController::class, 'show'])->name('trucks.show');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
