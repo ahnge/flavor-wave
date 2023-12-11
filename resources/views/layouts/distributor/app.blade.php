@@ -15,7 +15,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
-        <div id="parent-container" class="min-h-screen bg-gray-100 relative">
+        <div id="parent-container" class="dark min-h-screen bg-gray-100 relative">
             @include('layouts.distributor.navigation')
 
             @include('layouts.alert')
@@ -23,6 +23,12 @@
             <main>
                 @yield('main')
             </main>
+
+            <div class="w-full ">
+                @include('web.distributor.home.footer')
+
+            </div>
+
         </div>
         @stack('js')
     </body>
