@@ -20,6 +20,7 @@ class DistributorFactory extends Factory
             'name' => $this->faker->company(),
             'address' => $this->faker->address(),
             'phone_number' => $this->faker->phoneNumber(),
+            'email' => $this->faker->email(),
             'password' => bcrypt('password'),
             'region_code' =>  "MMR00".rand(1,12)
         ];
