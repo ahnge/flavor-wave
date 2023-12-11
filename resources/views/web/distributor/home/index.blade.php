@@ -13,9 +13,9 @@
                 <h1 class="text-4xl font-semibold ">Product List</h1>
                 <div class="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" data-v0-t="card" >
                     @foreach ($products as $product)
-                    <a href="./product-detail.html">
+                    <a >
                       <div
-                        class="flex border-neutral-200 shadow h-72 min-w-[250px] pt-4 rounded-md border md:flex-col flex-row items-center px-4 py-3 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-700">
+                        class="flex border-gray-200 dark:border-gray-700 shadow h-72 min-w-[250px] pt-4 rounded-md border md:flex-col flex-row items-center px-4 py-3 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-700">
                         <img
                           src="{{ $product->product_photo }}"
                           alt="Coffee Image"
@@ -33,9 +33,16 @@
                             Price : <span>${{$product->price}}</span>
                           </p>
 
-                          <button type="submit" class="min-w-[160px]  max-w-[180px] text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-xs text-center me-2 mb-2
-                          py-3
-                          ">Add to cart</button>
+
+                          <div  x-data="{ cartList: [] }" x-init="cartList = JSON.parse(localStorage.getItem('cart') || '[]')" id="cart-btn-{{$product->id}}" class="cart-btn">
+
+                            <button  x-show="!cartList.includes({{ $product->id }})"  type="button" onclick="addToCart({{ $product->id }})" id="atc-{{$product->id}}" class="min-w-[160px]  max-w-[180px] text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-xs text-center me-2 mb-2
+                                py-3
+                                ">Add to cart</button>
+
+                            <button x-show="cartList.includes({{ $product->id }})"  type="button" onclick="removeCart({{ $product->id }})" id="rmc-{{ $product->id }}" class="rmc hidden min-w-[160px]  max-w-[180px] text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Added</button>
+                          </div>
+
                         </div>
                       </div>
                     </a>
@@ -71,18 +78,10 @@
 
 @push('js')
     <script type="module">
-      $(document).ready(function(){
-        $("#product-1").on('click', function() {
-            callAlert('success', 'Product added to cart')
-        });
-
-        $("#product-2").on('click', function() {
-            callAlert('error', 'Product added to cart')
-        });
-        $("#product-3").on('click', function() {
-            callAlert('warning', 'Product added to cart')
-        });
-
-      })
+        $(document).ready(function(){
+            $('.rmc').each(function(rmc){
+                $(this).removeClass('hidden')
+            })
+        })
     </script>
 @endpush()

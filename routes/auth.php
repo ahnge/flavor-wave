@@ -66,7 +66,9 @@ Route::middleware('auth')->group(function () {
 
 });
 Route::get('logout', [AuthenticatedSessionController::class, 'destroy'])
-->name('logout');
+->name('get.logout');
+
+
 Route::post('/admin/logout',function(){
     Auth::guard('admin')->logout();
 
