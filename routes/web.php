@@ -35,4 +35,12 @@ Route::middleware('auth')->group(function () {
 });
 
 
+Route::prefix('distributor')
+    ->group(function ()
+    {
+        \App\Services\RouteFile\RouteHelper::includedRouteFiles(__DIR__ . '/web');
+    });
+
+
+
 require __DIR__.'/auth.php';
