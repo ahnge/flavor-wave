@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
-class AuthenticatedSessionController extends Controller
+class AdminAuthenticatedSessionController extends Controller
 {
     /**
      * Display the login view.
@@ -32,13 +32,11 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-
-        $request->authenticate('web');
+        $request->authenticate('admin');
 
         $request->session()->regenerate();
 
-
-        return redirect(Auth::guard('web')->user()->getRedirectRoute());
+        return redirect(Auth::guard('admin')->user()->getRedirectRoute());
     }
 
     /**
@@ -46,12 +44,12 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-        Auth::guard('web')->logout();
+         Auth::guard('admin')->logout();
 
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
 
-        return redirect('/login');
+        return redirect('/admin');
     }
 }

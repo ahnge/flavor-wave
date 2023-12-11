@@ -7,3 +7,6 @@ window.Alpine = Alpine;
 Alpine.start();
 
 import 'flowbite';
+
+import jQuery from 'jquery';
+window.$ = jQuery;
