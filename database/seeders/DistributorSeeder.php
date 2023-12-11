@@ -2,20 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Services\DataSets\ProductData;
+use App\Models\Distributor;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class ProductSeeder extends Seeder
+class DistributorSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-
-        $data  = ProductData::get();
-
-        \App\Models\Product::insert($data);
+        Distributor::factory()->count(10)->create();
     }
 }

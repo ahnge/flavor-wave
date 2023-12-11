@@ -1,7 +1,10 @@
 <?php
 
-use App\Http\Controllers\LogisticController;
+use App\Constants\RoleEnum;
 use App\Http\Controllers\ProfileController;
+use App\Models\Permission;
+use App\Services\Authorization\UserPermissions;
+use App\Services\DataSets\ProductData;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+// shine  update
 
 Route::get('/', function () {
     return view('welcome');
@@ -29,11 +34,5 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware([])->prefix('/logistic')->group(function () {
-    Route::get(
-        '/',
-        [LogisticController::class, "index"]
-    )->name("logistic.index");
-});
 
 require __DIR__ . '/auth.php';
