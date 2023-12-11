@@ -7,10 +7,11 @@ enum OrderStatusEnum: int
     case Pending = 0;
     case Approved = 1;
     case Rejected = 2;
-    case Received = 3;
-    case Returned = 4;
+    case Assigned = 3;
+    case Shipped = 4;
+    case Delivered = 5;
 
-    public static function getLabel(int $value): string
+    public static function getLabelForAdmins(int $value): string
     {
         switch ($value) {
             case self::Pending->value:
@@ -19,10 +20,33 @@ enum OrderStatusEnum: int
                 return 'Approved';
             case self::Rejected->value:
                 return 'Rejected';
-            case self::Received->value:
-                return 'Received';
-            case self::Returned->value:
-                return 'Returned';
+            case self::Assigned->value:
+                return 'Assigned';
+            case self::Shipped->value:
+                return 'Shipped';
+            case self::Delivered->value:
+                return 'Delivered';
+            default:
+                return 'Unknown';
+        }
+    }
+
+
+    public static function getLabelForDistributors(int $value): string
+    {
+        switch ($value) {
+            case self::Pending->value:
+                return 'Pending';
+            case self::Approved->value:
+                return 'Shipping';
+            case self::Rejected->value:
+                return 'Rejected';
+            case self::Assigned->value:
+                return 'Shipping';
+            case self::Shipped->value:
+                return 'Shipped';
+            case self::Delivered->value:
+                return 'Delivered';
             default:
                 return 'Unknown';
         }
@@ -44,12 +68,16 @@ enum OrderStatusEnum: int
                 'label' => "Rejected"
             ],
             [
-                'value' => self::Received->value,
-                'label' => "Received"
+                'value' => self::Assigned->value,
+                'label' => "Assigned"
             ],
             [
-                'value' => self::Returned->value,
-                'label' => "Returned"
+                'value' => self::Shipped->value,
+                'label' => "Shipped"
+            ],
+            [
+                'value' => self::Delivered->value,
+                'label' => "Delivered"
             ]
         ];
     }
