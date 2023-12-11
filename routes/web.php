@@ -18,12 +18,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    if(Auth::guard('admin')->check()){
+        return redirect(Auth::guard('admin')->user()->getRedirectRoute());
+    }
+    return redirect()->route('products');
 });
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware('loggedIn')->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

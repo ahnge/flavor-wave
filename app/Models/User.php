@@ -48,4 +48,14 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class);
     }
+
+    public function getRedirectRoute()
+    {
+        return match((int)$this->role_id)
+        {
+            2 => 'sales',
+            3 => 'logistics',
+            4 => 'warehouse'
+        };
+    }
 }

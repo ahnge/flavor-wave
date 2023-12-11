@@ -2,8 +2,14 @@
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
+
+@if (Illuminate\Support\Facades\Route::currentRouteName() == 'login')
+
+<form method="POST" action="{{ route('login') }}">
+    @else
+    <form method="POST" action="{{ route('admin') }}">
+    @endif
+    @csrf
 
         <!-- Email Address -->
         <div>
