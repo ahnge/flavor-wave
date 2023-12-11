@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Constants\OrderStatusEnum;
 use App\Models\Order;
 use App\Models\Truck;
 use App\Models\TruckOrders;
@@ -16,7 +17,7 @@ class TruckOrdersSeeder extends Seeder
     public function run(): void
     {
         $trucks = Truck::all();
-        $orders = Order::all();
+        $orders = Order::whereIn('status', [OrderStatusEnum::Assigned->value, OrderStatusEnum::Shipped->value])->get();
 
         foreach ($trucks as $truck) {
             // Get a random order from the existing orders
