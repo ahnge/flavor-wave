@@ -29,7 +29,15 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+
+Route::prefix('')
+    ->group(function ()
+    {
+        \App\Services\RouteFile\RouteHelper::includedRouteFiles(__DIR__ . '/web');
+    });
+
+
 // Truck detail page
 Route::get('/trucks/{id}', [TruckController::class, 'show'])->name('trucks.show');
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';
