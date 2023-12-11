@@ -66,3 +66,9 @@ Route::middleware('auth')->group(function () {
 
 
 });
+
+Route::post('/admin/logout',function(){
+    Auth::guard('admin')->logout();
+
+    return redirect('admin');
+})->name('admin-logout');

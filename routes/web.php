@@ -4,6 +4,7 @@ use App\Constants\RoleEnum;
 use App\Http\Controllers\PreorderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TruckController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,7 +30,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware('loggedIn')->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+Route::middleware('loggedIn')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
