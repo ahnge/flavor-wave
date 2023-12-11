@@ -15,15 +15,17 @@ class OrderSeeder extends Seeder
     {
         $data  =  [];
 
-        for($i = 1; $i <= 1000; $i++) {
+        for ($i = 1; $i <= 1000; $i++) {
             $data[] = [
-                "order_no" =>  "ORD-".str_pad($i, 5, '0', STR_PAD_LEFT),
+                "order_no" =>  "ORD-" . str_pad($i, 5, '0', STR_PAD_LEFT),
                 "status" =>  OrderStatusEnum::Pending->value,
-                "is_urgent" =>  rand(0,1),
-                "distributor_id" =>  rand(1,10),
+                "is_urgent" =>  rand(0, 1),
+                "distributor_id" =>  rand(1, 10),
                 'due_date' =>  now()->addDays(rand(1, 30))->format('Y-m-d'),
                 'total' =>  rand(100000, 1000000),
                 'completed_at' =>  null,
+                "created_at" =>  now()->addDays(rand(1, 30))->format('Y-m-d'),
+                'updated_at' =>  now()->addDays(rand(1, 30))->format('Y-m-d'),
             ];
         }
 

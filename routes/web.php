@@ -1,6 +1,7 @@
 <?php
 
 use App\Constants\RoleEnum;
+use App\Http\Controllers\PreorderController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Permission;
 use App\Services\Authorization\UserPermissions;
@@ -34,5 +35,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::controller(PreorderController::class)->group(function () {
+    Route::get("preorder", "preorderLists")->name("preorder.preorderList");
+    Route::post("preorder/check-status", "checkStatus")->name("preorder.checkStatus");
+});
 
-require __DIR__.'/auth.php';
+
+require __DIR__ . '/auth.php';
