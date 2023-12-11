@@ -1,10 +1,7 @@
 <?php
 
-use App\Constants\RoleEnum;
 use App\Http\Controllers\ProfileController;
-use App\Models\Permission;
-use App\Services\Authorization\UserPermissions;
-use App\Services\DataSets\ProductData;
+use App\Http\Controllers\TruckController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,8 +14,6 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-// shine  update
 
 Route::get('/', function () {
     return view('welcome');
@@ -34,5 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// Truck detail page
+Route::get('/trucks/{id}', [TruckController::class, 'show'])->name('trucks.show');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
