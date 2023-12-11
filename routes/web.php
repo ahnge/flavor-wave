@@ -48,7 +48,4 @@ Route::prefix('')
     });
 
 
-// Truck detail page
-Route::get('/trucks/{id}', [TruckController::class, 'show'])->name('trucks.show');
-
 require __DIR__ . '/auth.php';
