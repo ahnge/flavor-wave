@@ -2,7 +2,7 @@
 
 namespace App\Constants;
 
-enum OrderStatusEnum :int
+enum OrderStatusEnum: int
 {
     case Pending = 0;
     case Approved = 1;
@@ -13,15 +13,15 @@ enum OrderStatusEnum :int
     public static function getLabel(int $value): string
     {
         switch ($value) {
-            case self::Pending:
+            case self::Pending->value:
                 return 'Pending';
-            case self::Approved:
+            case self::Approved->value:
                 return 'Approved';
-            case self::Rejected:
+            case self::Rejected->value:
                 return 'Rejected';
-            case self::Received:
+            case self::Received->value:
                 return 'Received';
-            case self::Returned:
+            case self::Returned->value:
                 return 'Returned';
             default:
                 return 'Unknown';
@@ -32,23 +32,23 @@ enum OrderStatusEnum :int
     {
         return [
             [
-                'value' => self::Pending,
+                'value' => self::Pending->value,
                 'label' => "Pending"
             ],
             [
-                'value' => self::Approved,
+                'value' => self::Approved->value,
                 'label' => "Approved"
             ],
             [
-                'value' => self::Rejected,
+                'value' => self::Rejected->value,
                 'label' => "Rejected"
             ],
             [
-                'value' => self::Received,
+                'value' => self::Received->value,
                 'label' => "Received"
             ],
             [
-                'value' => self::Returned,
+                'value' => self::Returned->value,
                 'label' => "Returned"
             ]
         ];

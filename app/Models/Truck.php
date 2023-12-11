@@ -7,5 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Truck extends Model
 {
+
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class, 'truck_orders', 'truck_id', 'order_id');
+    }
+
     use HasFactory;
 }
