@@ -15,14 +15,15 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
+        <div id="parent-container" class="min-h-screen bg-gray-100 relative">
             @include('layouts.distributor.navigation')
 
-
+            @include('layouts.alert')
             <!-- Page Content -->
             <main>
                 @yield('main')
             </main>
         </div>
+        @stack('js')
     </body>
 </html>
