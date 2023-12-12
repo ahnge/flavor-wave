@@ -2,27 +2,51 @@
 
 namespace App\Constants;
 
-enum OrderStatusEnum :int
+enum OrderStatusEnum: int
 {
     case Pending = 0;
     case Approved = 1;
     case Rejected = 2;
-    case Received = 3;
-    case Returned = 4;
+    case Assigned = 3;
+    case Shipped = 4;
+    case Delivered = 5;
 
-    public static function getLabel(int $value): string
+    public static function getLabelForAdmins(int $value): string
     {
         switch ($value) {
-            case self::Pending:
+            case self::Pending->value:
                 return 'Pending';
-            case self::Approved:
+            case self::Approved->value:
                 return 'Approved';
-            case self::Rejected:
+            case self::Rejected->value:
                 return 'Rejected';
-            case self::Received:
-                return 'Received';
-            case self::Returned:
-                return 'Returned';
+            case self::Assigned->value:
+                return 'Assigned';
+            case self::Shipped->value:
+                return 'Shipped';
+            case self::Delivered->value:
+                return 'Delivered';
+            default:
+                return 'Unknown';
+        }
+    }
+
+
+    public static function getLabelForDistributors(int $value): string
+    {
+        switch ($value) {
+            case self::Pending->value:
+                return 'Pending';
+            case self::Approved->value:
+                return 'Shipping';
+            case self::Rejected->value:
+                return 'Rejected';
+            case self::Assigned->value:
+                return 'Shipping';
+            case self::Shipped->value:
+                return 'Shipped';
+            case self::Delivered->value:
+                return 'Delivered';
             default:
                 return 'Unknown';
         }
@@ -32,24 +56,28 @@ enum OrderStatusEnum :int
     {
         return [
             [
-                'value' => self::Pending,
+                'value' => self::Pending->value,
                 'label' => "Pending"
             ],
             [
-                'value' => self::Approved,
+                'value' => self::Approved->value,
                 'label' => "Approved"
             ],
             [
-                'value' => self::Rejected,
+                'value' => self::Rejected->value,
                 'label' => "Rejected"
             ],
             [
-                'value' => self::Received,
-                'label' => "Received"
+                'value' => self::Assigned->value,
+                'label' => "Assigned"
             ],
             [
-                'value' => self::Returned,
-                'label' => "Returned"
+                'value' => self::Shipped->value,
+                'label' => "Shipped"
+            ],
+            [
+                'value' => self::Delivered->value,
+                'label' => "Delivered"
             ]
         ];
     }
