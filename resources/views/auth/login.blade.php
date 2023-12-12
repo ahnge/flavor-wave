@@ -40,10 +40,13 @@
                         py-3
                         ">Sign in</button>
 
+                        @if (Illuminate\Support\Facades\Route::currentRouteName() == 'login')
                         <p class="text-sm font-light text-gray-500 dark:text-gray-400">
-                            Don’t have an account yet? <a href="#"
+                            Don’t have an account yet?
+                            <a href="{{ route('register') }}"
                                 class="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</a>
                         </p>
+                        @endif
                     </form>
                 </div>
             </div>

@@ -19,5 +19,6 @@ class OrderProduct extends Model
         return $this->belongsTo(Product::class);
     }
 
+
     public $timestamps = false;
 }
