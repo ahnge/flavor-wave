@@ -64,7 +64,7 @@ class ProductData
             [
                 'title' => "Citrus Fusion Fizz",
                 'price' => 78500,
-                "product_photo"  =>  "https://i2.wp.com/s3.amazonaws.com/laracasts/images/forum/avatars/default-avatar-".rand(1,40).".png?ssl=1",
+                "product_photo"  =>  "https://www.streetfoodguy.com/wp-content/uploads/2021/07/Spy-Wine-Cooler-1.jpeg",
                 "pc_per_box"  =>  12,
                 "total_box_count" =>  302,
                 "available_box_count" =>  60,
