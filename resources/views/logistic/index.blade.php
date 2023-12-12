@@ -39,7 +39,7 @@
                             <td class="px-6 py-4">{{ $t->driver_name }}</td>
                             <td class="px-6 py-4">{{ $t->capacity }}</td>
                             <td class="px-6 py-4">
-                                {{ $t->status }}
+                                {{ \App\Constants\TruckStatusEnum::getLabel($t->status) }}
                             </td>
                             <td class="px-6 py-4">
                                 <a href="{{ route('trucks.show', [$t->id]) }}"
