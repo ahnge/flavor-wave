@@ -13,7 +13,6 @@ class PreorderController extends Controller
 {
     public function preorderLists()
     {
-
         $orders = Order::when(request()->has("keyword"), function ($query) {
             $query->where(function (Builder $builder) {
                 $keyword = request()->keyword;
@@ -21,13 +20,21 @@ class PreorderController extends Controller
                 $builder->where("order_no", "LIKE", "%" . $keyword . "%");
             });
         })
+
+            ->when(request()->has("orderStatus"), function ($query) {
+                $query->where(function (Builder $builder) {
+                    $status = request()->orderStatus;
+
+                    $builder->where("status", $status);
+                });
+            })
+
             ->latest("is_urgent")
             ->orderBy("due_date", "desc")
             ->paginate(10)
             ->withQueryString();
 
         $orderLists = PreorderListsResource::collection($orders);
-
         return response()->json([
             "orders" => $orderLists->resource
         ], 200);
