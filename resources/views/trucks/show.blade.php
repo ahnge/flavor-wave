@@ -11,6 +11,7 @@
     <p class="text-lg">Truck Number: {{ $truck->truck_no }}</p>
     <p class="text-lg">Driver Name: {{ $truck->driver_name }}</p>
     <p class="text-lg">Capacity: {{ $truck->capacity }}</p>
+    <p class="text-lg">Truck status: {{ \App\Constants\TruckStatusEnum::getLabel($truck->status) }}</p>
 
     <div class="flex flex-row justify-between items-center">
       <p class="text-xl my-6 text-gray-900 dark:text-white font-semibold">
@@ -21,9 +22,8 @@
         <select id="countries"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
           <option selected disabled>Change truck status</option>
-          <option value="US">Unassigned</option>
-          <option value="CA">Assigned</option>
-          <option value="FR">Avalible</option>
+          <option value="0">At warehouse</option>
+          <option value="1">On the road</option>
         </select>
       </div>
     </div>
@@ -48,7 +48,12 @@
             @foreach ($truck->orders as $order)
               <tr
                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                <td class="px-6 py-4">{{ $order->order_no }}</td>
+                <td class="px-6 py-4">
+                  <a href="{{ route('trucks.orderDetail', ['id' => $truck->id, 'orderId' => $order->id]) }}">
+                    {{ $order->order_no }}
+                  </a>
+
+                </td>
                 <td class="px-6 py-4" data-order-id="{{ $order->id }}">
                   {{ \App\Constants\OrderStatusEnum::getLabelForAdmins($order->status) }}</td>
                 <td class="px-6 py-4">{{ $order->due_date }}</td>

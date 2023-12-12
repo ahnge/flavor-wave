@@ -32,4 +32,11 @@ class TruckController extends Controller
 
         return response()->json(['message' => 'Order status updated successfully.']);
     }
+
+    public function orderDetail($id, $orderId)
+    {
+        $order = Order::findOrFail($orderId);
+
+        return view('trucks.order-detail', compact('order'));
+    }
 }
