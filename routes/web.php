@@ -39,10 +39,10 @@ Route::get('/dashboard', function () {
 
 
 
-Route::controller(PreorderController::class)->group(function () {
+/* Route::controller(PreorderController::class)->group(function () {
     Route::get("preorder", "preorderLists")->name("preorder.preorderList");
     Route::post("preorder/check-status", "checkStatus")->name("preorder.checkStatus");
-});
+}); */
 
 
 Route::prefix('')
