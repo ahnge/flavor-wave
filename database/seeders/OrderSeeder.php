@@ -13,12 +13,15 @@ class OrderSeeder extends Seeder
      */
     public function run(): void
     {
+        $statusValues = collect(OrderStatusEnum::getValues())->pluck('value')->toArray();
         $data  =  [];
 
         for ($i = 1; $i <= 1000; $i++) {
+            $status = $statusValues[$i % count($statusValues)];
+
             $data[] = [
                 "order_no" =>  "ORD-" . str_pad($i, 5, '0', STR_PAD_LEFT),
-                "status" =>  OrderStatusEnum::Pending->value,
+                "status" =>  $status,
                 "is_urgent" =>  rand(0, 1),
                 "distributor_id" =>  rand(1, 10),
                 'due_date' =>  now()->addDays(rand(1, 30))->format('Y-m-d'),

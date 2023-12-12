@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.animate-ping {
+  animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes ping {
+  0%,
+  100% {
+    transform: scale(1, 1);
+    opacity: 0.5;
+  }
+
+  50% {
+    transform: scale(1.5, 2);
+    opacity: .3;
+  }
+}
