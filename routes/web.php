@@ -2,6 +2,7 @@
 
 use App\Constants\RoleEnum;
 use App\Http\Controllers\PreorderController;
+use App\Http\Controllers\LogisticController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TruckController;
 use Illuminate\Support\Facades\Auth;
@@ -19,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    if(Auth::guard('admin')->check()){
+    if (Auth::guard('admin')->check()) {
         return redirect(Auth::guard('admin')->user()->getRedirectRoute());
     }
     return redirect()->route('products');
@@ -44,5 +45,12 @@ Route::prefix('')
         \App\Services\RouteFile\RouteHelper::includedRouteFiles(__DIR__ . '/web');
     });
 
+
+Route::middleware([])->prefix('/logistic')->group(function () {
+    Route::get(
+        '/',
+        [LogisticController::class, "index"]
+    )->name("logistic.index");
+});
 
 require __DIR__ . '/auth.php';

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Distributor\Home\Index;
+use App\Http\Controllers\Distributor\Cart\Index as CartIndex;
 use App\Mail\SendOrderAlert;
 use Illuminate\Support\Facades\Route;
 
@@ -8,9 +9,11 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['distributor'])->group(function (){
     Route::get('/', [Index::class,'index'])->middleware('notAdmin')->name("distributor.index");
 
+    Route::get('/distributor/cart', [CartIndex::class,'index'])->name("distributor.cart.index");
 
 });
 use Illuminate\Support\Facades\Mail;
+
 Route::get('/distributor/index', [Index::class,'index'])->name("distributor.index");
 
 

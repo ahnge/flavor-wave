@@ -17,6 +17,5 @@ class ProductSeeder extends Seeder
         $data  = ProductData::get();
 
         \App\Models\Product::insert($data);
-
     }
 }
