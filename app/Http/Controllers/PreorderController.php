@@ -45,6 +45,37 @@ class PreorderController extends Controller
 
     }
 
+    public function filteredPreorderList(string $status)
+    {
+        if($status == 'pending'){
+            $status_code = 0;
+        }
+
+        $orders = Order::where('status',$status_code)
+        ->when(request()->has("keyword"), function ($query) {
+            $query->where(function (Builder $builder) {
+                $keyword = request()->keyword;
+
+                $builder->where("order_no", "LIKE", "%" . $keyword . "%")
+                ->orWhereHas('Distributor', function ($q) {
+                    $q->where('name', "LIKE", "%" . request()->keyword . "%");
+                });
+            });
+        })
+            ->when(request()->has('id'), function ($query) {
+                $sortType = request()->id ?? 'asc';
+                $query->orderBy("id", $sortType);
+            })
+            ->latest("is_urgent")
+            ->paginate(10)
+            ->withQueryString();
+
+        $orderLists = PreorderListsResource::collection($orders);
+
+        return view('sales.index',['preorders'=>$orderLists->resource]);
+
+    }
+
     public function showOrder(Order $preorder)
     {
         return view('sales.preorder.index',['preorder'=>$preorder]);

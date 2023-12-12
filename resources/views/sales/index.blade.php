@@ -12,17 +12,11 @@
 
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <form action="{{ route('preorder.preorderList') }}" method="GET">
+                    <form action="{{ route('preorder.filteredPreorderList',['status'=>'pending']) }}" method="GET">
                         @csrf
                         <div class="flex items-center space-x-4">
                             <div>
-                                <button type="submit" name="orderStatus" value="2">Rejects</button>
-                            </div>
-                            <div>
-                                <button type="submit" name="orderStatus" value="2">Rejects</button>
-                            </div>
-                            <div>
-                                <button type="submit" name="orderStatus" value="2">Rejects</button>
+                                <button type="submit">Pending</button>
                             </div>
                         </div>
 
