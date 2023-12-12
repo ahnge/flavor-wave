@@ -39,7 +39,8 @@
                                 </th>
                                 <td class="px-6 py-4">{{ $order->totalProductQuantity }}</td>
                                 <td class="px-6 py-4">
-                                    <form action="{{ route('logistic.addOrderToTruck') }}" method="post">
+                                    <form action="{{ route('logistic.addOrderToTruck', ['id' => $truck->id]) }}"
+                                        method="post">
                                         @csrf
                                         <input type="hidden" name="truck_id" value="{{ $truck->id }}">
                                         <input type="hidden" name="order_id" value="{{ $order->id }}">
