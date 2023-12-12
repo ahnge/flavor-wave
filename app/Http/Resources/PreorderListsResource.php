@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -20,7 +21,8 @@ class PreorderListsResource extends JsonResource
             "distributor_name" => $this->distributor->name,
             "is_urgent" => $this->is_urgent,
             "status" => $this->status,
-            "total_amount" => $this->total
+            "total_amount" => $this->total,
+            'due_date' => Carbon::createFromFormat('Y-m-d H:i:s', $this->due_date)->format('d-m-Y'),
 
         ];
     }
