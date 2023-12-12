@@ -1,5 +1,6 @@
 <x-app-layout>
     {{-- <div class="py-12">
+
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
@@ -27,7 +28,7 @@
         </div>
     </div> --}}
     <div class="max-w-screen-lg p-8 mx-auto">
-        <button type="button"
+      {{--   <button type="button"
             class="py-2 px-4 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200">
             <svg viewBox="0 0 1024 1024" width="20px" height="20px" xmlns="http://www.w3.org/2000/svg" fill="#000000">
                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -39,7 +40,7 @@
                     </path>
                 </g>
             </svg>
-        </button>
+        </button> --}}
 
         <p class="text-xl my-6 text-gray-900 dark:text-white font-semibold">
             {{ $preorder->order_no }} Details
@@ -95,14 +96,22 @@
 
 
         <div class="flex flex-row my-6 w-full justify-end gap-5">
-            <button type="button"
-                class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
-                Reject
-            </button>
-            <button type="button"
-                class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-                Approve
-            </button>
+
+            <div class="flex items-center justify-center space-x-10">
+                <div>
+                    <form method="POST" action="{{ route('preorder.changeStatus',['preorder'=>$preorder]) }}">
+                        @csrf
+                        <button name='status' type="submit" value="Approve" class="p-4 border border-b rounded-md mb-3 bg-green-400 text-white">Approve</button>
+                    </form>
+                </div>
+                <div>
+                    <form method="POST" action="{{ route('preorder.changeStatus',['preorder'=>$preorder]) }}">
+                        @csrf
+                        <button name='status' type="submit" value="Reject" class="p-4 border border-b rounded-md mb-3 bg-red-600 text-black">Reject</button>
+                    </form>
+                </div>
+            </div>
+
         </div>
     </div>
 </x-app-layout>

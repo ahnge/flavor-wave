@@ -14,6 +14,7 @@ class PreorderController extends Controller
     public function preorderLists()
     {
 
+
         $orders = Order::when(request()->has("keyword"), function ($query) {
             $query->where(function (Builder $builder) {
                 $keyword = request()->keyword;
@@ -45,13 +46,15 @@ class PreorderController extends Controller
 
     }
 
-    public function filteredPreorderList(string $status)
+    public function filteredPreorderList(int $status)
     {
-        if($status == 'pending'){
-            $status_code = 0;
+
+        if($status == 10)
+        {
+            return redirect()->route('preorder.preorderList');
         }
 
-        $orders = Order::where('status',$status_code)
+        $orders = Order::where('status',$status)
         ->when(request()->has("keyword"), function ($query) {
             $query->where(function (Builder $builder) {
                 $keyword = request()->keyword;
@@ -72,7 +75,7 @@ class PreorderController extends Controller
 
         $orderLists = PreorderListsResource::collection($orders);
 
-        return view('sales.index',['preorders'=>$orderLists->resource]);
+        return view('sales.index',['preorders'=>$orderLists->resource,'status'=>$status]);
 
     }
 

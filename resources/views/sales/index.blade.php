@@ -40,11 +40,14 @@
                   />
                 </svg>
               </div>
-              <input
+             <form action="{{route('preorder.preorderList')}}" method="GET">
+                @csrf
+                <input
                 type="search"
                 id="default-search"
+                name="keyword"
                 class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Search Mockups, Logos..."
+                placeholder="Search OrderIDs, Distributors..."
                 required
               />
               <button
@@ -53,19 +56,23 @@
               >
                 Search
               </button>
+             </form>
             </div>
           </form>
 
           <div>
             <select
-              id="countries"
+              id="statuses"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             >
-              <option selected disabled>Choose a country</option>
-              <option value="">United States</option>
-              <option value="CA">Canada</option>
-              <option value="FR">France</option>
-              <option value="DE">Germany</option>
+              <option selected disabled>Choose a status</option>
+                  <option value="10">All</option>
+              <option value="0">Pending</option>
+              <option value="1">Approved</option>
+              <option value="2">Rejected</option>
+              <option value="3">Assigned</option>
+              <option value="4">Shipped</option>
+              <option value="5">Delivered</option>
             </select>
           </div>
         </div>
@@ -141,4 +148,20 @@
             {{ $preorders->links() }}
         </div>
       </div>
+
+      @push('js')
+      <script type="module">
+        console.log('loaded js');
+
+        $(document).ready(function(){
+            $("#statuses").on('change', function(){
+                let status = $("#statuses").val();
+                window.location.href = "{{ route('preorders.filteredPreorderList', ':status') }}".replace(':status', status);
+            });
+        });
+    </script>
+
+@endpush
+
 </x-app-layout>
+

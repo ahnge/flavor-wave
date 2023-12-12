@@ -61,6 +61,6 @@ class RegisteredUserController extends Controller
 
         Auth::guard('web')->login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+        return redirect('/');
     }
 }
