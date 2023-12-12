@@ -39,4 +39,19 @@ class TruckController extends Controller
 
         return view('trucks.order-detail', compact('order'));
     }
+
+    public function updateTruckStatus(Request $request, $truckId)
+    {
+        $truck = Truck::findOrFail($truckId);
+
+        // Check if the requested status is valid
+        if (!in_array(intval($request->status), [0, 1])) {
+            return response()->json(['message' => 'Invalid truck status.'], 422);
+        }
+
+        // Update order status
+        $truck->update(['status' => $request->status]);
+
+        return response()->json(['message' => 'Truck status updated successfully.']);
+    }
 }

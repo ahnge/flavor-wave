@@ -11,7 +11,7 @@
     <p class="text-lg">Truck Number: {{ $truck->truck_no }}</p>
     <p class="text-lg">Driver Name: {{ $truck->driver_name }}</p>
     <p class="text-lg">Capacity: {{ $truck->capacity }}</p>
-    <p class="text-lg">Truck status: {{ \App\Constants\TruckStatusEnum::getLabel($truck->status) }}</p>
+    <p class="text-lg" id="truck-status">Truck status: {{ \App\Constants\TruckStatusEnum::getLabel($truck->status) }}</p>
 
     <div class="flex flex-row justify-between items-center">
       <p class="text-xl my-6 text-gray-900 dark:text-white font-semibold">
@@ -19,7 +19,7 @@
       </p>
 
       <div class="flex flex-row gap-3">
-        <select id="countries"
+        <select id="countries" onchange="updateTruckStatus(this.value, {{ $truck->id }})">
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
           <option selected disabled>Change truck status</option>
           <option value="0">At warehouse</option>
@@ -119,6 +119,33 @@
             button.disabled = true;
             statusTag.innerText = "Delivered";
             document.querySelector(`#status-${orderId}`).innerText = 5;
+          }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+    function updateTruckStatus(truckStatus, truckId) {
+      fetch(`/trucks/${truckId}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+          },
+          body: JSON.stringify({
+            status: truckStatus,
+          }),
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          // UPdate the truck status DOM
+          const truckStatusTag = document.querySelector("#truck-status");
+
+          if (parseInt(truckStatus) === 0) {
+            truckStatusTag.innerText = "Truck status: At warehouse"
+          }
+          if (parseInt(truckStatus) === 1) {
+            truckStatusTag.innerText = "Truck status: On the road"
           }
         })
         .catch(error => console.error('Error:', error));

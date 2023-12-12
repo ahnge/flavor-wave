@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Truck extends Model
 {
+    protected $fillable = ["status"];
 
     public function orders()
     {
