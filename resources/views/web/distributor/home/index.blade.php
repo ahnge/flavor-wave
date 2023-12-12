@@ -1,13 +1,13 @@
 @extends('layouts.distributor.app')
 
 @section('main')
-    <div class="min-h-[100vh] min-w-[100vw] bg-white dark:bg-gray-800 pt-12 ">
+    <div class="main-container min-h-[100vh] min-w-[100vw] bg-white dark:bg-gray-800 pt-12 ">
 
         @include('web.distributor.home.hero')
 
         @include('web.distributor.home.section-one')
 
-        <div class="min-w-full bg-white dark:bg-gray-900 dark:text-white px-4 sm:px-6 lg:px-[5vw] pb-20">
+        <div id="Products" class="min-w-full bg-white dark:bg-gray-900 dark:text-white px-4 sm:px-6 lg:px-[5vw] pb-20">
 
             <div class="flex flex-col gap-3 px-3 md:px-5 w-full">
                 <h1 class="text-4xl font-semibold ">Product List</h1>

@@ -47,7 +47,7 @@
                         @endforelse
                     </div>
                 </div>
-                <div class="w-1/2 bg-slate-100 dark:bg-slate-800 rounded-lg h-[350px] ">
+                <div class="w-1/2 bg-[#f9f9f9] dark:bg-slate-800 rounded-lg h-[350px] ">
                     <div class="flex flex-col px-8 py-6  gap-6">
                         <h3>Order summary</h3>
 
@@ -79,6 +79,8 @@
                                     </div>
                                 </div>
                             </div>
+
+
 
 
                         </div>
