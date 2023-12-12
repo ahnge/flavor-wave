@@ -1,5 +1,5 @@
 
-<footer class="bg-white dark:bg-gray-800">
+<footer id="Contact" class="bg-gray-200 dark:bg-gray-800">
     <div class="mx-auto w-full">
       <div class="grid grid-cols-2 gap-8 px-20 py-6 lg:py-8 md:grid-cols-4">
         <div>

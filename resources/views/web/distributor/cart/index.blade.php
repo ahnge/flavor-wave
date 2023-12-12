@@ -30,7 +30,7 @@
                                         +
                                     </button>
                                     <input type="number" id="quantity-{{ $product->id }}" value="1"
-                                        class="product-quantity bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-20 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                        class="product-quantity text-center bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-16 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         placeholder="John">
                                     <button onclick="decreaseQuantity({{ $product->id }})">
                                         -
@@ -47,7 +47,7 @@
                         @endforelse
                     </div>
                 </div>
-                <div class="w-1/2 bg-slate-100 dark:bg-slate-800 rounded-lg h-[350px] ">
+                <div class="w-1/2 bg-[#f9f9f9] dark:bg-slate-800 rounded-lg h-[350px] ">
                     <div class="flex flex-col px-8 py-6  gap-6">
                         <h3>Order summary</h3>
 
