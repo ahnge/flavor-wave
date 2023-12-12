@@ -13,16 +13,48 @@
         <script src="https://kit.fontawesome.com/f39d469662.js" crossorigin="anonymous"></script>
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
-            @include('layouts.distributor.navigation')
+        <div  class="dark min-h-screen bg-gray-100 relative">
+            <div  class="fixed  right-0 w-[40vw]  min-h-fit z-[995]">
+                <div id="parent-container" class="relative  w-full   h-full">
+                    @include('layouts.alert')
 
+                </div>
+
+            </div>
+            @include('layouts.distributor.navigation')
 
             <!-- Page Content -->
             <main>
                 @yield('main')
             </main>
+
+            <div class="w-full ">
+                @include('web.distributor.home.footer')
+
+            </div>
+
         </div>
+
+
+        <script src="{{ asset('distributor/index.js') }}"></script>
+        <script>
+            function navigateToCart()
+{
+    let cartIcon = document.getElementById('cartIcon');
+
+    // get the cart list from local storage
+    var cart = localStorage.getItem('cart');
+    var cartList = [];
+    if (cart) {
+        cartList = JSON.parse(cart);
+    }
+    // navigate to the cart page with the cart list
+    window.location.href = "{{route('distributor.cart.index')}}" +`?cartList=${cartList.join(',')}`;
+}
+        </script>
+        @stack('js')
     </body>
 </html>

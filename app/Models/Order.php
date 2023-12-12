@@ -9,13 +9,16 @@ class Order extends Model
 {
     use HasFactory;
 
+    protected $fillable = ["status"];
+
     public function distributor()
     {
         return $this->belongsTo(Distributor::class);
     }
 
-    public function orderProduct()
+    public function products()
     {
-        return $this->hasMany(OrderProduct::class);
+        return $this->belongsToMany(Product ::class, 'order_products');
     }
+
 }

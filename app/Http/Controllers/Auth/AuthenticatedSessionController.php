@@ -15,8 +15,15 @@ class AuthenticatedSessionController extends Controller
     /**
      * Display the login view.
      */
-    public function create(): View
+    public function create(): View | RedirectResponse
     {
+        if(Auth::guard('web')->check()){
+            return redirect(Auth::guard('web')->user()->getRedirectRoute());
+        }
+        elseif(Auth::guard('admin')->check()){
+            return redirect(Auth::guard('admin')->user()->getRedirectRoute());
+        }
+
         return view('auth.login');
     }
 
@@ -25,11 +32,13 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        $request->authenticate();
+
+        $request->authenticate('web');
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+
+        return redirect(Auth::guard('web')->user()->getRedirectRoute());
     }
 
     /**
@@ -43,6 +52,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/login');
     }
 }
