@@ -26,16 +26,21 @@ class ProductController extends Controller
 
         $productLists = ProductResource::collection($products);
 
-        return response()->json([
-            "products" => $productLists->resource
-        ], 200);
+        return view('warehouse.index',['products'=>$productLists->resource]);
+
+    }
+
+    public function show(Product $product)
+    {
+        return view('warehouse.product.index',['product'=>$product]);
     }
 
     public function edit(Request $request, $id)
     {
 
         $request->validate([
-            "quantity" => "required" | "integer"
+            "quantity" => ["required" , "integer"],
+            "type" => ["required"],
         ]);
 
         $product = Product::find($id);
@@ -52,5 +57,7 @@ class ProductController extends Controller
             $productTotalBoxCount += $quantity;
             $product->update(['total_box_count' => $productTotalBoxCount]);
         }
+
+        return redirect()->back();
     }
 }
