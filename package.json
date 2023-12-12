@@ -16,6 +16,7 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
+        "apexcharts": "^3.44.2",
         "flowbite": "^2.2.0",
         "jquery": "^3.7.1"
     }
