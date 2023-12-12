@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -20,16 +21,13 @@ class ProductController extends Controller
                     ->orWhere("price", "LIKE", "%" . $keyword . "%");
             });
         })
-            ->when(request()->has('id'), function ($query) {
-                $sortType = request()->id ?? 'asc';
-                $query->orderBy("id", $sortType);
-            })
-
-            ->paginate(10)
+            ->paginate(5)
             ->withQueryString();
 
+        $productLists = ProductResource::collection($products);
+
         return response()->json([
-            "products" => $products
+            "products" => $productLists->resource
         ], 200);
     }
 
