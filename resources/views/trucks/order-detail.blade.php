@@ -14,6 +14,9 @@
             Product name
           </th>
           <th scope="col" class="px-6 py-3">
+            Price
+          </th>
+          <th scope="col" class="px-6 py-3">
             Quantity
           </th>
           <th scope="col" class="px-6 py-3">
@@ -28,10 +31,13 @@
               {{ $product->title }}
             </th>
             <td class="px-6 py-4">
+              {{ $product->price }} Ks
+            </td>
+            <td class="px-6 py-4">
               {{ $product->pivot->quantity }} box
             </td>
             <td class="px-6 py-4">
-              {{ $order->total }}
+              {{ $order->total }} Ks
             </td>
           </tr>
         @endforeach
