@@ -58,6 +58,6 @@
             </div>
 
         </div>
-
+        {{ $approvedOrders->links() }}
     </div>
 @endsection

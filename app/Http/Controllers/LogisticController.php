@@ -32,7 +32,9 @@ class LogisticController extends Controller
 
     public function orderAssign(Request $request)
     {
-        $approvedOrders = Order::where('status', 1)->with("orderProducts")->get();
+        $approvedOrders = Order::where('status', 1)
+            ->with("orderProducts")
+            ->paginate(10);
         $truck = Truck::find($request->id);
 
         $truckOrders = TruckOrders::where('truck_id', $truck->id)->get();
