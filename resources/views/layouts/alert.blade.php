@@ -67,13 +67,13 @@
                 toastContainer.style.top = `${70 * (otherToasts.length + 1)}px`;
             }
 
-            toastContainer.className = `toast-alert absolute right-10  transition-all duration-800 ease-in-out`;
+            toastContainer.className = `toast-alert fixed right-10  transition-all duration-800 ease-in-out z-[999]`;
 
             const toast = document.createElement('div');
             const toastId = 'toast-id' + Math.floor(Math.random() * 1000);
             toast.id = toastId;
             toast.className =
-                'flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-[white] rounded-lg shadow-lg dark:text-gray-400 dark:bg-gray-800';
+                'flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-[white] rounded-lg shadow-lg dark:text-gray-400 dark:bg-gray-800 z-[999]';
             toast.setAttribute('role', 'alert');
 
             let icon = alertIcon(status);
