@@ -30,21 +30,13 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware('loggedIn')->name('dashboard');
 
-Route::middleware('loggedIn')->group(function () {
+/* Route::middleware('loggedIn')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+}); */
 
-Route::controller(PreorderController::class)->group(function () {
-    Route::get("preorder", "preorderLists")->name("preorder.preorderList");
-    Route::post("preorder/check-status", "checkStatus")->name("preorder.checkStatus");
-});
 
-Route::controller(PreorderController::class)->group(function () {
-    Route::get("preorder", "preorderLists")->name("preorder.preorderList");
-    Route::post("preorder/check-status", "checkStatus")->name("preorder.checkStatus");
-});
 
 
 Route::prefix('')

@@ -53,7 +53,7 @@ class User extends Authenticatable
     {
         return match((int)$this->role_id)
         {
-            2 => 'sales',
+            2 => 'preorders',
             3 => 'logistics',
             4 => 'warehouse'
         };

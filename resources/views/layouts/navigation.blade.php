@@ -41,9 +41,9 @@
 
                     <x-slot name="content">
                         @if (Illuminate\Support\Facades\Auth::guard('web')->check())
-                <x-responsive-nav-link :href="route('profile.edit')">
+                {{-- <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}
-                </x-responsive-nav-link>
+                </x-responsive-nav-link> --}}
 
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
@@ -104,9 +104,9 @@
 
             <div class="mt-3 space-y-1">
                 @if (Illuminate\Support\Facades\Auth::guard('web')->check())
-                <x-responsive-nav-link :href="route('profile.edit')">
+               {{--  <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}
-                </x-responsive-nav-link>
+                </x-responsive-nav-link> --}}
 
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
