@@ -51,11 +51,6 @@ Route::prefix('')
     });
 
 
-Route::middleware([])->prefix('/logistic')->group(function () {
-    Route::get(
-        '/',
-        [LogisticController::class, "index"]
-    )->name("logistic.index");
-});
+
 
 require __DIR__ . '/auth.php';

@@ -1,4 +1,4 @@
-@extends('layouts.guest')
+@extends('layouts.app')
 
 @section('content')
     <div class="max-w-screen-lg  mx-auto">
@@ -42,10 +42,9 @@
                                 {{ $t->status }}
                             </td>
                             <td class="px-6 py-4">
-                                <a href="{{ route('logistic.truckDetails', [$t->id]) }}">
-                                    <button type="button"
-                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-md text-sm px-5 py-2.5 me-2 mb-2">
-                                        Detail
+                                <a href=""
+                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-md text-sm px-5 py-2.5 me-2 mb-2">
+                                    Detail
                                     </button>
                                 </a>
                                 <a href="{{ route('logistic.orderAssign', [$t->id]) }}">

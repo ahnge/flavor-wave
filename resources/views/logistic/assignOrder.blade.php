@@ -1,4 +1,4 @@
-@extends('layouts.guest')
+@extends('layouts.app')
 
 @section('content')
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -10,7 +10,7 @@
         </div>
         <div class=" absolute  top-0 left-4 px-4 py-3 bg-gray-400 rounded-lg">
             <div class="flex">
-                <button onclick="history.back()">Back</button>
+                <a href="{{ route('logistic.index') }}">Back</a>
             </div>
         </div>
         <div class="max-w-screen-lg p-8 mx-auto">

@@ -29,27 +29,6 @@ class LogisticController extends Controller
         return view('logistic.index', compact("trucks"));
     }
 
-    public function truckDetails(Request $request)
-    {
-        $truck = Truck::find($request->id);
-        $truckOrders = TruckOrders::where('truck_id', $truck->id)->get();
-
-
-        foreach ($truckOrders  as $o) {
-            $o->status = Order::where('id', $o->order_id)->first()->status;
-        }
-
-
-
-        $currentTotalOrders = 0;
-        if ($truckOrders) {
-            foreach ($truckOrders as $order) {
-                $currentTotalOrders += $order->total_quantity;
-            }
-        }
-        return view('logistic.truckDetails', compact("truck", "currentTotalOrders", "truckOrders"));
-    }
-
 
     public function orderAssign(Request $request)
     {
@@ -105,6 +84,6 @@ class LogisticController extends Controller
         $truckOrders->order_id = $request->order_id;
         $truckOrders->total_quantity = $request->total_quantity;
         $truckOrders->save();
-        return redirect()->back()->with("success", "Order is added to the $truck->truck_number");
+        return redirect()->back()->with("success", $order->order_no . " was assigned successfully");
     }
 }

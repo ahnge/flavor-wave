@@ -19,8 +19,4 @@ class TruckOrders extends Model
         return $this->belongsTo(Order::class);
     }
     use HasFactory;
-    public function truck()
-    {
-        return $this->belongsTo(Truck::class);
-    }
 }
