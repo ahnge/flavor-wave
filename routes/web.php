@@ -31,10 +31,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::controller(PreorderController::class)->group(function () {
-    Route::get("preorder", "preorderLists")->name("preorder.preorderList");
-    Route::post("preorder/check-status", "checkStatus")->name("preorder.checkStatus");
-});
+
 
 Route::controller(PreorderController::class)->group(function () {
     Route::get("preorder", "preorderLists")->name("preorder.preorderList");

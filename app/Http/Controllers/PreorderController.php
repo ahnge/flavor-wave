@@ -21,11 +21,8 @@ class PreorderController extends Controller
                 $builder->where("order_no", "LIKE", "%" . $keyword . "%");
             });
         })
-            ->when(request()->has('id'), function ($query) {
-                $sortType = request()->id ?? 'asc';
-                $query->orderBy("id", $sortType);
-            })
             ->latest("is_urgent")
+            ->orderBy("due_date", "desc")
             ->paginate(10)
             ->withQueryString();
 
