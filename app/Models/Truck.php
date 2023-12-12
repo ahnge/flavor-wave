@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Truck extends Model
 {
+    protected $fillable = ["status"];
 
     public function orders()
     {
