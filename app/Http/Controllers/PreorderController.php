@@ -13,19 +13,25 @@ class PreorderController extends Controller
 {
     public function preorderLists()
     {
+
         $orders = Order::when(request()->has("keyword"), function ($query) {
             $query->where(function (Builder $builder) {
                 $keyword = request()->keyword;
 
-                $builder->where("order_no", "LIKE", "%" . $keyword . "%");
+                $builder->where("order_no", "LIKE", "%" . $keyword . "%")
+                ->orWhereHas('Distributor', function ($q) {
+                    $q->where('name', "LIKE", "%" . request()->keyword . "%");
+                });
             });
         })
 
             ->when(request()->has("orderStatus"), function ($query) {
                 $query->where(function (Builder $builder) {
                     $status = request()->orderStatus;
-
-                    $builder->where("status", $status);
+                    if($status != 10)
+                    {
+                        $builder->where("status", $status);
+                    }
                 });
             })
 
@@ -39,7 +45,7 @@ class PreorderController extends Controller
         return view('sales.index', ['preorders' => $orderLists->resource]);
     }
 
-    public function filteredPreorderList(int $status)
+    /* public function filteredPreorderList(int $status)
     {
 
         if($status == 10)
@@ -70,7 +76,7 @@ class PreorderController extends Controller
 
         return view('sales.index',['preorders'=>$orderLists->resource,'status'=>$status]);
 
-    }
+    } */
 
     public function showOrder(Order $preorder)
     {
