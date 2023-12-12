@@ -103,7 +103,7 @@
           padding: 10px 20px;
           text-decoration: none;
           border-radius: 4px;
-          margin-top: 20px;
+          margin-top: 10px;
         }
         .button:hover {
           background-color: #2980B9;
@@ -151,14 +151,15 @@
 <div class="container">
     <div class="flavor-wave">Flavor wave</div>
     <h2>New Order Request</h2>
-    <p>Hello [Admin Name],</p>
+    <p>Hello Sale Manager,</p>
     <p>You have received a new order request. Here are the details:</p>
     <div class="order-details">
       <!-- Include order details here -->
-      <p><strong>Order ID:</strong> #123456</p>
-      <p><strong>Product:</strong> [Product Name]</p>
-      <p><strong>Quantity:</strong> 2</p>
-      <p><strong>Total:</strong> $50.00</p>
+      <p><strong>Order ID:</strong> {{ $order->order_no }}</p>
+      <p><strong>Total:</strong> {{ $order->total }} Ks</p>
+      <p><strong>Is Urgent:</strong>  {{ $order->is_urgent ? "Urget" : "Normal" }} </p>
+      <p><strong>Start Order At:</strong> {{ $order->created_at }}</p>
+      <p><strong>Estilimated At:</strong> {{ $order->due_date }}</p>
     </div>
     <p>Click the button below to view and process the order:</p>
     <a href="[Your Web App URL]" class="button">View Order</a>
