@@ -17,7 +17,7 @@ class SendOrderAlert extends Mailable implements ShouldQueue
     /**
      * Create a new message instance.
      */
-    public function __construct(public string $order,public string $email)
+    public function __construct(public $order,public string $email)
     {
     }
 

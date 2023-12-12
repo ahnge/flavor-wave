@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class OrderProduct extends Model
 {
     use HasFactory;
+    public $timestamps = false;
+
+
+    protected $fillable = ['order_id','product_id','quantity'];
 
     public function order()
     {
@@ -19,6 +23,6 @@ class OrderProduct extends Model
         return $this->belongsTo(Product::class);
     }
 
-
     public $timestamps = false;
+
 }
