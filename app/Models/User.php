@@ -56,6 +56,7 @@ class User extends Authenticatable
             2 => 'preorders',
             3 => 'logistics',
             4 => 'warehouse',
+            6 => 'trucks',
 
         };
     }
