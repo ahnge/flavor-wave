@@ -1,8 +1,10 @@
 <?php
 
 use App\Constants\RoleEnum;
+use App\Http\Controllers\LogisticController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Permission;
+use App\Models\Truck;
 use App\Services\Authorization\UserPermissions;
 use App\Services\DataSets\ProductData;
 use Illuminate\Support\Facades\Route;
@@ -34,5 +36,15 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// logistic
+Route::prefix('logistic')->group(function () {
+    Route::get('/', [LogisticController::class, "index"]);
+    Route::get('/truck/{id}', [LogisticController::class, "orderAssign"])->name('logistic.orderAssign');
+    Route::get('/truck/truck-details/{id}', [LogisticController::class, "truckDetails"])->name('logistic.truckDetails');
+    Route::post('/truck', [LogisticController::class, "addOrderToTruck"])->name("logistic.addOrderToTruck");
+});
 
-require __DIR__.'/auth.php';
+
+
+
+require __DIR__ . '/auth.php';
