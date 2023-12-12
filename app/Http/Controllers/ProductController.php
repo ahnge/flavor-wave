@@ -33,6 +33,11 @@ class ProductController extends Controller
 
     public function edit(Request $request, $id)
     {
+
+        $request->validate([
+            "quantity" => "required" | "integer"
+        ]);
+
         $product = Product::find($id);
 
         $productTotalBoxCount = $product->total_box_count;
