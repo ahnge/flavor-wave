@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class TruckOrders extends Model
 {
@@ -18,4 +19,8 @@ class TruckOrders extends Model
         return $this->belongsTo(Order::class);
     }
     use HasFactory;
+    public function truck()
+    {
+        return $this->belongsTo(Truck::class);
+    }
 }
