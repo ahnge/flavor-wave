@@ -38,9 +38,9 @@ Enable extensions gd, zip in php.ini config file.
   ;extension=gd
   ;extension=zip
 ```
-Just remove the ';'.
+Just remove the ";" .
 
-Done!! The application should now be running on your localhost:8000.
+Done!! The application should now be running on your localhost at port 8000.
     
 ## Features
 
@@ -57,3 +57,16 @@ Done!! The application should now be running on your localhost:8000.
 ## Languages
 
 PHP, Javascript, Mysql
+
+## Tech Stack
+
+Laravel Framework, JQuery
+
+## Authors
+
+- [@ahnge](https://github.com/ahnge)
+- [@HeinZarNe](https://github.com/HeinZarNe)
+- [@LinnPyaePyae](https://github.com/LinnPyaePyae)
+- [@inhibitor255](https://github.com/inhibitor255)
+- [@Dede182](https://github.com/Dede182)
+- [@WinThiha](https://github.com/WinThiha)
