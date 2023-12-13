@@ -45,10 +45,7 @@
 
               <select id="statuses" name="orderStatus"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                <option value="10" {{ request('orderStatus') === '' ? 'selected' : '' }} disabled>Select
-                  Order Status
-                </option>
-                <option value="10" {{ request('orderStatus') === '10' ? 'selected' : '' }}>All</option>
+                <option value="10" selected {{ request('orderStatus') === '10' ? 'selected' : '' }}>All</option>
                 <option value="0" {{ request('orderStatus') === '0' ? 'selected' : '' }}>Pending
                 </option>
                 <option value="1" {{ request('orderStatus') === '1' ? 'selected' : '' }}>Approved
@@ -96,7 +93,7 @@
             <th scope="col" class="px-6 py-3">Distributor</th>
             <th scope="col" class="px-6 py-3">Price</th>
             <th scope="col" class="px-6 py-3">Region</th>
-            <th scope="col" class="px-6 py-3">Date</th>
+            <th scope="col" class="px-6 py-3">Due Date</th>
             <th scope="col" class="px-6 py-3">Status</th>
 
           </tr>
@@ -119,7 +116,7 @@
                 {{ $preorder->distributor->region_code }}
               </td>
               <td class="px-6 py-4 dark:text-white">
-                {{ Illuminate\Support\Carbon::parse($preorder->created_at)->toDateString() }}
+                {{ Illuminate\Support\Carbon::parse($preorder->due_date)->toDateString() }}
               </td>
               <td class="px-6 py-4 dark:text-white">
                 <div

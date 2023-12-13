@@ -38,7 +38,7 @@ class PreorderController extends Controller
             })
 
             ->latest("is_urgent")
-            ->orderBy("due_date", "desc")
+            ->orderBy("due_date", "asc")
             ->paginate(10)
             ->withQueryString();
 
