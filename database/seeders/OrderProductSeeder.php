@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,18 +14,30 @@ class OrderProductSeeder extends Seeder
      */
     public function run(): void
     {
-        $data =[];
-        for ($i=1; $i < 1000; $i++) {
-            $data[] = [
-                'order_id' => $i + 1,
-                'product_id' => rand(1,7),
-                'quantity' => rand(1,100),
-            ];
-            $data[] = [
-                'order_id' => $i + 1,
-                'product_id' => rand(1,7),
-                'quantity' => rand(1,100),
-            ];
+        $data = [];
+        for ($i = 1; $i < 300; $i++) {
+            /* Generate dates of 2 years. */
+            $endDate = Carbon::now()->addMonths(3);
+            $startDate = Carbon::now()->subYears(2);
+            $period = CarbonPeriod::create($startDate, $endDate);
+            foreach ($period as $date) {
+
+                $data[] = [
+                    'order_id' => $i + 1,
+                    'product_id' => rand(1, 14),
+                    'quantity' => rand(1, 100),
+                    "created_at" => $date,
+                    "updated_at" => $date
+
+                ];
+                $data[] = [
+                    'order_id' => $i + 1,
+                    'product_id' => rand(1, 14),
+                    'quantity' => rand(1, 100),
+                    "created_at" => $date,
+                    "updated_at" => $date
+                ];
+            }
         }
 
         $chunks = array_chunk($data, 100);
