@@ -4,15 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\OrderProduct;
 use App\Models\Product;
+use App\Models\TruckOrders;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class ChartController extends Controller
 {
+    //all products quantity that have been sold until now
     public function ProductSale()
     {
-
         $products = Product::withCount('product')
             // ->withSum('productSaleAmount', 'total')
             ->get();
@@ -21,7 +22,6 @@ class ChartController extends Controller
         foreach ($products as $product) {
             $productName = $product->title;
             $productCount = $product->product_count;
-
 
             $productInfo[] = [
                 'name' => $productName,
@@ -35,9 +35,10 @@ class ChartController extends Controller
         ], 200);
     }
 
+    /*  weekly best seller products for this week */
     public function weeklyBestSellerProduct()
     {
-        /* For weekly best seller products  */
+
         $startDate = Carbon::now()->startOfWeek()->format("Y-m-d H:i:s");
         $endDate = Carbon::now()->endOfWeek()->format("Y-m-d H:i:s");
 
@@ -53,9 +54,7 @@ class ChartController extends Controller
 
         $weeklyBestSellerProducts = [];
         foreach ($weeklyBestSellerProduct as $prodID => $quantity) {
-            $productName = Product::whereHas("product", function (Builder $query) use ($prodID) {
-                $query->where("id", $prodID);
-            })
+            $productName = Product::where("id", $prodID)
                 ->get()
                 ->pluck("title")
                 ->toArray();
@@ -77,9 +76,55 @@ class ChartController extends Controller
         return response()->json(
             [
                 "weekly_best_seller_products" => $weeklyBestSellerProducts,
-                "weekly_total_selling_total_amount" => $weeklyBestSellerTotalAmount,
+                "weekly_total_selling_amount" => $weeklyBestSellerTotalAmount,
             ],
             200
         );
     }
+
+    // public function weeklyMostDeliveringTruck()
+    // {
+
+    //     $startDate = Carbon::now()->startOfWeek()->format("Y-m-d H:i:s");
+    //     $endDate = Carbon::now()->endOfWeek()->format("Y-m-d H:i:s");
+
+    //     $weeklyMostDeliveringTruck = TruckOrders::selectRaw("sum(total_quantity) as total_quantity, truck_id")
+    //         ->whereBetween("created_at", [$startDate, $endDate])
+    //         ->groupBy("truck_id")
+    //         ->orderBy("total_quantity", "desc")
+    //         ->get()
+    //         ->pluck("total_quantity", "truck_id")
+    //         ->toArray();
+
+    //     return $weeklyMostDeliveringTruck;
+
+    //     $weeklyBestSellerProducts = [];
+    //     foreach ($weeklyBestSellerProduct as $prodID => $quantity) {
+    //         $productName = Product::where("id", $prodID)
+    //             ->get()
+    //             ->pluck("title")
+    //             ->toArray();
+
+    //         $weeklyBestSellerProducts[] = [
+    //             "product_name" => implode($productName),
+    //             "quantity" => $quantity,
+    //         ];
+    //     }
+
+    //     /* Total cash for weekly best selling products   */
+    //     $weeklyBestSellerTotalAmount = 0;
+    //     foreach ($weeklyBestSellerProduct as $prodID => $quantity) {
+    //         $price = Product::where("id", $prodID)->value("price");
+    //         $total_amount = $price * $quantity;
+    //         $weeklyBestSellerTotalAmount += $total_amount;
+    //     }
+
+    //     return response()->json(
+    //         [
+    //             "weekly_best_seller_products" => $weeklyBestSellerProducts,
+    //             "weekly_total_selling_amount" => $weeklyBestSellerTotalAmount,
+    //         ],
+    //         200
+    //     );
+    // }
 }

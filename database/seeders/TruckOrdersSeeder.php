@@ -25,21 +25,19 @@ class TruckOrdersSeeder extends Seeder
         $startDate = Carbon::now()->subYears(2);
         $period = CarbonPeriod::create($startDate, $endDate);
 
-        foreach ($trucks as $truck) {
-            foreach ($period as $day) {
+        foreach ($period as $i => $date) {
 
-                // Get a random order from the existing orders
-                $randomOrder = $orders->random();
+            // Get a random order from the existing orders
+            $randomOrder = $orders->random();
 
-                // Associate the random order with the truck using the pivot table (TruckOrder)
-                TruckOrders::create([
-                    'truck_id' => $truck->id,
-                    'order_id' => $randomOrder->id,
-                    'total_quantity' => rand(100, 500),
-                    "created_at" => $day,
-                    "updated_at" => $day
-                ]);
-            }
+            // Associate the random order with the truck using the pivot table (TruckOrder)
+            TruckOrders::create([
+                'truck_id' => random_int(1, 5),
+                'order_id' => random_int(1, 300),
+                'total_quantity' => rand(100, 500),
+                "created_at" => $date,
+                "updated_at" => $date
+            ]);
         }
     }
 }

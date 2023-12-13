@@ -52,5 +52,9 @@ Route::prefix('')
 
 
 
+Route::get('/info', function () {
+    return
 
+        phpinfo();
+});
 require __DIR__ . '/auth.php';
