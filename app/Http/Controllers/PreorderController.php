@@ -46,36 +46,36 @@ class PreorderController extends Controller
         return view('sales.index', ['preorders' => $orderLists->resource]);
     }
 
-    /* public function filteredPreorderList(int $status)
-    {
+    //  public function filteredPreorderList(int $status)
+    // {
 
-        if ($status == 10) {
-            return redirect()->route('preorder.preorderList');
-        }
+    //     if ($status == 10) {
+    //         return redirect()->route('preorder.preorderList');
+    //     }
 
-        $orders = Order::where('status', $status)
-            ->when(request()->has("keyword"), function ($query) {
-                $query->where(function (Builder $builder) {
-                    $keyword = request()->keyword;
+    //     $orders = Order::where('status', $status)
+    //         ->when(request()->has("keyword"), function ($query) {
+    //             $query->where(function (Builder $builder) {
+    //                 $keyword = request()->keyword;
 
-                    $builder->where("order_no", "LIKE", "%" . $keyword . "%")
-                        ->orWhereHas('Distributor', function ($q) {
-                            $q->where('name', "LIKE", "%" . request()->keyword . "%");
-                        });
-                });
-            })
-            ->when(request()->has('id'), function ($query) {
-                $sortType = request()->id ?? 'asc';
-                $query->orderBy("id", $sortType);
-            })
-            ->latest("is_urgent")
-            ->paginate(10)
-            ->withQueryString();
+    //                 $builder->where("order_no", "LIKE", "%" . $keyword . "%")
+    //                     ->orWhereHas('Distributor', function ($q) {
+    //                         $q->where('name', "LIKE", "%" . request()->keyword . "%");
+    //                     });
+    //             });
+    //         })
+    //         ->when(request()->has('id'), function ($query) {
+    //             $sortType = request()->id ?? 'asc';
+    //             $query->orderBy("id", $sortType);
+    //         })
+    //         ->latest("is_urgent")
+    //         ->paginate(10)
+    //         ->withQueryString();
 
-        $orderLists = PreorderListsResource::collection($orders);
+    //     $orderLists = PreorderListsResource::collection($orders);
 
-        return view('sales.index', ['preorders' => $orderLists->resource, 'status' => $status]);
-    }
+    //     return view('sales.index', ['preorders' => $orderLists->resource, 'status' => $status]);
+    // }
 
     public function showOrder(Order $preorder)
     {
