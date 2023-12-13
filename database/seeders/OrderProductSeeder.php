@@ -27,7 +27,7 @@ class OrderProductSeeder extends Seeder
                     'product_id' => rand(1, 14),
                     'quantity' => rand(1, 100),
                     "created_at" => $date,
-                    "updated_at" => $date
+                    "updated_at" => $date,
 
                 ];
                 $data[] = [
