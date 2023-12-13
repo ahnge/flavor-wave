@@ -44,20 +44,17 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public  function role() : BelongsTo
+    public  function role(): BelongsTo
     {
         return $this->belongsTo(Role::class);
     }
 
     public function getRedirectRoute()
     {
-        return match((int)$this->role_id)
-        {
-            2 => 'preorders',
-            3 => 'logistics',
-            4 => 'warehouse/product-list',
-            6 => 'trucks',
-
+        return match ((int)$this->role_id) {
+            2 => 'preorder.preorderList',
+            3 => 'logistic.index',
+            4 => 'warehouse.productList',
         };
     }
 }

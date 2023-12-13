@@ -24,7 +24,7 @@ class OrderSeeder extends Seeder
 
         foreach ($period as $date) {
 
-            for ($i = 1; $i <= 500; $i++) {
+            for ($i = 1; $i <= 300; $i++) {
                 $status = $statusValues[$i % count($statusValues)];
 
                 $data[] = [

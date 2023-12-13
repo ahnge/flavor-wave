@@ -1,6 +1,9 @@
 <nav class="bg-neutral-100 border-gray-200 dark:bg-gray-800">
   <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-    <a href="./index.html" class="flex items-center space-x-3 rtl:space-x-reverse">
+
+    <a href="{{ route(Illuminate\Support\Facades\Auth::guard('admin')->user()->getRedirectRoute()) }}"
+      class="flex items-center space-x-3 rtl:space-x-reverse">
+      <img src="{{ asset('assets/images/sig.png') }}" class="w-8  " alt="Flowbite Logo">
       <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Flavor Wave</span>
     </a>
 
@@ -12,7 +15,7 @@
         <!-- dark mode switch -->
         <button id="theme-toggle" type="button"
           class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5">
-          <svg id="theme-toggle-dark-icon" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+          <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg">
             <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
           </svg>
