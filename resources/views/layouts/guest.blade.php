@@ -16,10 +16,18 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="dark font-sans text-gray-900 antialiased">
+<body class="font-sans text-gray-900 antialiased">
     <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 min-w-full ">
+    {{ $slot }}
 
     </div>
 </body>
-
+    <script>
+         if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia(
+                '(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
+    </script>
 </html>

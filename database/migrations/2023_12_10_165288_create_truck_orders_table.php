@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('truck_id')->constrained('trucks')->cascadeOnDelete();
             $table->foreignId('order_id')->constrained('orders')->cascadeOnDelete();
-            $table->integer("total_quantity");
+            $table->integer("total_quantity")->nullable();
             $table->timestamps();
         });
     }

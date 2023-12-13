@@ -3,6 +3,27 @@
 @tailwind utilities;
 
 
+@layer components {
+  .highlight-text {
+    /* make italic */
+    @apply dark:text-[#838383] text-[#575757] font-medium text-xs
+  }
+}
+
+html {
+    scroll-behavior: smooth;
+ }
+
+ html::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  html {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+
 .animate-ping {
   animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
 }

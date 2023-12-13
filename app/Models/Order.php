@@ -12,6 +12,10 @@ class Order extends Model
 
     protected $fillable = ["status"];
 
+    protected $casts = [
+        'due_date' => 'datetime:Y-m-d',
+    ];
+
     public function distributor()
     {
         return $this->belongsTo(Distributor::class);
@@ -19,11 +23,19 @@ class Order extends Model
 
     public function products()
     {
-        return $this->belongsToMany(Product::class, 'order_products');
+        return $this->belongsToMany(Product::class, 'order_products')->withPivot('quantity');
     }
 
     public function orderProducts()
     {
         return $this->hasMany(OrderProduct::class);
     }
+
+    public function scopeSearch($query, $search)
+    {
+        return $query->when($search, function ($query, $search) {
+            return $query->where('order_no', 'like', '%' . $search . '%');
+        });
+    }
+
 }
