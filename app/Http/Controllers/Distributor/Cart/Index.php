@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\OrderProduct;
 use Illuminate\Http\Request;
 use App\Mail\SendOrderAlert;
+use App\Models\Region;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
@@ -16,11 +17,14 @@ class Index extends Controller {
         $cartIds = $request->query( 'cartList' );
         $cartIds = explode( ',', $cartIds );
         $products = \App\Models\Product::whereIn( 'id', $cartIds )->get();
-
-        return view( 'web.distributor.cart.index', compact( [ 'products' ] ) );
+        $user  = auth()->user();
+        $regions = Region::all();
+        return view( 'web.distributor.cart.index', compact( [ 'products' ,'regions','user'] ) );
     }
 
     public function order( Request $request ) {
+
+        sleep(1);
 
         DB::beginTransaction();
         try {
@@ -34,7 +38,7 @@ class Index extends Controller {
             $order->total = $total;
             $order->update();
 
-            Mail::to(config('control.hostMail'))->queue( new SendOrderAlert( $order, $user->email ) );
+            Mail::to(config('control.hostMail'))->queue(new SendOrderAlert( $order, $user->email ) );
 
             DB::commit();
             return response()->json( [
@@ -57,6 +61,9 @@ class Index extends Controller {
             $order->order_no  = 'ORD-'.rand( 100000, 999999 );
             $order->is_urgent = $request->isUrgent ? 0 : 1;
             $order->distributor_id = $user->id;
+            $order->address = $request->address;
+            $order->phone_no= $request->phone_number;
+            $order->region_code = $request->region;
             $order->status = OrderStatusEnum::Pending->value;
             $order->total =  0;
             $order->due_date = date( 'Y-m-d', strtotime( '+3 days' ) );

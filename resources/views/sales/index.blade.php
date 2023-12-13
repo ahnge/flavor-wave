@@ -124,7 +124,7 @@
                             </td>
                             <td class="px-6 py-4 dark:text-white">
                                 <div
-                                    class="px-3 py-2 bg-opacity-40 text-center rounded-md text-gray-900 dark:text-white @if ($preorder->status == 1 || $preorder->status > 2) bg-green-600 
+                                    class="px-3 py-2 bg-opacity-40 text-center rounded-md text-gray-900 dark:text-white @if ($preorder->status == 1 || $preorder->status > 2) bg-green-600
                 @elseif ($preorder->status == 2)
                 bg-red-500
                 @elseif ($preorder->status == 0)

@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('trucks', function (Blueprint $table) {
             $table->id();
             $table->string('truck_no',45);
-            $table->string('driver_name',125);
+            $table->string('driver_name');
+            $table->foreignId('user_id');
             $table->integer('capacity');
             $table->integer('status')->default(0);
             $table->timestamps();

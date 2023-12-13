@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\DailySaleController;
+use App\Http\Controllers\ChartController;
 use App\Http\Controllers\MonthlySaleController;
 use App\Http\Controllers\WeeklySaleController;
 use App\Http\Controllers\YearlySaleController;
@@ -18,4 +18,9 @@ Route::controller(MonthlySaleController::class)->group(function () {
 
 Route::controller(YearlySaleController::class)->group(function () {
     Route::get("yearly-sale", "yearlySale")->name("yearlySale.lists");
+});
+
+Route::controller(ChartController::class)->group(function () {
+    Route::get("product-sale", "productSale")->name("chart.productSale");
+    Route::get("weekly-best-seller-product", "weeklyBestSellerProduct")->name("chart.weekly");
 });

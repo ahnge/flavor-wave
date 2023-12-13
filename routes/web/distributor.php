@@ -1,11 +1,21 @@
 <?php
 
+use App\Constants\OrderStatusEnum;
+use App\Exports\TruckOrderAssign;
+use Illuminate\Support\Facades\Mail;
+
 use App\Http\Controllers\Distributor\Home\Index;
 use App\Http\Controllers\Distributor\Cart\Index as CartIndex;
 use App\Http\Controllers\Distributor\Order\Index as OrderIndex;
+use App\Jobs\AssignTruckOrder;
 use App\Mail\SendOrderAlert;
+use App\Models\Order;
+use App\Models\Truck;
+use App\Models\TruckOrders;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
-
+use Maatwebsite\Excel\Facades\Excel;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 Route::middleware(['distributor'])->group(function (){
     Route::get('/', [Index::class,'index'])->middleware('notAdmin')->name("distributor.index");
@@ -18,7 +28,6 @@ Route::middleware(['distributor'])->group(function (){
     Route::get('/distributor/order/list/{id}', [OrderIndex::class,'show'])->name("distributor.order.show");
 
 });
-use Illuminate\Support\Facades\Mail;
 
 Route::get('/distributor/index', [Index::class,'index'])->name("distributor.index");
 
@@ -33,4 +42,21 @@ Route::get('/email/view',function(){
 
     return  view('mail.order');
 });
+Route::get('/export/excel',function(){
 
+      (new AssignTruckOrder())->dispatch();
+      return 'success';
+});
+
+
+Route::get('/test',function(){
+        $driver = User::where("role_id",6)->pluck('id');
+
+        $truckOrders = TruckOrders::pluck('order_id');
+
+        $orders = Order::whereIn('id',$truckOrders)->where('status',OrderStatusEnum::Assigned->value)->get();
+
+        return  $orders;
+
+    return $driver;
+});
