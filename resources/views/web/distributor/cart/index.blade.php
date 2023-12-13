@@ -45,7 +45,7 @@
                                 </div>
                             </div>
                         @empty
-                          <p  class="text-center">No items in cart</p>
+                            <p class="text-center">No items in cart</p>
                         @endforelse
                     </div>
                 </div>
@@ -68,8 +68,11 @@
 
                             <div class="flex flex-col gap-5">
                                 <div class="flex items-center pt-4">
-                                    <input id="urgent-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                    <label for="default-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Urget Delivery</label>
+                                    <input id="urgent-checkbox" type="checkbox" value=""
+                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                    <label for="default-checkbox"
+                                        class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Urget
+                                        Delivery</label>
                                 </div>
 
                                 <div class="flex items-center justify-between">
@@ -149,6 +152,8 @@
 
             $('#orderConfirmed').on('click', function() {
                 const cartData = [];
+                let loading = true;
+                changeLoading(loading);
 
                 $(".productItem").each(function() {
                     const productId = $(this).attr('data-id');
@@ -161,32 +166,60 @@
                     cartData.push(cartItem);
                 })
 
-                const isUrget =  $('#urgent-checkbox').is(":checked");
-
-                console.log(isUrget)
+                const isUrget = $('#urgent-checkbox').is(":checked");
+                const phone_number = $("#phone_number").val();
+                const address = $("#address").val();
+                const region = $("#region").val();
 
                 $.ajax({
                     type: "POST",
                     url: "{{ route('distributor.cart.order') }}",
                     data: {
-                       cartData  : cartData,
-                        isUrget : isUrget
-
+                        cartData: cartData,
+                        isUrget: isUrget,
+                        phone_number: phone_number,
+                        address: address,
+                        region: region,
                     },
                     success: function(response) {
-                        callAlert("success","Order has been placed successfully")
+                        callAlert("success", "Order has been placed successfully")
                         // remove cart  from  localstorage
                         localStorage.removeItem('cart');
-                        // navigate to the order page
+                        loading = false;
+                        changeLoading(loading);
                         setTimeout(() => {
                             window.location.href = "{{ route('distributor.index') }}";
-                        }, 1500);
+                        }, 800);
                     },
                     error: function(error) {
-                        callAlert("error","something went wrong.Try again later")
-                    }
+                        callAlert("error", "something went wrong.Try again later")
+                        loading = false;
+                        changeLoading(loading);
+                    },
                 })
             })
         })
+
+        function changeLoading(loading) {
+            // Get references to the buttons
+            const orderConfirmedButton = document.getElementById('orderConfirmed');
+            const svgLoading = document.getElementById("svgLoading")
+
+            // Set the disabled state of the buttons based on the 'loading' parameter
+            orderConfirmedButton.disabled = loading;
+
+            // Toggle the visibility of the loading spinner and text
+            const loadingSpinner = orderConfirmedButton.querySelector('svg');
+            const loadingText = orderConfirmedButton.lastChild;
+
+            loadingSpinner.classList.toggle('hidden', !loading);
+            if(loading){
+                svgLoading.classList.remove('hidden');
+            }else{
+                svgLoading.classList.add('hidden');
+            }
+
+            loadingText.textContent = loading ? 'Loading...' : 'Order';
+        }
     </script>
 @endpush
