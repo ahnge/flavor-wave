@@ -23,4 +23,15 @@ class Product extends Model
     {
         return $this->belongsToMany(Order::class, 'order_products', 'product_id', 'order_id')->withPivot('quantity');
     }
+
+    public function product()
+    {
+        return $this->hasMany(OrderProduct::class);
+    }
+
+
+    // public function productSaleAmount()
+    // {
+    //     return $this->hasManyThrough(Order::class, OrderProduct::class);
+    // }
 }
