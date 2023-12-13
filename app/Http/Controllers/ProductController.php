@@ -78,7 +78,7 @@ class ProductController extends Controller
     // To create new product
     public function create()
     {
-        return view('warehouse.products.create');
+        return view('warehouse.product.create');
     }
 
     public function store(Request $request)
