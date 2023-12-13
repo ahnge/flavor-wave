@@ -51,36 +51,23 @@ Route::get('/export/excel',function(){
 
 
 Route::get('/test',function(){
-        $driver = User::where("role_id",6)->pluck('id');
+    $truckOrders = TruckOrders::select('truck_id', DB::raw('GROUP_CONCAT(order_id) as order_ids'))
+    ->groupBy('truck_id')
+    ->get();
 
-        $truckOrders = TruckOrders::select('truck_id', DB::raw('GROUP_CONCAT(order_id) as order_ids'))
-        ->groupBy('truck_id')
+    $truckIds = $truckOrders->pluck('truck_id');
+
+    $driver = Truck::whereIn('id',$truckIds)->with('user')->first();
+    $orders  =[];
+
+        $orders  = Order::whereIn('id',explode(',',$truckOrders->where('truck_id',3)->first()->order_ids))->where('status',OrderStatusEnum::Assigned->value)
+        ->with('distributor')
         ->get();
 
-        $truckIds = $truckOrders->pluck('truck_id');
-
-        $trucks = Truck::
-        whereIn('id',$truckIds)
-        ->with('user')->get();
-        $orders  =[];
-
-        foreach($trucks as  $i=> $truck){
-            $orders  = Order::whereIn('id',explode(',',$truckOrders->where('truck_id',$truck->id)->first()->order_ids))->where('status',OrderStatusEnum::Assigned->value)->get();
-
-            Excel::store(new TruckOrderAssign($orders),'public/pdf/'. now()->format('dmY') .'/' . ($truck->user->id  ?? 'unknown' ). '-orders.pdf');
-
-        }
-
-        return 'success';
-
-
-        // $truckOrders is now a collection where each item contains truck_id and order_ids
-
-        return $truck;
-
-        // $orders = Order::whereIn('id',$truckOrders)->where('status',OrderStatusEnum::Assigned->value)->groupBy();
-
-        // return  $orders;
-
-    // return $driver;
+        // Excel::store(
+        //     new TruckOrderAssign($orders,$truck),
+        //     'public/pdf/' . now()->format('dmY') . '/' . str_replace(' ', '_', ($truck->user->name ?? 'unknown')) . '-orders.pdf'
+        // );
+       $pdf   =PDF::loadView('mail.table',compact('orders','driver'));
+       return $pdf->stream();
 });

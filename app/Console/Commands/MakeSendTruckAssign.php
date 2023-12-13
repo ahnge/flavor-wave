@@ -30,17 +30,6 @@ class MakeSendTruckAssign extends Command
      */
     public function handle()
     {
-
-        $truckOrders = TruckOrders::select('truck_id', DB::raw('GROUP_CONCAT(order_id) as order_ids'))
-        ->groupBy('truck_id')
-        ->get();
-
-        $truckIds = $truckOrders->pluck('truck_id');
-
-        $trucks = Truck::
-        whereIn('id',$truckIds)
-        ->with('user')->get();
-
         $truckOrders = TruckOrders::select('truck_id', DB::raw('GROUP_CONCAT(order_id) as order_ids'))
         ->groupBy('truck_id')
         ->get();
@@ -52,11 +41,10 @@ class MakeSendTruckAssign extends Command
         ->with('user')->get();
 
 
-        foreach($trucks as $truck){
-            $path = "public/pdf/".now()->format('dmY')."/".$truck->user->id."-orders.pdf";
-            Mail::to($truck->user->email)->queue(new SendTruckAssignMail($path) );
+        foreach($trucks as $driver){
+            $path = "public/pdf/" . now()->format('dmY') . '/' . str_replace(' ', '_', ($driver->user->name ?? 'unknown')) . '-orders.pdf';
+            Mail::to($driver->user->email)->queue(new SendTruckAssignMail($path) );
         }
-
 
         $this->info('Email sent successfully.');
     }

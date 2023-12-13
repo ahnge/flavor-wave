@@ -13,15 +13,16 @@ class TruckOrderAssign implements FromView
     * @return \Illuminate\Support\Collection
     */
 
-    public function __construct(public $orders)
+    public function __construct(public $orders,public $driver)
     {
 
     }
 
     public function view() :View
     {
-        return view('mail.truck',[
-            'orders' => $this->orders
+        return view('mail.table',[
+            'orders' => $this->orders,
+            'driver'  => $this->driver,
         ]);
     }
 }
