@@ -21,7 +21,7 @@ class AuthenticatedSessionController extends Controller
             return redirect(Auth::guard('web')->user()->getRedirectRoute());
         }
         elseif(Auth::guard('admin')->check()){
-            return redirect(Auth::guard('admin')->user()->getRedirectRoute());
+            return redirect()->route(Auth::guard('admin')->user()->getRedirectRoute());
         }
 
         return view('auth.login');

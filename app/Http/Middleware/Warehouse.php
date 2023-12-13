@@ -17,7 +17,7 @@ class Warehouse
     public function handle(Request $request, Closure $next): Response
     {
         if(Auth::guard('admin')->user()->role_id != 4){
-            return redirect(Auth::guard('admin')->user()->getRedirectRoute());
+            return redirect()->route(Auth::guard('admin')->user()->getRedirectRoute());
         }
 
         return $next($request);
