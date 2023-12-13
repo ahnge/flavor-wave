@@ -39,7 +39,12 @@
       </div>
     </div>
 
-
+    <!-- Excel import form -->
+    <form action="{{ route('warehouse.importProductBoxCount') }}" method="post" enctype="multipart/form-data">
+      @csrf
+      <input type="file" name="excel_file">
+      <button type="submit" class="">Import</button>
+    </form>
 
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
       <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -107,7 +112,8 @@
       {{ $products->links() }}
     </div>
 
-
+    <!-- Export Products button -->
+    <a href="{{ route('warehouse.exportProducts') }}">Export</a>
 
   </div>
 @endsection

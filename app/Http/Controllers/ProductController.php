@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Akaunting\Apexcharts\Chart;
-
+use App\Exports\ProductExport;
 use App\Http\Resources\ProductResource;
+use App\Imports\ProductImport;
 use Illuminate\Database\Eloquent\Builder;
-
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProductController extends Controller
 {
@@ -30,7 +31,7 @@ class ProductController extends Controller
         return view('warehouse.index', ['products' => $productLists->resource]);
     }
 
-public function changeQty(Product $product)
+    public function changeQty(Product $product)
     {
         return view('warehouse.product.index', ['product' => $product]);
     }
@@ -107,10 +108,32 @@ public function changeQty(Product $product)
         return redirect()->route('warehouse.createProduct')->with('success', 'Product created successfully!');
     }
 
+    // exel import
+    public function import(Request $request)
+    {
+        // Validate the uploaded file
+        $request->validate([
+            'excel_file' => 'required|mimes:xlsx,xls',
+        ]);
+
+        // Get the uploaded file
+        $file = $request->file('excel_file');
+
+        // Process the Excel file
+        Excel::import(new ProductImport, $file);
+
+        return redirect()->route('warehouse.productList')->with('success', 'Excel file imported successfully!');
+    }
+
+    public function exportProducts()
+    {
+        return Excel::download(new ProductExport, 'products.xlsx');
+    }
+
     public function editDetails(Product $product)
     {
         $updatedDetail = request()->validate([
-            'title' => ['required' , 'min:2'],
+            'title' => ['required', 'min:2'],
             'price' => ['required'],
             'ppb' => ['required']
         ]);
@@ -122,11 +145,6 @@ public function changeQty(Product $product)
 
     public function showInfo(Product $product)
     {
-        return view('warehouse.product.edit',['product'=>$product]);
-    }
-
-    public function updateInfo(Product $product)
-    {
-
+        return view('warehouse.product.edit', ['product' => $product]);
     }
 }
