@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use App\Constants\OrderStatusEnum;
+use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,24 +15,32 @@ class OrderSeeder extends Seeder
      */
     public function run(): void
     {
+        /* Generate dates of 2 years. */
+        $endDate = Carbon::now()->addMonths(3);
+        $startDate = Carbon::now()->subYears(2);
+        $period = CarbonPeriod::create($startDate, $endDate);
         $statusValues = collect(OrderStatusEnum::getValues())->pluck('value')->toArray();
         $data  =  [];
 
-        for ($i = 1; $i <= 1000; $i++) {
-            $status = $statusValues[$i % count($statusValues)];
+        foreach ($period as $date) {
 
-            $data[] = [
-                "order_no" =>  "ORD-" . str_pad($i, 5, '0', STR_PAD_LEFT),
-                "status" =>  $status,
-                "is_urgent" =>  rand(0, 1),
-                "distributor_id" =>  rand(1, 10),
-                'due_date' =>  now()->addDays(rand(1, 30))->format('Y-m-d'),
-                'total' =>  rand(100000, 1000000),
-                'completed_at' =>  null,
-                "created_at" =>  now()->addDays(rand(1, 30))->format('Y-m-d'),
-                'updated_at' =>  now()->addDays(rand(1, 30))->format('Y-m-d'),
-            ];
+            for ($i = 1; $i <= 1000; $i++) {
+                $status = $statusValues[$i % count($statusValues)];
+
+                $data[] = [
+                    "order_no" =>  "ORD-" . str_pad($i, 5, '0', STR_PAD_LEFT),
+                    "status" =>  $status,
+                    "is_urgent" =>  rand(0, 1),
+                    "distributor_id" =>  rand(1, 10),
+                    'due_date' =>  now()->addDays(rand(1, 30))->format('Y-m-d'),
+                    'total' =>  rand(100000, 1000000),
+                    'completed_at' =>  null,
+                    "created_at" =>  $date,
+                    'updated_at' =>  $date,
+                ];
+            }
         }
+
 
         $chunks = array_chunk($data, 100);
         foreach ($chunks as $chunk) {
