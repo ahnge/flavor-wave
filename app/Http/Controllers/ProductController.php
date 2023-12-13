@@ -102,7 +102,7 @@ class ProductController extends Controller
             ->setHeight(400)
             ->setTitle("Product")
             ->setSubtitle("Products")
-            ->settype("donut")
+            ->setType("donut")
             ->setDataLabelsEnabled(true)
             ->setSeries($productQuantity)
             ->setLabels($productNames);
@@ -146,16 +146,37 @@ class ProductController extends Controller
             $weeklyBestSellerTotalAmount += $total_amount;
         }
 
-        dd($weeklyBestSellerProduct, $weeklyBestSellerTotalAmount);
-        return response()->json(
-            [
-                "weekly_best_seller_products" => $weeklyBestSellerProducts,
-                "weekly_total_selling_total_amount" => $weeklyBestSellerTotalAmount,
-            ],
-            200
-        );
+        //dd(collect($weeklyBestSellerProducts));
+        // return response()->json(
+        //     [
+        //         "weekly_best_seller_products" => $weeklyBestSellerProducts,
+        //         "weekly_total_selling_total_amount" => $weeklyBestSellerTotalAmount,
+        //     ],
+        //     200
+        // );
+        $weeklyBestProductNames = collect($weeklyBestSellerProducts)->map(function ($item) {
+            return $item['product_name'];
+        })->toArray();
+        $weeklyBestProductQuantity = collect($weeklyBestSellerProducts)->map(function ($item) {
+            return intval($item['quantity']);
+        })->toArray();
 
-        return view('warehouse.charts', compact("productChart"));
+        //dd($weeklyBestProductNames, $weeklyBestProductQuantity, $productQuantity, $productNames);
+
+
+
+
+        $weeklyBestProductChart = (new Chart)
+            ->setWidth('100%')
+            ->setHeight(400)
+            ->setTitle("Best Sale Products of last week")
+            ->setSubtitle("Top 7 Products")
+            ->setType("pie")
+            ->setDataLabelsEnabled(true)
+            ->setSeries($weeklyBestProductQuantity)
+            ->setLabels($weeklyBestProductNames);
+
+        return view('warehouse.charts', compact("productChart", "weeklyBestProductChart"));
     }
 
     // To create new product

@@ -5,6 +5,10 @@
         {!! $productChart->container() !!}
         {!! $productChart->script() !!}
     </div>
+    <div class=" container mx-auto w-[900px]">
+        {!! $weeklyBestProductChart->container() !!}
+        {!! $weeklyBestProductChart->script() !!}
+    </div>
 @endsection
 
 @section('scripts')
