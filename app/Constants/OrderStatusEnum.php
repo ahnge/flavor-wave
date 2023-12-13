@@ -38,7 +38,7 @@ enum OrderStatusEnum: int
             case self::Pending->value:
                 return 'Pending';
             case self::Approved->value:
-                return 'Shipping';
+                return 'Approved';
             case self::Rejected->value:
                 return 'Rejected';
             case self::Assigned->value:
@@ -80,5 +80,25 @@ enum OrderStatusEnum: int
                 'label' => "Delivered"
             ]
         ];
+    }
+
+    public static function  getBadgeClass(int $value): string
+    {
+        switch ($value) {
+            case self::Pending->value:
+                return 'bg-gray-100 text-gray-800 text-xs font-medium  px-2.5 py-1 rounded dark:bg-gray-900 dark:text-gray-300';
+            case self::Approved->value:
+                return 'bg-green-100 text-green-800 text-xs font-medium  px-2.5 py-1 rounded dark:bg-blue-900 dark:text-blue-300';
+            case self::Rejected->value:
+                return 'bg-red-100 text-red-800 text-xs font-medium  px-2.5 py-1 rounded dark:bg-red-900 dark:text-red-300';
+            case self::Assigned->value:
+                return 'bg-green-100 text-green-800 text-xs font-medium  px-2.5 py-1 rounded dark:bg-green-900 dark:text-green-300';
+            case self::Shipped->value:
+                return 'bg-yellow-100 text-yellow-800 text-xs font-medium  px-2.5 py-1 rounded dark:bg-yellow-900 dark:text-yellow-300';
+            case self::Delivered->value:
+                return 'bg-green-100 text-green-800 text-xs font-medium  px-2.5 py-1 rounded dark:bg-green-900 dark:text-green-300';
+            default:
+                return 'bg-gray-100 text-gray-800 text-xs font-medium  px-2.5 py-1 rounded dark:bg-gray-700 dark:text-gray-300';
+        }
     }
 }

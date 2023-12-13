@@ -15,6 +15,7 @@ Route::middleware(['distributor'])->group(function (){
     Route::post('/distributor/order', [CartIndex::class,'order'])->name("distributor.cart.order");
 
     Route::get('/distributor/order/list', [OrderIndex::class,'index'])->name("distributor.order.index");
+    Route::get('/distributor/order/list/{id}', [OrderIndex::class,'show'])->name("distributor.order.show");
 
 });
 use Illuminate\Support\Facades\Mail;

@@ -1,7 +1,7 @@
 
 
-<section  id="AboutUs" class=" bg-white dark:bg-gray-900">
-    <div class="py-8 px-4 mx-auto  lg:py-16  md:px-[6.4rem]" >
+<section  id="AboutUs" class=" bg-white dark:bg-gray-900 lg:px-[5vw]">
+    <div class="py-8 px-4 mx-auto  lg:py-16   md:px-5" >
         <div class="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8 md:p-12 mb-8">
             <a href="#" class="bg-blue-100 text-blue-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded-md dark:bg-gray-700 dark:text-blue-400 mb-2">
                 <svg class="w-2.5 h-2.5 me-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 14">
@@ -9,8 +9,8 @@
                 </svg>
                 Tutorial
             </a>
-            <h1 class="text-gray-900 dark:text-white text-3xl md:text-5xl font-extrabold mb-2">How to quickly deploy a static website</h1>
-            <p class="text-lg font-normal text-gray-500 dark:text-gray-400 mb-6">Static websites are now used to bootstrap lots of websites and are becoming the basis for a variety of tools that even influence both web designers and developers.</p>
+            <h1 class="text-gray-900 dark:text-white text-3xl md:text-5xl font-extrabold mb-2">Timeless Elegance in Every Bottle</h1>
+            <p class="text-lg font-normal text-gray-500 dark:text-gray-400 mb-6">"Discover the artistry of Flavor Wave – where every bottle encapsulates timeless elegance. Sip, savor, and celebrate life with our exceptional wines, crafted to elevate your moments to unforgettable heights. Taste the extraordinary, toast to memories, and let our wines weave a tale of refined indulgence. Here's to the extraordinary, here's to you.</p>
             <a href="#" class="inline-flex justify-center items-center py-2.5 px-5 text-base font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900">
                 Read more
                 <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
@@ -27,7 +27,7 @@
                     Quality
                 </a>
                 <h2 class="text-gray-900 dark:text-white text-3xl font-extrabold mb-2">Collab Your Business with with us</h2>
-                <p class="text-lg font-normal text-gray-500 dark:text-gray-400 mb-4">Start Order Now!</p>
+                <p class="text-lg font-normal text-gray-500 dark:text-gray-400 mb-4">Indulge in the essence of elegance and savor the moments with our exquisite selection of wines. Crafted with passion, each bottle tells a tale of unparalleled craftsmanship, inviting you to uncork the extraordinary. Elevate your senses, celebrate life, and let the symphony of flavors awaken your palate. Cheers to sophistication, togetherness, and the timeless allure of our distinguished wine collection;</p>
                 <a href="#" class="text-blue-600 dark:text-blue-500 hover:underline font-medium text-lg inline-flex items-center">Read more
                     <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
@@ -39,10 +39,10 @@
                     <svg class="w-2.5 h-2.5 me-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 4 1 8l4 4m10-8 4 4-4 4M11 1 9 15"/>
                     </svg>
-                    Code
+                    Products
                 </a>
-                <h2 class="text-gray-900 dark:text-white text-3xl font-extrabold mb-2">Best react libraries around the web</h2>
-                <p class="text-lg font-normal text-gray-500 dark:text-gray-400 mb-4">Static websites are now used to bootstrap lots of websites and are becoming the basis for a variety of tools that even influence both web designers and developers.</p>
+                <h2 class="text-gray-900 dark:text-white text-3xl font-extrabold mb-2">Elevate Every Moment</h2>
+                <p class="text-lg font-normal text-gray-500 dark:text-gray-400 mb-4">Sip, savor, celebrate. Elevate every moment with Flavor Wave's exceptional wines. Crafted for extraordinary occasions, our bottles promise a symphony of flavors that linger long after the last drop. Unleash the extraordinary – because life's too short for ordinary wine.</p>
                 <a href="#" class="text-blue-600 dark:text-blue-500 hover:underline font-medium text-lg inline-flex items-center">Read more
                     <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
