@@ -21,10 +21,10 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if ($guard == 'admin' && Auth::guard($guard)->check()) {
-                return redirect(Auth::guard('admin')->user()->getRedirectRoute);
+                return redirect()->route(Auth::guard('admin')->user()->getRedirectRoute);
             }
             elseif($guard == 'web' && Auth::guard($guard)->check()){
-                return redirect(Auth::guard('web')->user()->getRedirectRoute);
+                return redirect()->route(Auth::guard('web')->user()->getRedirectRoute);
             }
         }
 

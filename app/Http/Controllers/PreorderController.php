@@ -20,17 +20,16 @@ class PreorderController extends Controller
                 $keyword = request()->keyword;
 
                 $builder->where("order_no", "LIKE", "%" . $keyword . "%")
-                ->orWhereHas('Distributor', function ($q) {
-                    $q->where('name', "LIKE", "%" . request()->keyword . "%");
-                });
+                    ->orWhereHas('Distributor', function ($q) {
+                        $q->where('name', "LIKE", "%" . request()->keyword . "%");
+                    });
             });
         })
 
             ->when(request()->has("orderStatus"), function ($query) {
                 $query->where(function (Builder $builder) {
                     $status = request()->orderStatus;
-                    if($status != 10)
-                    {
+                    if ($status != 10) {
                         $builder->where("status", $status);
                     }
                 });
