@@ -5,13 +5,16 @@
         <p class="text-xl my-6 text-gray-900 dark:text-white font-semibold">
             Order List
         </p>
-        <!-- Table -->
+        <!-- Search Form -->
 
         <form method="GET" action="{{ route('preorder.preorderList') }}">
-            @csrf
 
             <div class="flex items-center justify-end space-x-4 mb-3">
                 <div class="flex flex-col space-y-3">
+
+
+                    {{-- search-input --}}
+
                     <div class="">
 
                         <input type="search" id="default-search" name="keyword"
@@ -19,10 +22,14 @@
                             placeholder="Search OrderIDs, Distributors..." value="{{ request('keyword') }}" />
 
                     </div>
+
+                    {{-- status-select --}}
+
+
                     <div>
                         <select id="statuses" name="orderStatus"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            <option value="" {{ request('orderStatus') === '' ? 'selected' : '' }}>Select Order Status
+                            <option value="10" {{ request('orderStatus') === '' ? 'selected' : '' }} disabled>Select Order Status
                             </option>
                             <option value="10" {{ request('orderStatus') === '10' ? 'selected' : '' }}>All</option>
                             <option value="0" {{ request('orderStatus') === '0' ? 'selected' : '' }}>Pending</option>
@@ -34,6 +41,8 @@
                         </select>
                     </div>
                 </div>
+
+                {{-- search-button --}}
 
                 <div class="">
                     <button type="submit" class="btn-primary border p-2 rounded-full hover:opacity-50 cursor-pointer">
@@ -138,15 +147,16 @@
     </div>
 @endsection
 
-{{-- @section('scripts')
+@section('scripts')
         <script type="module">
             console.log('loaded js');
 
             $(document).ready(function() {
                 $("#statuses").on('change', function() {
                     let status = $("#statuses").val();
-                    window.location.href = "{{ route('preorder.preorderList') }}";
+                    let keyword = $("#default-search").val();
+                    window.location.href = ("{{ route('preorder.preorderList') }}"+"?keyword=:keyword"+"&orderStatus=:status").replace(':status', status).replace(':keyword', keyword);
                 });
             });
         </script>
-    @endsection --}}
+    @endsection
