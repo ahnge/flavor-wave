@@ -20,5 +20,7 @@ Route::middleware(['admin', 'warehouse'])->group(function () {
         // To create new product
         Route::get('/products/create', [ProductController::class, 'create'])->name('warehouse.createProduct');
         Route::post('/products', [ProductController::class, 'store'])->name('warehouse.storeProduct');
+        // To update product box count with excel import
+        Route::post('/import-box-counts', [ProductController::class, 'import'])->name('warehouse.importProductBoxCount');
     });
 });

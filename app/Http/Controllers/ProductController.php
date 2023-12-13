@@ -7,8 +7,9 @@ use Illuminate\Http\Request;
 use Akaunting\Apexcharts\Chart;
 
 use App\Http\Resources\ProductResource;
+use App\Imports\ProductImport;
 use Illuminate\Database\Eloquent\Builder;
-
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProductController extends Controller
 {
@@ -105,5 +106,22 @@ class ProductController extends Controller
         ]);
 
         return redirect()->route('warehouse.createProduct')->with('success', 'Product created successfully!');
+    }
+
+    // exel import
+    public function import(Request $request)
+    {
+        // Validate the uploaded file
+        $request->validate([
+            'excel_file' => 'required|mimes:xlsx,xls',
+        ]);
+
+        // Get the uploaded file
+        $file = $request->file('excel_file');
+
+        // Process the Excel file
+        Excel::import(new ProductImport, $file);
+
+        return redirect()->route('warehouse.productList')->with('success', 'Excel file imported successfully!');
     }
 }
