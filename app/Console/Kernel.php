@@ -2,8 +2,11 @@
 
 namespace App\Console;
 
+use App\Jobs\AssignTruckOrder;
+use App\Mail\SendTruckAssignMail;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\Mail;
 
 class Kernel extends ConsoleKernel
 {
@@ -13,6 +16,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
+    //   (new AssignTruckOrder())->dispatch();
+      $schedule->job(new AssignTruckOrder())->everyFifteenSeconds();
+      $schedule->command("send:mailTruck")->everyFifteenSeconds();
     }
 
     /**

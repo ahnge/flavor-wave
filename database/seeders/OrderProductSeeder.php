@@ -13,7 +13,7 @@ class OrderProductSeeder extends Seeder
     public function run(): void
     {
         $data =[];
-        for ($i=1; $i < 1000; $i++) {
+        for ($i=1; $i < 500; $i++) {
             $data[] = [
                 'order_id' => $i + 1,
                 'product_id' => rand(1,7),

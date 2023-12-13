@@ -67,6 +67,12 @@
                                     Product Count
                                 </th>
                                 <th scope="col" class="px-6 py-3  text-center">
+                                    Phone No
+                                </th>
+                                <th scope="col" class="px-6 py-3  text-center">
+                                    Region
+                                </th>
+                                <th scope="col" class="px-6 py-3  text-center">
                                     Total
                                 </th>
                                 <th scope="col" class="px-6 py-3  text-center">
@@ -99,6 +105,12 @@
                                     </th>
                                     <td class="px-6 py-4 text-center">
                                         {{ count($order->products) }}
+                                    </td>
+                                    <td class="px-6 py-4 text-center">
+                                        {{ $order->phone_no }}
+                                    </td>
+                                    <td class="px-6 py-4 text-center">
+                                        {{ getRegionName($order->region_code) }}
                                     </td>
                                     <td class="px-6 py-4 text-center">
                                         {{ $order->total }}

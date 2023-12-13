@@ -48,7 +48,32 @@ class UserSeeder extends Seeder
                 "email" =>  "truckDriver@gmail.com",
                 "password" =>  bcrypt("12345678"),
                 "role_id" =>  RoleEnum::Driver->value
-            ]
+            ],
+            [
+                "name" =>  "Htet Shine",
+                "email" =>  "htetshine.htetmkk@gmail.com",
+                "password" =>  bcrypt("12345678"),
+                "role_id" =>  RoleEnum::Driver->value
+            ],
+            [
+                "name" =>  "winstownwinn",
+                "email" =>  "winstonwinn2000@gmail.com",
+                "password" =>  bcrypt("12345678"),
+                "role_id" =>  RoleEnum::Driver->value
+            ],
+            [
+                "name" =>  "coin",
+                "email" =>  "htetshine.coin@gmail.com",
+                "password" =>  bcrypt("12345678"),
+                "role_id" =>  RoleEnum::Driver->value
+            ],
+            [
+                "name" =>  "flavorsale",
+                "email" =>  "sale.flavorwave@gmail.com",
+                "password" =>  bcrypt("12345678"),
+                "role_id" =>  RoleEnum::Driver->value
+            ],
+
         ];
 
         \App\Models\User::insert($data);

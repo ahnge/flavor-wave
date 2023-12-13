@@ -42,7 +42,7 @@
                         @endforelse
                     </div>
                 </div>
-                <div class="w-1/2 bg-[#f9f9f9] dark:bg-slate-800 rounded-lg h-[330px] ">
+                <div class="w-1/2 bg-[#f9f9f9] dark:bg-slate-800 rounded-lg h-[400px] ">
                     <div class="flex flex-col px-8 py-6  gap-6">
                         <h3 class="text-2xl  font-bold">Order summary</h3>
 
@@ -65,6 +65,20 @@
                                 <p>Order Status</p>
                                 <div class="flex items-center gap-2">
                                     {!! getStatusBadge($order->status) !!}
+                                </div>
+                            </div>
+
+                            <div class="flex items-center justify-between">
+                                <p>Order Region</p>
+                                <div class="flex items-center gap-2">
+                                    {{ getRegionName($order->region_code) }}
+                                </div>
+                            </div>
+
+                            <div class="flex items-center justify-between">
+                                <p class="w-2/6">Delivery Address</p>
+                                <div class="flex items-center gap-2 flex-wrap  text-xs">
+                                    {{ $order->address }}
                                 </div>
                             </div>
 
