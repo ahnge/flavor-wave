@@ -39,7 +39,7 @@ class TruckSeeder extends Seeder
             [
                 "truck_no"=> "3W/2000",
                 "driver_name"  => "Driver Ko Kyaw",
-                "user_id" =>11,
+                "user_id" =>6,
                 'capacity' => 400,
             ],
 

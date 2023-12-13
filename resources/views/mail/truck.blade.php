@@ -59,18 +59,7 @@
             </tr>
         </thead>
         <tbody>
-            {{-- @foreach ($users as $user)
-                <tr>
-                    <td data-column="First Name">{{ $user->first_name }}</td>
-                    <td data-column="Last Name">{{ $user->last_name }}</td>
-                    <td data-column="Email" style="color: dodgerblue;">
-                        {{ $user->email }}
-                    </td>
-                    <td data-column="Date">
-                        {{ date('F j, Y', strtotime($user->create_at)) }}
-                    </td>
-                </tr>
-            @endforeach --}}
+
         </tbody>
     </table>
 

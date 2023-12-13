@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Truck extends Model
 {
+    use HasFactory;
+
     protected $fillable = ["status"];
 
     public function orders()
@@ -17,7 +19,10 @@ class Truck extends Model
         return $this->belongsToMany(Order::class, 'truck_orders', 'truck_id', 'order_id');
     }
 
-    use HasFactory;
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
 
 
