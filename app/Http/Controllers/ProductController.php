@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Product;
+use App\Models\OrderProduct;
+
 use Illuminate\Http\Request;
 use Akaunting\Apexcharts\Chart;
 use App\Exports\ProductExport;
@@ -62,18 +65,120 @@ class ProductController extends Controller
         return redirect()->back();
     }
 
-    public function chart()
+    public function charts()
     {
-        $chart = (new Chart)
-            ->setWidth('100%')
-            ->setHeight(300)
-            ->setTitle("Product Trends by Week")
-            ->setSubtitle("Line chart")
-            ->setDataset('Order count', 'line', [112, 225, 232, 433, 586, 363, 136, 533, 222])
-            ->setDataset('pre count', 'line', [11, 25, 22, 433, 56, 36, 16, 33, 22])
-            ->setXaxisCategories(['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep']);
+        $products = Product::withCount('product')
+            // ->withSum('productSaleAmount', 'total')
+            ->get();
+        // return $products;
 
-        return view('warehouse.cart', compact("chart"));
+        foreach ($products as $product) {
+            $productName = $product->title;
+            $productCount = $product->product_count;
+
+
+            $productInfo[] = [
+                'name' => $productName,
+                'quantity' => $productCount
+
+            ];
+        }
+
+
+        // return response()->json([
+        //     'productsInfo' => $productInfo
+        // ], 200);
+
+        $productNames = collect($productInfo)->map(function ($item) {
+            return $item['name'];
+        })->toArray();
+        $productQuantity = collect($productInfo)->map(function ($item) {
+            return $item['quantity'];
+        })->toArray();
+
+
+
+
+        $productChart = (new Chart)
+            ->setWidth('100%')
+            ->setHeight(400)
+            ->setTitle("Product")
+            ->setSubtitle("Products")
+            ->setType("donut")
+            ->setDataLabelsEnabled(true)
+            ->setSeries($productQuantity)
+            ->setLabels($productNames);
+
+
+        /////////////////////////////////////////////////////////////////////////////////
+        /* For weekly best seller products  */
+        $startDate = Carbon::now()->startOfWeek()->format("Y-m-d H:i:s");
+        $endDate = Carbon::now()->endOfWeek()->format("Y-m-d H:i:s");
+
+        $weeklyBestSellerProduct = OrderProduct::selectRaw("sum(quantity) as quantity, product_id")
+            ->whereBetween("created_at", [$startDate, $endDate])
+            ->groupBy("product_id")
+            ->orderBy("quantity", "desc")
+            ->get()
+            ->pluck("quantity", "product_id")
+            ->toArray();
+
+        // return $weeklyBestSellerProduct;
+
+        $weeklyBestSellerProducts = [];
+        foreach ($weeklyBestSellerProduct as $prodID => $quantity) {
+            $productName = Product::whereHas("product", function (Builder $query) use ($prodID) {
+                $query->where("id", $prodID);
+            })
+                ->get()
+                ->pluck("title")
+                ->toArray();
+
+            $weeklyBestSellerProducts[] = [
+                "product_name" => implode($productName),
+                "quantity" => $quantity,
+            ];
+        }
+
+        /* Total cash for weekly best selling products   */
+        $weeklyBestSellerTotalAmount = 0;
+        foreach ($weeklyBestSellerProduct as $prodID => $quantity) {
+            $price = Product::where("id", $prodID)->value("price");
+            $total_amount = $price * $quantity;
+            $weeklyBestSellerTotalAmount += $total_amount;
+        }
+
+        //dd(collect($weeklyBestSellerProducts));
+        // return response()->json(
+        //     [
+        //         "weekly_best_seller_products" => $weeklyBestSellerProducts,
+        //         "weekly_total_selling_total_amount" => $weeklyBestSellerTotalAmount,
+        //     ],
+        //     200
+        // );
+        $weeklyBestProductNames = collect($weeklyBestSellerProducts)->map(function ($item) {
+            return $item['product_name'];
+        })->toArray();
+        $weeklyBestProductQuantity = collect($weeklyBestSellerProducts)->map(function ($item) {
+            return intval($item['quantity']);
+        })->toArray();
+
+        //dd($weeklyBestProductNames, $weeklyBestProductQuantity, $productQuantity, $productNames);
+
+
+
+
+        $weeklyBestProductChart = (new Chart)
+            ->setWidth('100%')
+            ->setHeight(400)
+            ->setTitle("Best Sale Products of last week")
+            ->setSubtitle("Top 7 Products")
+            ->setType("pie")
+            ->setDataLabelsEnabled(true)
+            ->setSeries($weeklyBestProductQuantity)
+            ->setLabels($weeklyBestProductNames);
+
+        return view('warehouse.charts', compact("productChart", "weeklyBestProductChart"));
     }
 
     // To create new product

@@ -366,7 +366,8 @@ class PreorderController extends Controller
             ->setHeight(500)
             ->setTitle("Preorder Trends by Daily")
             ->setSubtitle("Line chart")
-            ->setDataset('Order count', 'area', $daySalesValuesArray)
+            ->setDataset('Order count', 'bar', $daySalesValuesArray)
+            ->setDataLabelsEnabled(true)
 
             ->setXaxisCategories($dayValuesArray);
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -503,10 +504,10 @@ class PreorderController extends Controller
 
 
 
-        $yearValuesArray = $all->map(function ($item) {
+        $yearMonthValuesArray = $all->map(function ($item) {
             return $item['monthName'];
         })->toArray();
-        $yearValuesArray = $all->map(function ($item) {
+        $yearSaleValuesArray = $all->map(function ($item) {
             return $item['monthSales'];
         })->toArray();
 
@@ -515,9 +516,9 @@ class PreorderController extends Controller
             ->setHeight(500)
             ->setTitle("Preorder Trends by Yearly")
             ->setSubtitle("Line chart")
-            ->setDataset('Order count', 'area', $yearValuesArray)
+            ->setDataset('Order count', 'area', $yearSaleValuesArray)
 
-            ->setXaxisCategories($yearValuesArray);
+            ->setXaxisCategories($yearMonthValuesArray);
 
         return view('sales.charts', compact("monthlyChart", "weeklyChart", "yearlyChart"));
     }
