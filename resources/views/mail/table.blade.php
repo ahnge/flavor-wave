@@ -5,72 +5,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>PDF</title>
-</head>
-
-<body>
-    <div class="container">
-        <div class="flavor-wave">Flavor wave</div>
-        <h2>New Order Request</h2>
-        <p>Hello [Admin Name],</p>
-        <p>You have received a new order request. Here are the details:</p>
-        <div class="order-details">
-            <!-- Include order details here -->
-            <p><strong>Order ID:</strong> #123456</p>
-            <p><strong>Product:</strong> [Product Name]</p>
-            <p><strong>Quantity:</strong> 2</p>
-            <p><strong>Total:</strong> $50.00</p>
-        </div>
-        <p>Click the button below to view and process the order:</p>
-        <a href="[Your Web App URL]" class="button">View Order</a>
-
-        <div class="relative overflow-x-auto my-9">
-            <table class="w-full text-left text-sm text-gray-500 rtl:text-right">
-                <thead class="bg-gray-50 text-xs uppercase text-gray-700">
-                    <tr>
-                        <th scope="col" class="px-6 py-3">Product name</th>
-                        <th scope="col" class="px-6 py-3">Color</th>
-                        <th scope="col" class="px-6 py-3">Category</th>
-                        <th scope="col" class="px-6 py-3">Price</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="border-b bg-white">
-                        <th scope="row" class="whitespace-nowrap px-6 py-4 font-medium text-gray-900">Apple MacBook
-                            Pro 17"</th>
-                        <td class="px-6 py-4">Silver</td>
-                        <td class="px-6 py-4">Laptop</td>
-                        <td class="px-6 py-4">$2999</td>
-                    </tr>
-                    <tr class="border-b bg-white">
-                        <th scope="row" class="whitespace-nowrap px-6 py-4 font-medium text-gray-900">Microsoft
-                            Surface Pro</th>
-                        <td class="px-6 py-4">White</td>
-                        <td class="px-6 py-4">Laptop PC</td>
-                        <td class="px-6 py-4">$1999</td>
-                    </tr>
-                    <tr class="bg-white">
-                        <th scope="row" class="whitespace-nowrap px-6 py-4 font-medium text-gray-900">Magic Mouse 2
-                        </th>
-                        <td class="px-6 py-4">Black</td>
-                        <td class="px-6 py-4">Accessories</td>
-                        <td class="px-6 py-4">$99</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
+    <title>Daily Orders</title>
     <style>
+        /* General Styles */
         body {
             font-family: "Arial", sans-serif;
-            background-color: #F4F4F4;
+            background-color: #f7fafc;
             margin: 0;
             padding: 0;
+            color: #333;
         }
 
         .container {
-            max-width: 600px;
+            max-width: 800px;
             margin: 20px auto;
             background-color: #fff;
             border-radius: 8px;
@@ -78,168 +25,77 @@
             padding: 20px;
         }
 
+        /* Header Styles */
         h2 {
-            color: #333;
+            font-size: 24px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498DB;
+            text-align: center;
         }
 
         p {
-            color: #666;
+            line-height: 1.5;
+            margin-bottom: 10px;
         }
 
-        .order-details {
-            margin-top: 20px;
-            border-top: 1px solid #ddd;
-            padding-top: 20px;
+        /* Order Line Styles */
+        .order-line {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
         }
 
-        .button {
-            display: inline-block;
-            font-size: 14px;
-            color: #fff;
-            background-color: #3498DB;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 4px;
-            margin-top: 20px;
+        .order-line p {
+            font-size: 0.9rem;
+            margin: 5px 0;
         }
 
-        .button:hover {
-            background-color: #2980B9;
-        }
-
+        /* Flavor Wave Section */
         .flavor-wave {
             width: 100%;
             font-size: 1.875rem;
-            /* Equivalent to text-3xl in Tailwind (1rem = 16px) */
             color: #fff;
-            padding-left: 0.75rem;
-            padding-right: 0.75rem;
-            padding-top: 2.5rem;
-            padding-bottom: 2.5rem;
-            margin-bottom: 0.75rem;
+            padding: 1.5rem;
+            text-align: center;
             font-family: serif;
             background-color: #3498DB;
+            margin-bottom: 20px;
         }
 
-        .relative {
-            position: relative;
-        }
-
-        .overflow-x-auto {
-            overflow-x: auto;
-        }
-
-        .my-9 {
-            margin-top: 2.25rem;
-            margin-bottom: 2.25rem;
-        }
-
-        .w-full {
-            width: 100%;
-        }
-
-        .text-left {
-            text-align: left;
-        }
-
-        .text-sm {
-            font-size: 0.875rem;
-        }
-
-        .text-gray-500 {
-            color: #718096;
-        }
-
-        .rtl\:text-right {
-            text-align: right;
-        }
-
-        .bg-gray-50 {
-            background-color: #f7fafc;
-        }
-
-        .text-xs {
-            font-size: 0.75rem;
-        }
-
-        .uppercase {
-            text-transform: uppercase;
-        }
-
-        .text-gray-700 {
-            color: #4a5568;
-        }
-
-        .border-b {
-            border-bottom-width: 1px;
-            border-bottom-style: solid;
-        }
-
-        .bg-white {
-            background-color: #ffffff;
-        }
-
-        .whitespace-nowrap {
-            white-space: nowrap;
-        }
-
-        .px-6 {
-            padding-left: 1.5rem;
-            padding-right: 1.5rem;
-        }
-
-        .py-3 {
-            padding-top: 0.75rem;
-            padding-bottom: 0.75rem;
-        }
-
-        .py-4 {
-            padding-top: 1rem;
-            padding-bottom: 1rem;
-        }
-
-        .font-medium {
-            font-weight: 500;
-        }
-
-        .text-gray-900 {
-            color: #1a202c;
-        }
-
-        .table {
-            display: table;
-            width: 100%;
-            border-collapse: collapse;
-            border-spacing: 0;
-        }
-
-        .text-right {
-            text-align: right;
-        }
-
-        .border {
-            border-width: 1px;
-            border-style: solid;
-        }
-
-        .laptop,
-        .laptop-pc,
-        .accessories {
-            display: table-cell;
-        }
-
-        .price {
-            display: table-cell;
-        }
-
-        .$2999,
-        .$1999,
-        .$99 {
-            display: table-cell;
+        /* Footer Styles */
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
         }
     </style>
+</head>
 
+<body>
+    <div class="container">
+        <h2>Daily Orders</h2>
+        <p>Hello {{ $driver->user->name }},</p>
+        <p>Here's the list of orders. Please update the status of your order in the application as soon as you
+            deliver!</p>
 
+        @foreach ($orders as $order)
+        <div class="order-line">
+            <p><strong>Order No:</strong> {{ $order->order_no }}</p>
+            <p><strong>Customer Name:</strong> {{ $order->distributor->name }}</p>
+            <p><strong>Contact No:</strong> {{ $order->phone_no }}</p>
+            <p><strong>Region:</strong> {{ getRegionName($order->region_code) }}</p>
+            <p><strong>Address:</strong> {{ $order->address }}</p>
+            <p><strong>Total Price:</strong> {{ $order->total }} Ks</p>
+            <p><strong>Due Date:</strong> {{ $order->due_date->format('d-m-Y') }}</p>
+            <p><strong>Ordered At:</strong> {{ $order->created_at->format('d-m-Y') }}</p>
+        </div>
+        @endforeach
+
+        <div class="footer">
+            <p>Logistic Manager</p>
+            <p>{{ config('app.name') }}</p>
+        </div>
+    </div>
 </body>
 
 </html>
