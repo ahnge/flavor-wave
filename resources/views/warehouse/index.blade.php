@@ -39,7 +39,12 @@
             </div>
         </div>
 
-
+        <!-- Excel import form -->
+        <form action="{{ route('warehouse.importProductBoxCount') }}" method="post" enctype="multipart/form-data">
+            @csrf
+            <input type="file" name="excel_file">
+            <button type="submit" class="">Import</button>
+        </form>
 
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -51,12 +56,16 @@
                         <th scope="col" class="px-6 py-3">
                             Product
                         </th>
+                        <th scope="col" class="px-6 py-3">
+                            Price
+                        </th>
                         <th scope="col" class="px-6 py-3 text-center">
                             Boxes Quantity
                         </th>
                         <th scope="col" class="px-6 py-3">
 
                         </th>
+                        <th></th>
 
 
                     </tr>
@@ -72,13 +81,23 @@
                             <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
                                 {{ $product->title }}
                             </td>
+                            <td class="px-6">
+                                {{ $product->price . ' ks' }}
+                            </td>
                             <td class="px-6 text-center">
                                 {{ $product->total_box_count }}
                             </td>
                             <td>
-                                <a href="{{ route('warehouse.productShow', ['product' => $product]) }}">
+                                <a href="{{ route('warehouse.productQtyChange', ['product' => $product]) }}">
                                     <div class="border px-3 py-2 text-center rounded-md mr-4">
                                         Update
+                                    </div>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{{ route('warehouse.productShow', ['product' => $product]) }}">
+                                    <div class="border px-3 py-2 text-center rounded-md mr-4">
+                                        Details
                                     </div>
                                 </a>
                             </td>
@@ -95,7 +114,8 @@
             {{ $products->links() }}
         </div>
 
-
+        <!-- Export Products button -->
+        <a href="{{ route('warehouse.exportProducts') }}">Export</a>
 
     </div>
 @endsection
