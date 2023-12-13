@@ -52,10 +52,9 @@ class User extends Authenticatable
     public function getRedirectRoute()
     {
         return match ((int)$this->role_id) {
-            2 => 'preorders',
-            3 => 'logistics',
+            2 => 'preorder.preorderList',
+            3 => 'logistic.index',
             4 => 'warehouse.productList',
-            6 => 'trucks',
         };
     }
 }
