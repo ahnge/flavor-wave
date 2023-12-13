@@ -86,7 +86,7 @@ class ProductController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'price' => 'required|numeric',
-            'product_photo_url' => 'required|url',
+            'product_photo' => 'required|url',
             'pc_per_box' => 'required|integer',
             'total_box_count' => 'required|integer',
             'available_box_count' => 'required|integer',
@@ -97,13 +97,13 @@ class ProductController extends Controller
         Product::create([
             'title' => $request->input('title'),
             'price' => $request->input('price'),
-            'product_photo_url' => $request->input('product_photo_url'),
+            'product_photo' => $request->input('product_photo'),
             'pc_per_box' => $request->input('pc_per_box'),
             'total_box_count' => $request->input('total_box_count'),
             'available_box_count' => $request->input('available_box_count'),
             'reserving_box_count' => $request->input('reserving_box_count'),
         ]);
 
-        return redirect()->route('products.create')->with('success', 'Product created successfully!');
+        return redirect()->route('warehouse.createProduct')->with('success', 'Product created successfully!');
     }
 }

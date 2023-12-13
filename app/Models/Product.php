@@ -12,7 +12,7 @@ class Product extends Model
     protected $fillable = [
         'title',
         'price',
-        'product_photo_url',
+        'product_photo',
         'pc_per_box',
         'total_box_count',
         'available_box_count',
