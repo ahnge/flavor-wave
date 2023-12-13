@@ -5,11 +5,9 @@
         <div class="min-w-full min-h-screen bg-white dark:bg-gray-900 dark:text-white px-4 sm:px-6 lg:px-[5vw] pt-20 pb-40">
             <h3 class="text-2xl font-bold pb-4 border-b">Your Orders</h3>
             <div class="flex gap-3 pt-4 w-full ">
-
-
-                <div class="relative overflow-x-auto shadow-md sm:rounded-lg w-full pb-6">
-                    <div class="pb-4 bg-white dark:bg-gray-900  flex items-center  gap-6">
-                       <div class="flex flex-col">
+                <div class="relative overflow-x-auto shadow-md sm:rounded-lg w-full">
+                    <div class="py-4 bg-white dark:bg-gray-900  flex items-center  gap-6">
+                       <div class="flex flex-col px-4">
                         <label for="table-search" class="sr-only">Search</label>
                         <div class="relative">
                             <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -141,7 +139,7 @@
                         </tbody>
                     </table>
 
-                    <div class="flex justify-between mt-10">
+                    <div class="flex justify-between">
                         <div class="">
 
                         </div>

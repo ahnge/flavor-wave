@@ -8,6 +8,7 @@ use App\Http\Controllers\Distributor\Cart\Index as CartIndex;
 use App\Http\Controllers\Distributor\Order\Index as OrderIndex;
 use App\Jobs\AssignTruckOrder;
 use App\Mail\SendOrderAlert;
+use App\Models\Truck;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Maatwebsite\Excel\Facades\Excel;
@@ -47,5 +48,8 @@ Route::get('/export/excel',function(){
 
 Route::get('/test',function(){
         $driver = User::where("role_id",6)->pluck('id');
+
+        $truckOrders = Truck
+
     return $driver;
 });

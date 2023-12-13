@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Log;
 
 class OrderSeeder extends Seeder
 {
@@ -19,17 +20,15 @@ class OrderSeeder extends Seeder
         $endDate = Carbon::now()->addMonths(3);
         $startDate = Carbon::now()->subYears(2);
         $period = CarbonPeriod::create($startDate, $endDate);
-        $statusValues = collect(OrderStatusEnum::getValues())->pluck('value')->toArray();
+        // $statusValues = collect(OrderStatusEnum::getValues())->pluck('value')->toArray();
         $data  =  [];
 
-        foreach ($period as $date) {
-
-            for ($i = 1; $i <= 300; $i++) {
-                $status = $statusValues[$i % count($statusValues)];
+        foreach ($period as $i=> $date) {
+                // $status = $statusValues[$i % count($statusValues)];
 
                 $data[] = [
                     "order_no" =>  "ORD-" . str_pad($i, 5, '0', STR_PAD_LEFT),
-                    "status" =>  $status,
+                    "status" =>  rand(0,5),
                     'region_code' => "MMR00".rand(1, 9),
                     "address" => fake()->address(),
                     "phone_no" => fake()->phoneNumber(),
@@ -41,11 +40,10 @@ class OrderSeeder extends Seeder
                     "created_at" =>  $date,
                     'updated_at' =>  $date,
                 ];
-            }
         }
 
 
-        $chunks = array_chunk($data, 100);
+        $chunks = array_chunk($data, 50);
         foreach ($chunks as $chunk) {
             \App\Models\Order::insert($chunk);
         }

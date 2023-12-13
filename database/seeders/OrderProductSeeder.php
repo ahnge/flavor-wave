@@ -15,12 +15,11 @@ class OrderProductSeeder extends Seeder
     public function run(): void
     {
         $data = [];
-        for ($i = 1; $i < 300; $i++) {
             /* Generate dates of 2 years. */
             $endDate = Carbon::now()->addMonths(3);
             $startDate = Carbon::now()->subYears(2);
             $period = CarbonPeriod::create($startDate, $endDate);
-            foreach ($period as $date) {
+            foreach ($period as $i=>$date) {
 
                 $data[] = [
                     'order_id' => $i + 1,
@@ -38,7 +37,6 @@ class OrderProductSeeder extends Seeder
                     "updated_at" => $date
                 ];
             }
-        }
 
         $chunks = array_chunk($data, 100);
         foreach ($chunks as $chunk) {
