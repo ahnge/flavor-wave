@@ -25,6 +25,8 @@ class ProductFactory extends Factory
             'total_box_count' => fake()->numberBetween(10, 100),
             'effective_box_count' => fake()->numberBetween(5, 50),
             'reserve_box_count' => fake()->numberBetween(1, 10),
+            'created_at'=>now(),
+            'updated_at'=>now()
         ];
     }
 }

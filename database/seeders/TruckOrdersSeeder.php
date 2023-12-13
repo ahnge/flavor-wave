@@ -27,6 +27,7 @@ class TruckOrdersSeeder extends Seeder
             TruckOrders::create([
                 'truck_id' => $truck->id,
                 'order_id' => $randomOrder->id,
+                'total_quantity' => 0
             ]);
         }
     }

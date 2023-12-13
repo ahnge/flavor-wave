@@ -1,12 +1,12 @@
 @extends('layouts.distributor.app')
 
 @section('main')
-    <div class="min-h-[100vh] min-w-[100vw] bg-white dark:bg-gray-800 pt-12 dark:text-white ">
+    <div class="min-h-[90vh]  min-w-[100vw] bg-white dark:bg-gray-800 pt-12 dark:text-white ">
         <div class="min-w-full h-full bg-white dark:bg-gray-900 dark:text-white px-4 sm:px-6 lg:px-[5vw] pt-20 pb-40">
             <h3 class="text-2xl font-bold pb-4 border-b">Cart</h3>
             <div class="flex gap-3 pt-4">
                 <div class="w-1/2">
-                    <div class="flex flex-col gap-y-4">
+                    <div class="flex flex-col gap-y-4 max-h-[60vh] overflow-y-scroll">
                         @forelse ($products as $product)
                             <div id="productItem-{{ $product->id }}" data-id="{{ $product->id }}"
                                 data-price="{{ $product->price }}"
@@ -39,7 +39,9 @@
 
                                 <div class="absolute top-3 right-3">
                                     <button onclick="removeCart({{ $product->id }},true)" id="rmc-{{ $product->id }}"
-                                        class="rmc min-w-[40px]   text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-xs px-3 py-1 text-center me-2 mb-2">Remove</button>
+                                        class="rmc min-w-[40px] focus:outline-none dark:text-white  hover:text-[#ec5959] dark:hover:text-[#ec5959]">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
                                 </div>
                             </div>
                         @empty
@@ -51,7 +53,7 @@
                     <div class="flex flex-col px-8 py-6  gap-6">
                         <h3>Order summary</h3>
 
-                        <div class="flex flex-col divide-y-2 divide-slate-700 gap-4">
+                        <div class="flex flex-col divide-y-2 divide-gray-300 dark:divide-slate-700 gap-4">
                             <div class="flex items-center justify-between">
                                 <p>Subtotal</p>
                                 <div class="flex items-center gap-2">
