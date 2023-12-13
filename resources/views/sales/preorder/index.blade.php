@@ -1,48 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-    {{-- <div class="py-12">
-
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                        @foreach ($preorder->products as $product)
-                                {{ $product->title }}
-                        @endforeach
-                    <div class="mt-4">
-                    </div>
-                </div>
-                <div class="flex items-center justify-center space-x-10">
-                    <div>
-                        <form method="POST" action="{{ route('preorder.changeStatus',['preorder'=>$preorder]) }}">
-                            @csrf
-                            <button name='status' type="submit" value="Approve" class="p-4 border border-b rounded-md mb-3 bg-green-400 text-white">Approve</button>
-                        </form>
-                    </div>
-                    <div>
-                        <form method="POST" action="{{ route('preorder.changeStatus',['preorder'=>$preorder]) }}">
-                            @csrf
-                            <button name='status' type="submit" value="Reject" class="p-4 border border-b rounded-md mb-3 bg-red-600 text-black">Reject</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> --}}
     <div class="max-w-screen-lg p-8 mx-auto">
-        {{--   <button type="button"
-              class="py-2 px-4 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200">
-              <svg viewBox="0 0 1024 1024" width="20px" height="20px" xmlns="http://www.w3.org/2000/svg" fill="#000000">
-                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                  <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                  <g id="SVGRepo_iconCarrier">
-                      <path fill="#000000" d="M224 480h640a32 32 0 1 1 0 64H224a32 32 0 0 1 0-64z"></path>
-                      <path fill="#000000"
-                          d="m237.248 512 265.408 265.344a32 32 0 0 1-45.312 45.312l-288-288a32 32 0 0 1 0-45.312l288-288a32 32 0 1 1 45.312 45.312L237.248 512z">
-                      </path>
-                  </g>
-              </svg>
-          </button> --}}
+
         <a href="{{ route('preorder.preorderList') }}">
             <button type="button"
                 class="py-2.5 px-5  text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-md border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Back</button>
@@ -50,10 +10,14 @@
 
         <p class="text-xl my-6 text-gray-900 dark:text-white font-semibold">
             {{ $preorder->order_no }} Details
+            <span @if ($preorder->status == 0)
+                hidden
+            @endif class="@if ($preorder->status != 2)
+            text-green-500
+            @else
+            text-red-500
+            @endif">({{ App\Constants\OrderStatusEnum::getLabelForAdmins($preorder->status) }})</span>
         </p>
-
-
-
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-neutral-100 dark:bg-gray-700 dark:text-gray-400">
@@ -100,10 +64,8 @@
                 </tbody>
             </table>
         </div>
-
-
+@if ($preorder->status == 0)
         <div class="flex flex-row my-6 w-full justify-end gap-5">
-
             <div class="flex items-center justify-center space-x-10">
                 <div>
                     <form method="POST" action="{{ route('preorder.changeStatus', ['preorder' => $preorder]) }}">
@@ -122,7 +84,7 @@
                     </form>
                 </div>
             </div>
-
         </div>
+  @endif
     </div>
 @endsection

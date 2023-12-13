@@ -65,7 +65,6 @@ class WeeklySaleController extends Controller
 
         $all = collect($daysOfWeek);
 
-
         $total = $weeklySales->sum('total_sales');
         // return $total;
 

@@ -31,7 +31,7 @@ class ProductController extends Controller
         return view('warehouse.index', ['products' => $productLists->resource]);
     }
 
-    public function show(Product $product)
+    public function changeQty(Product $product)
     {
         return view('warehouse.product.index', ['product' => $product]);
     }
@@ -54,7 +54,7 @@ class ProductController extends Controller
         if ($type === "expire") {
             $productTotalBoxCount -=  $quantity;
             $product->update(['total_box_count' => $productTotalBoxCount]);
-        } elseif ($type === "return") {
+        } elseif ($type === "return" || $type === "produced") {
             $productTotalBoxCount += $quantity;
             $product->update(['total_box_count' => $productTotalBoxCount]);
         }
@@ -128,5 +128,23 @@ class ProductController extends Controller
     public function exportProducts()
     {
         return Excel::download(new ProductExport, 'products.xlsx');
+    }
+
+    public function editDetails(Product $product)
+    {
+        $updatedDetail = request()->validate([
+            'title' => ['required', 'min:2'],
+            'price' => ['required'],
+            'ppb' => ['required']
+        ]);
+
+        $product->update($updatedDetail);
+
+        return redirect()->back();
+    }
+
+    public function showInfo(Product $product)
+    {
+        return view('warehouse.product.edit', ['product' => $product]);
     }
 }
