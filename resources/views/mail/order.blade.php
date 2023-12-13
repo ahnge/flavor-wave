@@ -98,7 +98,7 @@
         .button {
           display: inline-block;
           font-size: 14px;
-          color: #fff;
+          color: #fff!important;
           background-color: #3498DB;
           padding: 10px 20px;
           text-decoration: none;
@@ -157,12 +157,13 @@
       <!-- Include order details here -->
       <p><strong>Order ID:</strong> {{ $order->order_no }}</p>
       <p><strong>Total:</strong> {{ $order->total }} Ks</p>
-      <p><strong>Is Urgent:</strong>  {{ $order->is_urgent ? "Urget" : "Normal" }} </p>
+      <p><strong>Is Urgent:</strong>  {{ $order->is_urgent == 1 ? "Urget" : "Normal" }} </p>
       <p><strong>Start Order At:</strong> {{ $order->created_at }}</p>
       <p><strong>Estilimated At:</strong> {{ $order->due_date }}</p>
     </div>
     <p>Click the button below to view and process the order:</p>
-    <a href="[Your Web App URL]" class="button">View Order</a>
+    <a href="{{ url(route('preorder.edit', $order->id)) }}"   class="button">View Order</a>
+
   </div>
 </body>
 </html>

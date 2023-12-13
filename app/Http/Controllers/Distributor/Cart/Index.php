@@ -17,8 +17,9 @@ class Index extends Controller {
         $cartIds = $request->query( 'cartList' );
         $cartIds = explode( ',', $cartIds );
         $products = \App\Models\Product::whereIn( 'id', $cartIds )->get();
+        $user  = auth()->user();
         $regions = Region::all();
-        return view( 'web.distributor.cart.index', compact( [ 'products' ,'regions'] ) );
+        return view( 'web.distributor.cart.index', compact( [ 'products' ,'regions','user'] ) );
     }
 
     public function order( Request $request ) {
@@ -37,7 +38,7 @@ class Index extends Controller {
             $order->total = $total;
             $order->update();
 
-            // Mail::to(config('control.hostMail'))->queue(new SendOrderAlert( $order, $user->email ) );
+            Mail::to(config('control.hostMail'))->queue(new SendOrderAlert( $order, $user->email ) );
 
             DB::commit();
             return response()->json( [

@@ -32,14 +32,14 @@
                     <label for="default-input"
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Please Fill Phone Number</label>
                     <input type="text" id="phone_number"
-                    name="phone_no"
+                    name="phone_no"  value="{{ $user->phone_number }}"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 </div>
 
                 <div class="mb-6">
                     <label for="default-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Please Fill Detail Address</label>
                     <input type="text" id="address"
-                    name="address"
+                    name="address" value="{{ $user->address }}"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 </div>
 
@@ -48,7 +48,9 @@
                 <select id="region"
                  name="region" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                   @foreach ($regions as $region)
-                  <option value="{{ $region->code }}">{{ $region->name }}</option>
+                  <option value="{{ $region->code }}"
+                    @selected($region->code == $user->region_code)
+                >{{ $region->name }}</option>
                   @endforeach
                 </select></div>
                   {{-- <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">

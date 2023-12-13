@@ -189,7 +189,7 @@
                         changeLoading(loading);
                         setTimeout(() => {
                             window.location.href = "{{ route('distributor.index') }}";
-                        }, 1500);
+                        }, 800);
                     },
                     error: function(error) {
                         callAlert("error", "something went wrong.Try again later")
