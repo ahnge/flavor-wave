@@ -17,5 +17,8 @@ Route::middleware(['admin', 'warehouse'])->group(function () {
         Route::get('product/cart', "chart")->name("warehouse.chart");
         Route::get("product-list/{product}", "show")->name("warehouse.productShow");
         Route::put("product-edit/{id}", "edit")->name("warehouse.productEdit");
+        // To create new product
+        Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
+        Route::post('/products', [ProductController::class, 'store'])->name('products.store');
     });
 });

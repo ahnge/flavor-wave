@@ -74,4 +74,36 @@ class ProductController extends Controller
 
         return view('warehouse.cart', compact("chart"));
     }
+
+    // To create new product
+    public function create()
+    {
+        return view('warehouse.products.create');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'price' => 'required|numeric',
+            'product_photo_url' => 'required|url',
+            'pc_per_box' => 'required|integer',
+            'total_box_count' => 'required|integer',
+            'available_box_count' => 'required|integer',
+            'reserving_box_count' => 'required|integer',
+        ]);
+
+        // Create new product
+        Product::create([
+            'title' => $request->input('title'),
+            'price' => $request->input('price'),
+            'product_photo_url' => $request->input('product_photo_url'),
+            'pc_per_box' => $request->input('pc_per_box'),
+            'total_box_count' => $request->input('total_box_count'),
+            'available_box_count' => $request->input('available_box_count'),
+            'reserving_box_count' => $request->input('reserving_box_count'),
+        ]);
+
+        return redirect()->route('products.create')->with('success', 'Product created successfully!');
+    }
 }
