@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Akaunting\Apexcharts\Chart;
-
+use App\Exports\ProductExport;
 use App\Http\Resources\ProductResource;
 use App\Imports\ProductImport;
 use Illuminate\Database\Eloquent\Builder;
@@ -123,5 +123,10 @@ class ProductController extends Controller
         Excel::import(new ProductImport, $file);
 
         return redirect()->route('warehouse.productList')->with('success', 'Excel file imported successfully!');
+    }
+
+    public function exportProducts()
+    {
+        return Excel::download(new ProductExport, 'products.xlsx');
     }
 }

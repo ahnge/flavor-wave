@@ -98,7 +98,8 @@
       {{ $products->links() }}
     </div>
 
-
+    <!-- Export Products button -->
+    <a href="{{ route('warehouse.exportProducts') }}">Export</a>
 
   </div>
 @endsection

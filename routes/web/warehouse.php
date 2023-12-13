@@ -22,5 +22,6 @@ Route::middleware(['admin', 'warehouse'])->group(function () {
         Route::post('/products', [ProductController::class, 'store'])->name('warehouse.storeProduct');
         // To update product box count with excel import
         Route::post('/import-box-counts', [ProductController::class, 'import'])->name('warehouse.importProductBoxCount');
+        Route::get('/export-products', [ProductController::class, 'exportProducts'])->name('warehouse.exportProducts');
     });
 });
