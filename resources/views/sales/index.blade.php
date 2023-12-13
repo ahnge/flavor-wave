@@ -1,13 +1,24 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="max-w-screen-lg p-8 mx-auto">
-        <p class="text-xl my-6 text-gray-900 dark:text-white font-semibold">
-            Order List
-        </p>
+    <div class="max-w-screen-lg mx-auto">
+        <div class="flex flex-row my-6 items-center justify-between">
+            <p class="text-xl  mt-0 text-gray-900 dark:text-white font-semibold">
+                Order List
+            </p>
+            <a href="{{ route('preorders.chart') }}"
+                class=" text-white py-3 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                Data charts
+                <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                    fill="none" viewBox="0 0 14 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M1 5h12m0 0L9 1m4 4L9 9" />
+                </svg>
+            </a>
+        </div>
         <!-- Search Form -->
 
-        <div class="flex flex-row justify-end gap-4 items-center my-3">
+        <div class="flex flex-row justify-start gap-4 items-center my-3">
             <form method="GET" action="{{ route('preorder.preorderList') }}">
 
                 <div class="flex items-center justify-end gap-4 ">
@@ -59,8 +70,9 @@
             <a href="{{ route('preorder.preorderList') }}">
 
                 <button type="button"
-                    class="text-gray-900 dark:text-white bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Reset</button>
+                    class="text-gray-900 border border-neutral-300 dark:text-white bg-neutral-200 hover:bg-gray-300 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 ">Reset</button>
             </a>
+
         </div>
 
         {{-- <div class="my-3">
@@ -86,15 +98,14 @@
                         <th scope="col" class="px-6 py-3">Region</th>
                         <th scope="col" class="px-6 py-3">Date</th>
                         <th scope="col" class="px-6 py-3">Status</th>
-                        <th scope="col" class="px-6 py-3"></th>
 
                     </tr>
                 </thead>
                 <tbody>
 
                     @foreach ($preorders as $preorder)
-                        <tr
-                            class="cursor-pointer bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <tr onclick="window.location.href='{{ route('preorder.edit', ['preorder' => $preorder]) }}'"
+                            class="cursor-pointer hover:bg-gray-200 bg-white border-b dark:bg-gray-800 dark:border-gray-700 ">
                             <th scope="row"
                                 class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 {{ $preorder->order_no }}
@@ -121,7 +132,7 @@
                                     {{ App\Constants\OrderStatusEnum::getLabelForAdmins($preorder->status) }}
                                 </div>
                             </td>
-                            <td class="px-6 py-4">
+                            {{-- <td class="px-6 py-4">
                                 <a href="{{ route('preorder.edit', ['preorder' => $preorder]) }}">
                                     <button
                                         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
@@ -129,7 +140,7 @@
                                     </button>
 
                                 </a>
-                            </td>
+                            </td> --}}
                         </tr>
                     @endforeach
 

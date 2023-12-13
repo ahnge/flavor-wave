@@ -51,6 +51,8 @@ Route::prefix('')
     });
 
 
-
+Route::get('/testpage',function(){
+    return view('mail.table');
+});
 
 require __DIR__ . '/auth.php';
