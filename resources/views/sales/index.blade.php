@@ -99,19 +99,19 @@
                                 class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 {{ $preorder->order_no }}
                             </th>
-                            <td class="px-6 py-4">
+                            <td class="px-6 py-4 dark:text-white ">
                                 {{ $preorder->distributor->name }}
                             </td>
-                            <td class="px-6 py-4">
+                            <td class="px-6 py-4 dark:text-white">
                                 {{ $preorder->total . 'ks' }}
                             </td>
-                            <td class="px-6 py-4">
+                            <td class="px-6 py-4 dark:text-white">
                                 {{ $preorder->distributor->region_code }}
                             </td>
-                            <td class="px-6 py-4">
+                            <td class="px-6 py-4 dark:text-white">
                                 {{ Illuminate\Support\Carbon::parse($preorder->created_at)->toDateString() }}
                             </td>
-                            <td class="px-6 py-4">
+                            <td class="px-6 py-4 dark:text-white">
                                 <div
                                     class="px-3 py-2 bg-opacity-40 text-center rounded-md text-gray-900 dark:text-white @if ($preorder->status == 1 || $preorder->status > 2) bg-green-600 
                 @elseif ($preorder->status == 2)
