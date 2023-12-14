@@ -85,17 +85,18 @@
                                 </button>
 
                             </div>
-                            <a href="./product-list">
-                                <button title="Import" type="submit"
-                                    class=" flex flex-row dark:text-white border border-gray-600  dark:bg-gray-800 px-3 py-1 rounded-md">
-                                    Reset
-                                </button> </a>
+
                             {{-- status-select --}}
 
                         </div>
 
                     </div>
                 </form>
+                <a href="{{ route('warehouse.productList') }}">
+                    <button title="Import" type="submit"
+                        class=" flex flex-row dark:text-white border border-gray-600  dark:bg-gray-800 px-3 py-1 rounded-md">
+                        Reset
+                    </button> </a>
 
             </div>
         </div>
@@ -143,7 +144,7 @@
                                 {{ $product->total_box_count }}
                             </td>
                             <td>
-                                <a href="{{ route('warehouse.productShow', ['product' => $product]) }}">
+                                <a href="{{ route('warehouse.productQtyChange', ['product' => $product]) }}">
                                     <div
                                         class="border px-3 py-2 text-center text-black hover:bg-neutral-200 border-gray-400 hover:dark:bg-gray-700  rounded-md mr-4 dark:text-gray-300">
                                         Update
@@ -151,7 +152,7 @@
                                 </a>
                             </td>
                             <td>
-                                <a href="{{ route('warehouse.productDetailChange', ['product' => $product]) }}">
+                                <a href="{{ route('warehouse.productShow', ['product' => $product]) }}">
                                     <div
                                         class="border px-3 py-2 text-center text-black hover:bg-neutral-200 border-gray-400 hover:dark:bg-gray-700  rounded-md mr-4 dark:text-gray-300">
                                         Detail
