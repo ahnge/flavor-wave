@@ -22,7 +22,7 @@ class TruckController extends Controller
 
     // Truck detail page controller for order deliver feature to be used by logistic
     // to change status of the order when the order is delivered.
-    public function updateOrderStatus(Request $request, $orderId)
+    public function updateOrderStatus(Request $request, $truck_id, $orderId)
     {
         $order = Order::findOrFail($orderId);
 
@@ -37,18 +37,11 @@ class TruckController extends Controller
         return response()->json(['message' => 'Order status updated successfully.']);
     }
 
-    public function orderDetail($orderId)
+    public function orderDetail($truck_id, $orderId)
     {
         $order = Order::findOrFail($orderId);
 
-        return view('logistic.order-detail', compact('order'));
-    }
-
-    public function trucksOrderDetail($truck_id, $orderId)
-    {
-        $order = Order::findOrFail($orderId);
-
-        return view('trucks.order-detail', compact('order'));
+        return view('trucks.order-detail', compact('truck_id','order'));
     }
 
     public function updateTruckStatus(Request $request, $truckId)

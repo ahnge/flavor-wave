@@ -26,7 +26,7 @@
           @if ($order->status == \App\Constants\OrderStatusEnum::Shipped->value)
             <!-- Form to update order status to return state -->
             <form method="POST"
-              action="{{ route('trucks.returnOrder', ['truck_id' => $order->id, 'order_id' => $order->id]) }}">
+              action="{{ route('trucks.returnOrder', ['truck_id' => $truck_id, 'order_id' => $order->id]) }}">
               @csrf
               @method('PUT')
               <input type="hidden" name="dummy">
@@ -88,7 +88,9 @@
   <script>
     document.addEventListener("DOMContentLoaded", function() {
 
-      function updateOrderStatus(orderId) {
+
+      function updateOrderStatus(truckId, orderId) {
+        console.log(truckId,orderId);
         let oldOrderStatus = document.querySelector(`#status-${orderId}`).innerText;
         const newStatus = parseInt(oldOrderStatus) + 1;
         console.log(newStatus);
@@ -99,7 +101,7 @@
           return
         };
 
-        fetch(`/trucks/orders/${orderId}/update-status`, {
+        fetch(`/trucks/${truckId}/orders/${orderId}/update-status`, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json',
@@ -123,7 +125,7 @@
 
               // Show return order btn
               returnOrderContainer.innerHTML = `
-                <form method="POST" action="{{ route('trucks.returnOrder', ['id' => $order->id]) }}"> @csrf
+                <form method="POST" action="{{ route('trucks.returnOrder', ['truck_id'=>$truck_id,'order_id' => $order->id]) }}"> @csrf
                   @method('PUT')
                   <input type="hidden" name="dummy">
                   <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded">Return Order</button>
@@ -141,11 +143,12 @@
           .catch(error => console.error('Error:', error));
       };
 
+
       var updateOrderStatusBtn = document.querySelector("#update-order-status-btn");
 
       if (updateOrderStatusBtn) {
         updateOrderStatusBtn.addEventListener("click", () => {
-          updateOrderStatus({{ $order->id }})
+          updateOrderStatus({{$truck_id}},{{$order->id }})
         })
       }
 
