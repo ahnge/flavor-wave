@@ -92,7 +92,7 @@ Done!! The application should now be running on your localhost at port 8000.
 
 - sale@gmail.com
 - warehouse@gmail.com
-- truckDriver@gmail.com
+- truckdriver@gmail.com
 - logistic@gmail.com
 
   Default password is 12345678 for all admin accounts.
