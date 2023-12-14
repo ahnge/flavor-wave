@@ -9,15 +9,17 @@ use Illuminate\Http\Request;
 
 class TruckController extends Controller
 {
-    // Truck detail page controller for order deliver feature to be used by logistic
-    // to change status of the order when the order is delivered.
     public function show($id)
     {
         $truck = Truck::with('orders')->findOrFail($id);
 
-        return view('trucks.show', compact('truck'));
+        $assignOrders = $truck->orders()->paginate(10);
+
+        return view('trucks.show', compact('truck', 'assignOrders'));
     }
 
+    // Truck detail page controller for order deliver feature to be used by logistic
+    // to change status of the order when the order is delivered.
     public function updateOrderStatus(Request $request, $orderId)
     {
         $order = Order::findOrFail($orderId);
@@ -33,7 +35,7 @@ class TruckController extends Controller
         return response()->json(['message' => 'Order status updated successfully.']);
     }
 
-    public function orderDetail($id, $orderId)
+    public function orderDetail($orderId)
     {
         $order = Order::findOrFail($orderId);
 

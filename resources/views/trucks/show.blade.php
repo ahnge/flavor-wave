@@ -40,95 +40,42 @@
             <th scope="col" class="px-6 py-3">Distributor Name</th>
             <th scope="col" class="px-6 py-3">Distributor ph no</th>
             <th scope="col" class="px-6 py-3">Deliver to</th>
-            <th scope="col" class="px-6 py-3"></th>
           </tr>
         </thead>
         <tbody>
-          @if ($truck->orders->isEmpty())
+          @if ($assignOrders->isEmpty())
             <p>No orders associated with this truck.</p>
           @else
-            @foreach ($truck->orders as $order)
+            @foreach ($assignOrders as $order)
               @if ($order->status !== \App\Constants\OrderStatusEnum::Delivered->value)
-                <tr
-                  class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <tr onclick="window.location.href='{{ route('trucks.orderDetail', ['id' => $order->id]) }}'"
+                  class="bg-white cursor-pointer border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                   <td class="px-6 py-4">
-
-                    <a href="{{ route('trucks.orderDetail', ['id' => $truck->id, 'orderId' => $order->id]) }}">
-                      {{ $order->order_no }}
-                    </a>
+                    {{ $order->order_no }}
                   </td>
                   <td class="px-6 py-4" data-order-id="{{ $order->id }}">
                     {{ \App\Constants\OrderStatusEnum::getLabelForAdmins($order->status) }}</td>
-                  <td class="px-6 py-4">{{ $order->due_date }}</td>
+                  <td class="px-6 py-4">{{ $order->due_date->format('Y-m-d') }}</td>
 
                   <td class="px-6 py-4">{{ $order->distributor->name }}</td>
                   <td class="px-6 py-4">{{ $order->distributor->phone_number }}</td>
                   <td class="px-6 py-4">{{ $order->distributor->address }}</td>
-
-                  <td class="px-6 py-4">
-                    <div class="hidden" id="status-{{ $order->id }}">{{ $order->status }}</div>
-                    <button class="bg-blue-500 text-white py-2 px-4 rounded" data-order-id="{{ $order->id }}"
-                      onclick="updateOrderStatus({{ $order->id }})">
-                      {{ $order->status === \App\Constants\OrderStatusEnum::Assigned->value ? 'Loaded' : 'Delivered' }}
-                    </button>
-                  </td>
                 </tr>
               @endif
             @endforeach
           @endif
-
-
         </tbody>
       </table>
+    </div>
+
+    <div class="flex justify-center">
+      {{ $assignOrders->links() }}
     </div>
   </div>
 @endsection
 
 @section('scripts')
   <script>
-    function updateOrderStatus(orderId) {
-      let oldOrderStatus = document.querySelector(`#status-${orderId}`).innerText;
-      console.log(oldOrderStatus);
-      const newStatus = parseInt(oldOrderStatus) + 1;
-      console.log(newStatus);
-      console.log(orderId);
-
-      if (newStatus > 5) {
-        return
-      };
-
-      fetch(`/trucks/orders/${orderId}/update-status`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-          },
-          body: JSON.stringify({
-            status: newStatus,
-          }),
-        })
-        .then(response => response.json())
-        .then(data => {
-          console.log(data);
-          // Update the button text and disable the button if status is 'delivered'
-          const button = document.querySelector(`button[data-order-id="${orderId}"]`);
-          const statusTag = document.querySelector(`td[data-order-id="${orderId}"]`);
-
-          if (newStatus === 4) {
-            button.innerText = "Delivered";
-            statusTag.innerText = "Shipped";
-            document.querySelector(`#status-${orderId}`).innerText = 4;
-          }
-          if (newStatus === 5) {
-            button.disabled = true;
-            button.remove()
-            statusTag.innerText = "Delivered";
-            document.querySelector(`#status-${orderId}`).innerText = 5;
-          }
-        })
-        .catch(error => console.error('Error:', error));
-    }
-
     function updateTruckStatus(truckStatus, truckId) {
       fetch(`/trucks/${truckId}`, {
           method: 'PUT',
