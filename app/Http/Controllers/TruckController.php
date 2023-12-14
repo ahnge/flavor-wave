@@ -36,6 +36,9 @@ class TruckController extends Controller
         // Update order status
         $order->update(['status' => $request->status]);
 
+        // TODO: make the total_quantity of 'truck_orders' tables right on 'Delivered'
+        //  just substract 'quantity' of 'order_products' from 'total_quantity' of 'truck_orders' 
+
         return response()->json(['message' => 'Order status updated successfully.']);
     }
 

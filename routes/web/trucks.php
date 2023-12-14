@@ -22,5 +22,5 @@ Route::middleware(['admin', 'truck-driver'])->group(function () {
     Route::put('/trucks/{truck_id}/orders/{order_id}/return', [TruckController::class, 'returnOrder'])->name('trucks.returnOrder');
 
     // Export assigned orders
-    Route::get('/trucks/{truckId}/export-orders', [TruckController::class, 'exportAssignedOrders'])->name('trucks.exportOrder');
+    Route::get('/trucks/{truck_id}/export-orders', [TruckController::class, 'exportAssignedOrders'])->name('trucks.exportOrder');
 });
