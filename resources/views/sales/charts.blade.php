@@ -4,8 +4,8 @@
     <div class="max-w-lg w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
         <div class="flex justify-between mb-5">
             <div>
-                <h5 class="leading-none text-3xl font-bold text-gray-900 dark:text-white pb-2">$12,423</h5>
-                <p class="text-base font-normal text-gray-500 dark:text-gray-400">Sales this week</p>
+                <h5 class="leading-none text-3xl font-bold text-gray-900 dark:text-white pb-2">Total Sales by Period</h5>
+                <p class="text-base font-normal text-gray-500 dark:text-gray-400">Yearly Sales</p>
             </div>
 
         </div>
