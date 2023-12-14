@@ -49,25 +49,3 @@ Route::get('/export/excel',function(){
       return 'success';
 });
 
-
-Route::get('/test',function(){
-    $truckOrders = TruckOrders::select('truck_id', DB::raw('GROUP_CONCAT(order_id) as order_ids'))
-    ->groupBy('truck_id')
-    ->get();
-
-    $truckIds = $truckOrders->pluck('truck_id');
-
-    $driver = Truck::whereIn('id',$truckIds)->with('user')->first();
-    $orders  =[];
-
-        $orders  = Order::whereIn('id',explode(',',$truckOrders->where('truck_id',3)->first()->order_ids))->where('status',OrderStatusEnum::Assigned->value)
-        ->with('distributor')
-        ->get();
-
-        // Excel::store(
-        //     new TruckOrderAssign($orders,$truck),
-        //     'public/pdf/' . now()->format('dmY') . '/' . str_replace(' ', '_', ($truck->user->name ?? 'unknown')) . '-orders.pdf'
-        // );
-       $pdf   =PDF::loadView('mail.table',compact('orders','driver'));
-       return $pdf->stream();
-});
