@@ -129,9 +129,7 @@ class ProductController extends Controller
 
         $weeklyBestSellerProducts = [];
         foreach ($weeklyBestSellerProduct as $prodID => $quantity) {
-            $productName = Product::whereHas("product", function (Builder $query) use ($prodID) {
-                $query->where("id", $prodID);
-            })
+            $productName = Product::where("id", $prodID)
                 ->get()
                 ->pluck("title")
                 ->toArray();
@@ -149,6 +147,7 @@ class ProductController extends Controller
             $total_amount = $price * $quantity;
             $weeklyBestSellerTotalAmount += $total_amount;
         }
+
 
         //dd(collect($weeklyBestSellerProducts));
         // return response()->json(
