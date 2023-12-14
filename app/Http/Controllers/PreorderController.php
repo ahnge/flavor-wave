@@ -27,7 +27,6 @@ class PreorderController extends Controller
                     });
             });
         })
-
             ->when(request()->has("orderStatus"), function ($query) {
                 $query->where(function (Builder $builder) {
                     $status = request()->orderStatus;
@@ -36,9 +35,9 @@ class PreorderController extends Controller
                     }
                 });
             })
-
-            ->latest("is_urgent")
-            ->orderBy("due_date", "asc")
+            // ->latest("is_urgent")
+            ->latest('id')
+            ->orderBy('is_urgent','asc')
             ->paginate(10)
             ->withQueryString();
 
@@ -80,6 +79,7 @@ class PreorderController extends Controller
 
     public function showOrder(Order $preorder)
     {
+        $isAvailable = $preorder->orderProducts->load('product');
         return view('sales.preorder.index', ['preorder' => $preorder]);
     }
 
