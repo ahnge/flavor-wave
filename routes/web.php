@@ -19,12 +19,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+/* Route::get('/', function () {
     if (Auth::guard('admin')->check()) {
         return redirect(Auth::guard('admin')->user()->getRedirectRoute());
     }
     return redirect()->route('products');
-});
+}); */
 
 
 Route::get('/dashboard', function () {

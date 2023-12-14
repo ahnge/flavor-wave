@@ -189,7 +189,7 @@ class ProductController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'price' => 'required|numeric',
-            'product_photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'product_photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'pc_per_box' => 'required|integer',
             'total_box_count' => 'required|integer',
         ]);
@@ -209,7 +209,7 @@ class ProductController extends Controller
             'reserving_box_count' => 0,
         ]);
 
-        return redirect()->route('warehouse.createProduct')->with('success', 'Product created successfully!');
+        return redirect()->route('warehouse.productList')->with('success', 'Product created successfully!');
     }
 
     // exel import

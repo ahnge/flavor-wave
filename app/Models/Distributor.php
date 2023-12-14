@@ -21,7 +21,7 @@ class Distributor extends Authenticatable
 
     public function getRedirectRoute()
     {
-        return '/';
+        return 'distributor.index';
     }
 
     public function preorder()

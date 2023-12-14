@@ -24,7 +24,7 @@ class AdminAuthenticatedSessionController extends Controller
 
         if(Auth::guard('admin')->user()->role_id == 6)
         {
-            return redirect()->route(Auth::guard('admin')->user()->getRedirectRoute(),['id'=>Auth::guard('admin')->user()->truck()->id]);
+            return redirect()->route(Auth::guard('admin')->user()->getRedirectRoute(),['truck_id'=>Auth::guard('admin')->user()->truck]);
         }
 
             return redirect()->route(Auth::guard('admin')->user()->getRedirectRoute());
