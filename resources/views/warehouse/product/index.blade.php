@@ -2,7 +2,7 @@
 
 @section('content')
     <section
-        class="border pb-8 pt-3 lg:pb-16 lg:pt-6 px-6 mx-auto max-w-screen-md dark:bg-gray-800 bg-neutral-100 m-10 rounded-lg">
+        class="border dark:border-gray-700 pb-8 pt-3 lg:pb-16 lg:pt-6 px-6 mx-auto max-w-screen-md dark:bg-gray-800 bg-neutral-100 m-10 rounded-lg">
         <a href="{{ route('warehouse.productList') }}">
             <button type="button"
                 class="py-2.5 px-5  text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-md border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Back</button>
@@ -17,7 +17,7 @@
             <div class="mb-5">
                 <label for="type" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an
                     option</label>
-                <select id="type" name="type"
+                <select id="type" name="type" required
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     <option value="" selected>Select Operation</option>
                     <option value="expire">Expire</option>
@@ -44,12 +44,12 @@
     </section>
 @endsection
 @section('scripts')
-<script type="module">
-$("document").ready(function(){
-    setTimeout(function(){
-        console.log('test');
-        $("#error-message").fadeOut('fast');
-        }, 3000);
-    });
-</script>
+    <script type="module">
+        $("document").ready(function() {
+            setTimeout(function() {
+                console.log('test');
+                $("#error-message").fadeOut('fast');
+            }, 3000);
+        });
+    </script>
 @endsection

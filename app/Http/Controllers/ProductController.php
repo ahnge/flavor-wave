@@ -30,6 +30,7 @@ class ProductController extends Controller
                     ->orWhere("price", "LIKE", "%" . $keyword . "%");
             });
         })
+            ->latest("id")
             ->paginate(5)
             ->withQueryString();
 
