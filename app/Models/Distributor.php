@@ -28,4 +28,12 @@ class Distributor extends Authenticatable
     {
         return $this->hasMany(Order::class);
     }
+
+    public function scopeSearch($query,$search){
+        return $query->when($search,function($q) use ($search){
+            return $q->where('name','like',"%$search%")
+                ->orWhere('email','like',"%$search%")
+                ->orWhere('phone_number','like',"%$search%");
+        });
+    }
 }

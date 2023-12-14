@@ -10,6 +10,7 @@ enum OrderStatusEnum: int
     case Assigned = 3;
     case Shipped = 4;
     case Delivered = 5;
+    case Returned = 6;
 
     public static function getLabelForAdmins(int $value): string
     {
@@ -24,6 +25,8 @@ enum OrderStatusEnum: int
                 return 'Assigned';
             case self::Shipped->value:
                 return 'Shipped';
+            case self::Returned->value:
+                return 'Returned';
             case self::Delivered->value:
                 return 'Delivered';
             default:
@@ -45,6 +48,8 @@ enum OrderStatusEnum: int
                 return 'Shipping';
             case self::Shipped->value:
                 return 'Shipped';
+            case self::Returned->value:
+                return 'Returned';
             case self::Delivered->value:
                 return 'Delivered';
             default:
@@ -78,6 +83,10 @@ enum OrderStatusEnum: int
             [
                 'value' => self::Delivered->value,
                 'label' => "Delivered"
+            ],
+            [
+                'value' => self::Returned->value,
+                'label' => "Returned"
             ]
         ];
     }
