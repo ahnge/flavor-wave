@@ -30,9 +30,7 @@ The app allows for the company's data to be flowed seamlessly with integrity acr
   npm run dev
 ```
 
-(2)
-
-Enable extensions gd, zip in php.ini config file.
+(2)Enable extensions gd, zip in php.ini config file.
 
 ```bash
   ;extension=gd
@@ -42,9 +40,7 @@ Just remove the ";" .
 
 Done!! The application should now be running on your localhost at port 8000.
 
-(3)
-
-Edit Mail_Mailer and AWS configs in your .env file accordingly.
+(3)Edit Mail_Mailer and AWS configs in your .env file accordingly.
 
 Change here-
 
