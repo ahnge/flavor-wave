@@ -21,24 +21,24 @@ The app allows for the company's data to be flowed seamlessly with integrity acr
 ```bash
   npm install
 ```
-(2)Run the project
+
+(2)Migration and seeding
+
+
+Configure your database in the .env file.
+
 
 ```bash
-  php artisan serve
-```
-```bash
-  npm run dev
+  npm install my-project
+  cd my-project
 ```
 
-(2)Enable extensions gd, zip in php.ini config file.
+Then, run the following command -
 
-```bash
-  ;extension=gd
-  ;extension=zip
+
+ ```bash
+  php artisan migrate —seed
 ```
-Just remove the ";" .
-
-Done!! The application should now be running on your localhost at port 8000.
 
 (3)Edit Mail_Mailer and AWS configs in your .env file accordingly.
 
@@ -65,6 +65,27 @@ AWS_DEFAULT_REGION=us-east-1
 AWS_BUCKET=
 AWS_USE_PATH_STYLE_ENDPOINT=false
 ```
+
+(4)Enable extensions gd, zip in php.ini config file.
+
+```bash
+  ;extension=gd
+  ;extension=zip
+```
+Just remove the ";" .
+
+
+(5)Run the project
+
+```bash
+  php artisan serve
+```
+```bash
+  npm run dev
+```
+
+Done!! The application should now be running on your localhost at port 8000.
+
     
 ## Features
 
