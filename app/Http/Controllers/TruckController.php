@@ -13,7 +13,9 @@ class TruckController extends Controller
     {
         $truck = Truck::with('orders')->findOrFail($id);
 
-        $assignOrders = $truck->orders()->paginate(10);
+        $assignOrders = $truck->orders()
+            ->whereIn('status', [OrderStatusEnum::Assigned, OrderStatusEnum::Shipped])
+            ->paginate(10);
 
         return view('trucks.show', compact('truck', 'assignOrders'));
     }
@@ -55,5 +57,18 @@ class TruckController extends Controller
         $truck->update(['status' => $request->status]);
 
         return response()->json(['message' => 'Truck status updated successfully.']);
+    }
+
+
+    public function returnOrder(Request $request, $orderId)
+    {
+        $order = Order::findOrFail($orderId);
+
+        // Update order status
+        $order->update(['status' => OrderStatusEnum::Returned->value]);
+
+        // Update the warehouse inventory
+
+        return redirect()->back()->with("success", "Success!");
     }
 }
