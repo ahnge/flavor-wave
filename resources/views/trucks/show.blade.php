@@ -30,7 +30,7 @@
       </p>
 
       <div class="flex flex-row gap-3">
-        <a href="{{ route('trucks.exportOrder', ['truckId' => $truck->id]) }}"
+        <a href="{{ route('trucks.exportOrder', ['truck_id' => $truck->id]) }}"
           class="flex flex-row gap-2 dark:text-white border border-gray-600  dark:bg-gray-800 p-2 rounded-md">Export</a>
         <select id="countries" onchange="updateTruckStatus(this.value, {{ $truck->id }})"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
