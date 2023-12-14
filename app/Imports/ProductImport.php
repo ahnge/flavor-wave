@@ -5,9 +5,11 @@ namespace App\Imports;
 use App\Models\Product;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithValidation;
 
 
-class ProductImport implements ToModel, WithHeadingRow
+
+class ProductImport implements ToModel, WithHeadingRow, WithValidation
 {
     /**
      * @param array $row
@@ -24,5 +26,13 @@ class ProductImport implements ToModel, WithHeadingRow
         }
 
         return null;
+    }
+
+    public function rules(): array
+    {
+        return [
+            'product_id' => 'required',
+            'count' => 'required',
+        ];
     }
 }
