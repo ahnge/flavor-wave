@@ -88,4 +88,11 @@ class LogisticController extends Controller
         $truckOrders->save();
         return redirect()->back()->with("success", $order->order_no . " was assigned successfully");
     }
+
+    public function orderDetail($truck_id, $orderId)
+    {
+        $order = Order::findOrFail($orderId);
+
+        return view('logistic.order-detail', compact('truck_id', 'order'));
+    }
 }

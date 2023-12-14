@@ -9,8 +9,8 @@ use App\Models\Order;
 Route::middleware(['admin', 'logistics'])->group(function () {
 
     Route::get('/logistics', [LogisticController::class, "index"])->name("logistic.index");
-    Route::get('/orders/{id}/detail',[TruckController::class, 'orderDetail'])->name('logistic.orderDetail');
     Route::get('/trucks/{id}/orders', [LogisticController::class, "orderAssign"])->name('logistic.orderAssign');
     Route::post('/trucks/{id}/orders', [LogisticController::class, "addOrderToTruck"])->name("logistic.addOrderToTruck");
-    Route::get("/product/order-list/{id}", [PreorderController::class, "preorderDetails"])->name("logistic.preOrderDetails");
+    // Logistic order detail page
+    Route::get('/logistscs/{truck_id}/orders/{id}/detail', [LogisticController::class, 'orderDetail'])->name('logistic.orderDetail');
 });
