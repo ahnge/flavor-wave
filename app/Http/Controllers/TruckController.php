@@ -37,6 +37,8 @@ class TruckController extends Controller
 
     public function orderDetail($orderId)
     {
+       
+    
         $order = Order::findOrFail($orderId);
 
         return view('trucks.order-detail', compact('order'));

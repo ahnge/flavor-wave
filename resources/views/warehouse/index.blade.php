@@ -52,12 +52,10 @@
                         accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"
                         name="excel_file">
 
-                    <button title="Import" type="submit" class="border border-gray-600  dark:bg-gray-800 p-2 rounded-md">
-                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
-                                d="M3 8V5.828a2 2 0 0 1 .586-1.414l2.828-2.828A2 2 0 0 1 7.828 1h8.239A.969.969 0 0 1 17 2v16a.969.969 0 0 1-.933 1H3.933A.97.97 0 0 1 3 18v-2M8 1v4a1 1 0 0 1-1 1H3m-2 6h10M9.061 9.232 11.828 12l-2.767 2.768" />
-                        </svg></button>
+                    <button title="Import" type="submit"
+                        class="border border-gray-400 dark:text-white dark:bg-gray-800 py-1.5 bg-neutral-100 p-2 rounded-md">
+                        Import
+                    </button>
                 </div>
 
 
@@ -71,12 +69,12 @@
                             {{-- search-input --}}
                             <div class="flex flex-row items-center">
                                 <input type="search" id="default-search" name="keyword"
-                                    class="focus-visible:outline-none focus-visible:border-0 focus:border-0 block w-full border-e-0 rounded-e-none  text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white "
+                                    class="focus-visible:outline-none focus-visible:border-0 focus:border-0 block w-full border-e-0 rounded-e-none  text-sm text-gray-900 border border-gray-400 rounded-lg bg-gray-50  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white "
                                     placeholder="Search" value="{{ request('keyword') }}" />
                                 {{-- search-button --}}
 
                                 <button type="submit"
-                                    class="btn-primary rounded-e-lg border-s-0 dark:border-gray-600 hover:bg-opacity-20 bg-black bg-opacity-0 border-gray-300   border  p-2  cursor-pointer">
+                                    class="btn-primary rounded-e-lg border-s-0 dark:border-gray-600 hover:bg-opacity-20 bg-black bg-opacity-0 border-gray-400   border  p-2  cursor-pointer">
                                     <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" aria-hidden="true"
                                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -112,10 +110,10 @@
                             <span class="sr-only">Image</span>
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Product
+                            Product <span class="dark:text-neutral-300 text-gray-600 ">( Total : 20 )</span>
                         </th>
-                        <th scope="col" class="px-6 py-3 text-center">
-                            Boxes Quantity
+                        <th scope="col" class="px-6 py-3 dark:text-center">
+                            Boxes Quantity <span class="dark:text-neutral-300 text-gray-600 ">( Total : 24340 )</span>
                         </th>
                         <th scope="col" class="px-6 py-3">
 
@@ -134,8 +132,7 @@
                     @forelse ($products as $product)
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 ">
                             <td class="p-4">
-                                <img class="w-16 md:w-32 max-w-full max-h-full" src="{{ $product->product_photo }}"
-                                    alt="Jese image">
+                                <img class="w-32 h-28 object-cover" src="{{ $product->product_photo }}" alt="Jese image">
                             </td>
                             <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
                                 {{ $product->title }}
@@ -146,16 +143,16 @@
                             <td>
                                 <a href="{{ route('warehouse.productQtyChange', ['product' => $product]) }}">
                                     <div
-                                        class="border px-3 py-2 text-center text-black hover:bg-neutral-200 border-gray-400 hover:dark:bg-gray-700  rounded-md mr-4 dark:text-gray-300">
-                                        Update
+                                        class="border px-3 py-2 text-center text-black hover:bg-neutral-200 border-gray-400 hover:dark:bg-gray-900  rounded-md mr-4 dark:text-gray-300">
+                                        Update Quantity
                                     </div>
                                 </a>
                             </td>
                             <td>
                                 <a href="{{ route('warehouse.productShow', ['product' => $product]) }}">
                                     <div
-                                        class="border px-3 py-2 text-center text-black hover:bg-neutral-200 border-gray-400 hover:dark:bg-gray-700  rounded-md mr-4 dark:text-gray-300">
-                                        Detail
+                                        class="border px-3 py-2 text-center text-black hover:bg-neutral-200 border-gray-400 hover:dark:bg-gray-900  rounded-md mr-4 dark:text-gray-300">
+                                        Detail Edit
                                     </div>
                                 </a>
                             </td>
