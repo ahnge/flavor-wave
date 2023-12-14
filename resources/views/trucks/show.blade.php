@@ -1,11 +1,5 @@
 @extends('layouts.app')
 
-@section('header')
-  <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-    {{ __('Truck Details') }}
-  </h2>
-@endsection
-
 @section('content')
   <div class="max-w-screen-lg p-8 mx-auto">
     <!-- Truck information -->
@@ -47,21 +41,19 @@
             <p>No orders associated with this truck.</p>
           @else
             @foreach ($assignOrders as $order)
-              @if ($order->status !== \App\Constants\OrderStatusEnum::Delivered->value)
-                <tr onclick="window.location.href='{{ route('trucks.orderDetail', ['truck_id'=>$truck->id,'id' => $order->id]) }}'"
-                  class="bg-white cursor-pointer border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                  <td class="px-6 py-4">
-                    {{ $order->order_no }}
-                  </td>
-                  <td class="px-6 py-4" data-order-id="{{ $order->id }}">
-                    {{ \App\Constants\OrderStatusEnum::getLabelForAdmins($order->status) }}</td>
-                  <td class="px-6 py-4">{{ $order->due_date->format('Y-m-d') }}</td>
+              <tr onclick="window.location.href='{{ route('trucks.orderDetail', ['truck_id'=>$truck->id,'id' => $order->id]) }}'"
+                class="bg-white cursor-pointer border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <td class="px-6 py-4">
+                  {{ $order->order_no }}
+                </td>
+                <td class="px-6 py-4" data-order-id="{{ $order->id }}">
+                  {{ \App\Constants\OrderStatusEnum::getLabelForAdmins($order->status) }}</td>
+                <td class="px-6 py-4">{{ $order->due_date->format('Y-m-d') }}</td>
 
-                  <td class="px-6 py-4">{{ $order->distributor->name }}</td>
-                  <td class="px-6 py-4">{{ $order->distributor->phone_number }}</td>
-                  <td class="px-6 py-4">{{ $order->distributor->address }}</td>
-                </tr>
-              @endif
+                <td class="px-6 py-4">{{ $order->distributor->name }}</td>
+                <td class="px-6 py-4">{{ $order->distributor->phone_number }}</td>
+                <td class="px-6 py-4">{{ $order->distributor->address }}</td>
+              </tr>
             @endforeach
           @endif
         </tbody>

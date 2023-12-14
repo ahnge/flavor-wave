@@ -17,4 +17,7 @@ Route::middleware(['admin', 'truck-driver'])->group(function () {
 
     // Update truck status
     Route::put('/trucks/{truck_id}', [TruckController::class, 'updateTruckStatus']);
+
+    // Return order
+    Route::put('/trucks/{truck_id}/orders/{id}/return', [TruckController::class, 'returnOrder'])->name('trucks.returnOrder');
 });
