@@ -114,10 +114,10 @@
                                         {{ $order->total }}
                                     </td>
                                     <td class="px-6 py-4 text-center">
-                                        {{ $order->created_at }}
+                                        {{ $order->created_at->format('Y-m-d') }}
                                     </td>
                                     <td class="px-6 py-4 text-center">
-                                        {{ $order->due_date }}
+                                        {{ $order->due_date->format('Y-m-d') }}
                                     </td>
                                     <td class="px-6 py-4 text-center">
 
