@@ -33,9 +33,18 @@ class ProductController extends Controller
             ->paginate(5)
             ->withQueryString();
 
+        $allProducts = Product::all();
+
+        $totalQty = 0;
+
+        foreach ($allProducts as $product) {
+            $totalQty += $product->total_box_count;
+        }
+
+
         $productLists = ProductResource::collection($products);
 
-        return view('warehouse.index', ['products' => $productLists->resource]);
+        return view('warehouse.index', ['products' => $productLists->resource, 'totalProducts'=> Product::all()->count(), 'totalQty'=>$totalQty]);
     }
 
     public function changeQty(Product $product)
