@@ -196,8 +196,6 @@ class ProductController extends Controller
             'product_photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'pc_per_box' => 'required|integer',
             'total_box_count' => 'required|integer',
-            'available_box_count' => 'required|integer',
-            'reserving_box_count' => 'required|integer',
         ]);
 
         // Upload image to AWS S3
@@ -211,8 +209,8 @@ class ProductController extends Controller
             'product_photo' => Storage::disk('s3')->url($path),
             'pc_per_box' => $request->input('pc_per_box'),
             'total_box_count' => $request->input('total_box_count'),
-            'available_box_count' => $request->input('available_box_count'),
-            'reserving_box_count' => $request->input('reserving_box_count'),
+            'available_box_count' => $request->input('total_box_count'),
+            'reserving_box_count' => 0,
         ]);
 
         return redirect()->route('warehouse.createProduct')->with('success', 'Product created successfully!');
