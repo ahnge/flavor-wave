@@ -29,6 +29,8 @@ enum OrderStatusEnum: int
                 return 'Returned';
             case self::Delivered->value:
                 return 'Delivered';
+            case self::Returned->value:
+                return 'Returned';
             default:
                 return 'Unknown';
         }
@@ -52,6 +54,8 @@ enum OrderStatusEnum: int
                 return 'Returned';
             case self::Delivered->value:
                 return 'Delivered';
+            case self::Returned->value:
+                return 'Returned';
             default:
                 return 'Unknown';
         }

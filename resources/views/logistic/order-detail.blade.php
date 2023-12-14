@@ -10,31 +10,17 @@
         {{ $order->order_no }}
       </h2>
       <!-- change order status -->
-      <div class="flex flex-col gap-5">
-        @if (
-            $order->status == \App\Constants\OrderStatusEnum::Assigned->value or
-                $order->status == \App\Constants\OrderStatusEnum::Shipped->value)
-          <div>
-            <div class="hidden" id="status-{{ $order->id }}">{{ $order->status }}</div>
-            <button id="update-order-status-btn" class="bg-blue-500 text-white py-2 px-4 rounded"
-              data-order-id="{{ $order->id }}">
-              {{ $order->status === \App\Constants\OrderStatusEnum::Assigned->value ? 'Loaded' : 'Delivered' }}
-            </button>
-          </div>
-        @endif
-        <div id="return-order-container">
-          @if ($order->status == \App\Constants\OrderStatusEnum::Shipped->value)
-            <!-- Form to update order status to return state -->
-            <form method="POST"
-              action="{{ route('trucks.returnOrder', ['truck_id' => $truck_id, 'order_id' => $order->id]) }}">
-              @csrf
-              @method('PUT')
-              <input type="hidden" name="dummy">
-              <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded">Return Order</button>
-            </form>
-          @endif
+      @if (
+          $order->status == \App\Constants\OrderStatusEnum::Assigned->value or
+              $order->status == \App\Constants\OrderStatusEnum::Shipped->value)
+        <div>
+          <div class="hidden" id="status-{{ $order->id }}">{{ $order->status }}</div>
+          <button id="update-order-status-btn" class="bg-blue-500 text-white py-2 px-4 rounded"
+            data-order-id="{{ $order->id }}">
+            {{ $order->status === \App\Constants\OrderStatusEnum::Assigned->value ? 'Loaded' : 'Delivered' }}
+          </button>
         </div>
-      </div>
+      @endif
     </div>
     <!-- Order information -->
     <div id="status">Status: {{ \App\Constants\OrderStatusEnum::getLabelForAdmins($order->status) }}</div>
@@ -88,20 +74,17 @@
   <script>
     document.addEventListener("DOMContentLoaded", function() {
 
-
-      function updateOrderStatus(truckId, orderId) {
-        console.log(truckId,orderId);
+      function updateOrderStatus(orderId) {
         let oldOrderStatus = document.querySelector(`#status-${orderId}`).innerText;
         const newStatus = parseInt(oldOrderStatus) + 1;
         console.log(newStatus);
 
-        const returnOrderContainer = document.querySelector("#return-order-container");
 
         if (newStatus > 5) {
           return
         };
 
-        fetch(`/trucks/${truckId}/orders/${orderId}/update-status`, {
+        fetch(`/trucks/orders/${orderId}/update-status`, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json',
@@ -122,20 +105,10 @@
               button.innerText = "Delivered";
               statusTag.innerText = "Status: Shipped";
               document.querySelector(`#status-${orderId}`).innerText = 4;
-
-              // Show return order btn
-              returnOrderContainer.innerHTML = `
-                <form method="POST" action="{{ route('trucks.returnOrder', ['truck_id'=>$truck_id,'order_id' => $order->id]) }}"> @csrf
-                  @method('PUT')
-                  <input type="hidden" name="dummy">
-                  <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded">Return Order</button>
-                </form>
-              `;
             }
             if (newStatus === 5) {
               button.disabled = true;
               button.remove()
-              returnOrderContainer.remove();
               statusTag.innerText = "Status: Delivered";
               document.querySelector(`#status-${orderId}`).innerText = 5;
             }
@@ -143,12 +116,11 @@
           .catch(error => console.error('Error:', error));
       };
 
-
       var updateOrderStatusBtn = document.querySelector("#update-order-status-btn");
 
       if (updateOrderStatusBtn) {
         updateOrderStatusBtn.addEventListener("click", () => {
-          updateOrderStatus({{$truck_id}},{{$order->id }})
+          updateOrderStatus({{ $order->id }})
         })
       }
 
