@@ -60,7 +60,7 @@ class TruckController extends Controller
     }
 
 
-    public function returnOrder(Request $request, $orderId)
+    public function returnOrder(Request $request, $truckId, $orderId)
     {
         $order = Order::findOrFail($orderId);
 

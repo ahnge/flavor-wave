@@ -25,7 +25,8 @@
         <div id="return-order-container">
           @if ($order->status == \App\Constants\OrderStatusEnum::Shipped->value)
             <!-- Form to update order status to return state -->
-            <form method="POST" action="{{ route('trucks.returnOrder', ['id' => $order->id]) }}">
+            <form method="POST"
+              action="{{ route('trucks.returnOrder', ['truck_id' => $order->id, 'order_id' => $order->id]) }}">
               @csrf
               @method('PUT')
               <input type="hidden" name="dummy">
