@@ -16,6 +16,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\DB;
 
 Route::middleware(['distributor'])->group(function (){
     Route::get('/', [Index::class,'index'])->middleware('notAdmin')->name("distributor.index");
@@ -50,13 +51,23 @@ Route::get('/export/excel',function(){
 
 
 Route::get('/test',function(){
-        $driver = User::where("role_id",6)->pluck('id');
+    $truckOrders = TruckOrders::select('truck_id', DB::raw('GROUP_CONCAT(order_id) as order_ids'))
+    ->groupBy('truck_id')
+    ->get();
 
-        $truckOrders = TruckOrders::pluck('order_id');
+    $truckIds = $truckOrders->pluck('truck_id');
 
-        $orders = Order::whereIn('id',$truckOrders)->where('status',OrderStatusEnum::Assigned->value)->get();
+    $driver = Truck::whereIn('id',$truckIds)->with('user')->first();
+    $orders  =[];
 
-        return  $orders;
+        $orders  = Order::whereIn('id',explode(',',$truckOrders->where('truck_id',3)->first()->order_ids))->where('status',OrderStatusEnum::Assigned->value)
+        ->with('distributor')
+        ->get();
 
-    return $driver;
+        // Excel::store(
+        //     new TruckOrderAssign($orders,$truck),
+        //     'public/pdf/' . now()->format('dmY') . '/' . str_replace(' ', '_', ($truck->user->name ?? 'unknown')) . '-orders.pdf'
+        // );
+       $pdf   =PDF::loadView('mail.table',compact('orders','driver'));
+       return $pdf->stream();
 });

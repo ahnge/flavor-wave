@@ -2,14 +2,20 @@
 
 namespace App\Jobs;
 
+use App\Constants\OrderStatusEnum;
 use App\Exports\TruckOrderAssign;
+use App\Models\Order;
+use App\Models\Truck;
+use App\Models\TruckOrders;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Mail;
 
@@ -31,9 +37,26 @@ class AssignTruckOrder implements ShouldQueue
      */
     public function handle(): void
     {
-        $driver = User::where("role",6)->get();
-        for($i=0;$i<3;$i++){
-            Excel::store(new TruckOrderAssign,'public/pdf/'. now()->format('dmY') .'/' . rand(0,400) . '-orders.pdf');
+        $truckOrders = TruckOrders::select('truck_id', DB::raw('GROUP_CONCAT(order_id) as order_ids'))
+        ->groupBy('truck_id')
+        ->get();
+
+        $truckIds = $truckOrders->pluck('truck_id');
+
+        $trucks = Truck::whereIn('id',$truckIds)->with('user')->get();
+        $orders  =[];
+
+        foreach($trucks as  $i=> $driver){
+            $orders  = Order::whereIn('id',explode(',',$truckOrders->where('truck_id',$driver->id)->first()->order_ids))->where('status',OrderStatusEnum::Assigned->value)
+            ->with('distributor')
+            ->get();
+
+            // Excel::store(
+            //     new TruckOrderAssign($orders,$truck),
+            //     'public/pdf/' . now()->format('dmY') . '/' . str_replace(' ', '_', ($truck->user->name ?? 'unknown')) . '-orders.pdf'
+            // );
+            $path  =  storage_path('app/public/pdf/' . now()->format('dmY') . '/' . str_replace(' ', '_', ($driver->user->name ?? 'unknown')) . '-orders.pdf');
+           Pdf::loadView('mail.table',compact('orders','driver'))->save($path);
         }
     }
 }

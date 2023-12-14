@@ -13,6 +13,8 @@ use App\Http\Resources\ProductResource;
 use App\Imports\ProductImport;
 use Illuminate\Database\Eloquent\Builder;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Storage;
+
 
 class ProductController extends Controller
 {
@@ -127,9 +129,7 @@ class ProductController extends Controller
 
         $weeklyBestSellerProducts = [];
         foreach ($weeklyBestSellerProduct as $prodID => $quantity) {
-            $productName = Product::whereHas("product", function (Builder $query) use ($prodID) {
-                $query->where("id", $prodID);
-            })
+            $productName = Product::where("id", $prodID)
                 ->get()
                 ->pluck("title")
                 ->toArray();
@@ -147,6 +147,7 @@ class ProductController extends Controller
             $total_amount = $price * $quantity;
             $weeklyBestSellerTotalAmount += $total_amount;
         }
+
 
         //dd(collect($weeklyBestSellerProducts));
         // return response()->json(
@@ -177,8 +178,8 @@ class ProductController extends Controller
             ->setDataLabelsEnabled(true)
             ->setSeries($weeklyBestProductQuantity)
             ->setLabels($weeklyBestProductNames);
-
-        return view('warehouse.charts', compact("productChart", "weeklyBestProductChart"));
+        $chartsData = [$weeklyBestProductNames, $weeklyBestProductQuantity, $productNames, $productQuantity];
+        return view('warehouse.charts')->with("chartsData", $chartsData);
     }
 
     // To create new product
@@ -192,18 +193,22 @@ class ProductController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'price' => 'required|numeric',
-            'product_photo' => 'required|url',
+            'product_photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'pc_per_box' => 'required|integer',
             'total_box_count' => 'required|integer',
             'available_box_count' => 'required|integer',
             'reserving_box_count' => 'required|integer',
         ]);
 
+        // Upload image to AWS S3
+        $path = $request->file('product_photo')->store('images/products', 's3');
+
+
         // Create new product
         Product::create([
             'title' => $request->input('title'),
             'price' => $request->input('price'),
-            'product_photo' => $request->input('product_photo'),
+            'product_photo' => Storage::disk('s3')->url($path),
             'pc_per_box' => $request->input('pc_per_box'),
             'total_box_count' => $request->input('total_box_count'),
             'available_box_count' => $request->input('available_box_count'),
@@ -235,15 +240,23 @@ class ProductController extends Controller
         return Excel::download(new ProductExport, 'products.xlsx');
     }
 
-    public function editDetails(Product $product)
+    public function editDetails(Request $request, Product $product)
     {
         $updatedDetail = request()->validate([
             'title' => ['required', 'min:2'],
             'price' => ['required'],
-            'ppb' => ['required']
+            'ppb' => ['required'],
+            'product_photo' => ['required'],
         ]);
 
-        $product->update($updatedDetail);
+        $path = $request->file('product_photo')->store('images/products', 's3');
+
+        $product->update([
+            'title' => request('title'),
+            'price' => request('price'),
+            'ppb' => request('ppb'),
+            'product_photo' => Storage::disk('s3')->url($path),
+        ]);
 
         return redirect()->back();
     }

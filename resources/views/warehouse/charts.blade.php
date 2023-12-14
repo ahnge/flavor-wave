@@ -95,6 +95,79 @@
     </script>
 
     </div>
+
+    <script>
+        let chartsData = @json($chartsData);
+        // Best Sales of the Week has 7 array and total sales has 14 arrays
+        console.log(chartsData);
+        // ApexCharts options and config
+        window.addEventListener("load", function() {
+            const getChartOptions = () => {
+                return {
+                    series: chartsData[3],
+                    colors: ["#1C64F2", "#16BDCA", "#9061F9", "#F29F05", "#F2056E", "#05F259", "#A605F2",
+                        "#F22D2D", "#2DF24D", "#2D6BF2", "#F22DE6", "#F2B22D", "#8B2DF2", "#2DF2EC"
+                    ],
+                    chart: {
+                        height: 420,
+                        width: "100%",
+                        type: "pie",
+                    },
+                    stroke: {
+                        colors: ["white"],
+                        lineCap: "",
+                    },
+                    plotOptions: {
+                        pie: {
+                            labels: {
+                                show: true,
+                            },
+                            size: "100%",
+                            dataLabels: {
+                                offset: -25
+                            }
+                        },
+                    },
+                    labels: chartsData[2],
+                    dataLabels: {
+                        enabled: true,
+                        style: {
+                            fontFamily: "Inter, sans-serif",
+                        },
+                    },
+                    legend: {
+                        position: "bottom",
+                        fontFamily: "Inter, sans-serif",
+                    },
+                    yaxis: {
+                        labels: {
+                            formatter: function(value) {
+                                return value
+                            },
+                        },
+                    },
+                    xaxis: {
+                        labels: {
+                            formatter: function(value) {
+                                return value
+                            },
+                        },
+                        axisTicks: {
+                            show: false,
+                        },
+                        axisBorder: {
+                            show: false,
+                        },
+                    },
+                }
+            }
+
+            if (document.getElementById("pie-chart") && typeof ApexCharts !== 'undefined') {
+                const chart = new ApexCharts(document.getElementById("pie-chart"), getChartOptions());
+                chart.render();
+            }
+        });
+    </script>
 @endsection
 
 

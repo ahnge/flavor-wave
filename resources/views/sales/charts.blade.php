@@ -83,116 +83,145 @@
 
 
     </div>
+
     <script>
-        // ApexCharts options and config]
+        let chartsData = @json($chartsData);
+
+        // Yearly names and prices are [0],[1]
+        // Monthly names and prices are [2],[3]
+        // Weekly names and prices are [4],[5]
+        console.log(chartsData);
 
 
+
+
+        let dropdownButton = document.getElementById("lastDaysdropdown")
+
+
+
+
+        let options = {
+            // enable and customize data labels using the following example, learn more from here: https://apexcharts.com/docs/datalabels/
+            dataLabels: {
+                enabled: true,
+                // offsetX: 10,
+                style: {
+                    cssClass: 'text-xs text-white font-medium'
+                },
+            },
+            grid: {
+                show: false,
+                strokeDashArray: 4,
+                padding: {
+                    left: 16,
+                    right: 16,
+                    top: -26
+                },
+            },
+            series: [{
+                    name: "Developer Edition",
+                    data: chartsData[1],
+                    color: "#1A56DB",
+                },
+
+            ],
+            chart: {
+                height: "100%",
+                maxWidth: "100%",
+                type: "area",
+                fontFamily: "Inter, sans-serif",
+                dropShadow: {
+                    enabled: false,
+                },
+                toolbar: {
+                    show: false,
+                },
+            },
+            tooltip: {
+                enabled: true,
+                x: {
+                    show: false,
+                },
+            },
+            legend: {
+                show: true
+            },
+            fill: {
+                type: "gradient",
+                gradient: {
+                    opacityFrom: 0.55,
+                    opacityTo: 0,
+                    shade: "#1C64F2",
+                    gradientToColors: ["#1C64F2"],
+                },
+            },
+            stroke: {
+                width: 6,
+            },
+            xaxis: {
+                categories: chartsData[0],
+                labels: {
+                    show: false,
+                },
+                axisBorder: {
+                    show: false,
+                },
+                axisTicks: {
+                    show: false,
+                },
+            },
+            yaxis: {
+                show: false,
+                labels: {
+                    formatter: function(value) {
+                        return '$' + value;
+                    }
+                }
+            },
+        }
+
+        dropdownButton.addEventListener("click", function(e) {
+            if (document.getElementById("data-labels-chart") && typeof ApexCharts !== 'undefined') {
+                const selectedId = parseInt(e.target.id);
+                const newChartData = chartsData[selectedId + 1];
+
+                const chart = new ApexCharts(document.getElementById("data-labels-chart"), {
+                    ...options,
+                    series: [{
+                        name: "Developer Edition",
+                        data: newChartData,
+                        color: "#1A56DB",
+                    }],
+                    xaxis: {
+                        categories: chartsData[selectedId],
+                        labels: {
+                            show: false,
+                        },
+                        axisBorder: {
+                            show: false,
+                        },
+                        axisTicks: {
+                            show: false,
+                        },
+                    },
+                });
+
+                chart.render();
+            }
+        });
+
+
+        // ApexCharts options and config
 
 
         window.addEventListener("load", function() {
-            let options = {
-                // add data series via arrays, learn more here: https://apexcharts.com/docs/series/
-                series: [{
-                        name: "Developer Edition",
-                        data: [1500, 1418, 1456, 1526, 1356, 1256],
-                        color: "#1A56DB",
-
-                    },
 
 
-                ],
-                chart: {
-                    height: "100%",
-                    maxWidth: "100%",
-                    type: "area",
-                    fontFamily: "Inter, sans-serif",
-                    dropShadow: {
-                        enabled: false,
-                    },
-                    toolbar: {
-                        show: false,
-                    },
-                },
-                tooltip: {
-                    enabled: true,
-                    x: {
-                        show: false,
-                    },
-                },
-                legend: {
-                    show: false
-                },
-                fill: {
-                    type: "gradient",
-                    gradient: {
-                        opacityFrom: 0.55,
-                        opacityTo: 0,
-                        shade: "#1C64F2",
-                        gradientToColors: ["#1C64F2"],
-                    },
-                },
-                dataLabels: {
-                    enabled: false,
-                },
-                stroke: {
-                    width: 6,
-                },
-                grid: {
-                    show: false,
-                    strokeDashArray: 4,
-                    padding: {
-                        left: 2,
-                        right: 2,
-                        top: 0
-                    },
-                },
-                xaxis: {
-                    categories: ['01 Feb', '02 Feb', '03 Feb', '04 Feb', '05 Feb',
-                        '06 Feb', '07 Feb'
-                    ],
-                    labels: {
-                        show: true,
-
-                    },
-                    axisBorder: {
-                        show: false,
-                    },
-                    axisTicks: {
-                        show: false,
-                    },
-                },
-                yaxis: {
-                    show: false,
-                    labels: {
-                        formatter: function(value) {
-                            return '$' + value;
-                        }
-                    }
-                },
-            }
-
-            if (document.getElementById("data-series-chart") && typeof ApexCharts !== 'undefined') {
-                const chart = new ApexCharts(document.getElementById("data-series-chart"), {
-                    ...options,
-                    series: [{
-                            name: "Last 7 Days",
-                            data: [1500, 1418, 1456, 1526, 1356, 1256, 3432],
-                            color: "#1A56DB",
-                        },
-
-                    ],
-                    xaxis: {
-                        ...options.xaxis,
-                        categories: ['01 Feb', '02 Feb', '03 Feb', '04 Feb',
-                            '05 Feb',
-                            '06 Feb', '07 Feb'
-                        ]
-
-                    }
-                });
+            if (document.getElementById("data-labels-chart") && typeof ApexCharts !== 'undefined') {
+                const chart = new ApexCharts(document.getElementById("data-labels-chart"), options);
                 chart.render();
             }
-        })
+        });
     </script>
 @endsection
 

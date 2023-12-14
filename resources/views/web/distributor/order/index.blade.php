@@ -117,9 +117,14 @@
                                     </td>
                                     <td class="px-6 py-4 text-center">
 
-                                        <span class="{{ \App\Constants\OrderStatusEnum::getBadgeClass($order->status) }}">
-                                            {{ \App\Constants\OrderStatusEnum::getLabelForDistributors($order->status) }}
-                                        </span>
+                                        <div
+                                        class="px-3 py-2 bg-opacity-40 text-center rounded-md text-gray-900 dark:text-white @if ($order->status == 1 || $order->status > 2) bg-green-600
+                                      @elseif ($order->status == 2)
+                                      bg-red-500
+                                      @elseif ($order->status == 0)
+                                      bg-[#ebff00] @endif">
+                                        {{ App\Constants\OrderStatusEnum::getLabelForDistributors($order->status) }}
+                                      </div>
 
                                         {{-- {{$order->status}} --}}
                                     </td>

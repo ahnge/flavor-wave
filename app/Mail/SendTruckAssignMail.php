@@ -51,7 +51,7 @@ class SendTruckAssignMail extends Mailable implements ShouldQueue
     {
         return [
         //    get from  storage
-            Attachment::fromStorage("public/pdf/13122023/42-orders.pdf"),
+            Attachment::fromStorage($this->filePath),
         ];
     }
 }

@@ -79,7 +79,7 @@
                         @csrf
                         <button name='status' type="submit" value="Reject"
                             class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-base w-24 py-3 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
-                            Detail
+                            Reject
                         </button>
                     </form>
                 </div>

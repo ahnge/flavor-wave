@@ -57,4 +57,13 @@ class User extends Authenticatable
             4 => 'warehouse.productList',
         };
     }
+
+    public function getAppTitle()
+    {
+        return match ((int)$this->role_id) {
+            2 => 'Preorder',
+            3 => 'Logistic',
+            4 => 'Warehouse',
+        };
+    }
 }
