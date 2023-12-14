@@ -240,15 +240,23 @@ class ProductController extends Controller
         return Excel::download(new ProductExport, 'products.xlsx');
     }
 
-    public function editDetails(Product $product)
+    public function editDetails(Request $request, Product $product)
     {
         $updatedDetail = request()->validate([
             'title' => ['required', 'min:2'],
             'price' => ['required'],
-            'ppb' => ['required']
+            'ppb' => ['required'],
+            'product_photo' => ['required'],
         ]);
 
-        $product->update($updatedDetail);
+        $path = $request->file('product_photo')->store('images/products', 's3');
+
+        $product->update([
+            'title' => request('title'),
+            'price' => request('price'),
+            'ppb' => request('ppb'),
+            'product_photo' => Storage::disk('s3')->url($path),
+        ]);
 
         return redirect()->back();
     }
