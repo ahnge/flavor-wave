@@ -9,9 +9,9 @@ use Illuminate\Http\Request;
 
 class TruckController extends Controller
 {
-    public function show($id)
+    public function show($truck_id)
     {
-        $truck = Truck::with('orders')->findOrFail($id);
+        $truck = Truck::with('orders')->findOrFail($truck_id);
 
         $assignOrders = $truck->orders()->paginate(10);
 
@@ -36,6 +36,13 @@ class TruckController extends Controller
     }
 
     public function orderDetail($orderId)
+    {
+        $order = Order::findOrFail($orderId);
+
+        return view('logistic.order-detail', compact('order'));
+    }
+
+    public function trucksOrderDetail($truck_id, $orderId)
     {
         $order = Order::findOrFail($orderId);
 

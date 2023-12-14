@@ -48,7 +48,7 @@
                       class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Add</button>
                   </form>
 
-                  <a href="{{ route('trucks.orderDetail', ['id' => $order->id]) }}" type="submit"
+                  <a href="{{ route('trucks.orderDetail', ['truck_id' => $truck->id,'id'=>$order->id]) }}" type="submit"
                     class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Detail</a>
                 </td>
 

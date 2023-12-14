@@ -8,6 +8,7 @@ use App\Http\Middleware\Logistics;
 use App\Http\Middleware\NotAdmin;
 use App\Http\Middleware\Sale;
 use App\Http\Middleware\SignedIn;
+use App\Http\Middleware\TruckDriver;
 use App\Http\Middleware\Warehouse;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -78,5 +79,6 @@ class Kernel extends HttpKernel
         'notAdmin' => NotAdmin::class,
         'distributor' => Distributor::class,
         'loggedIn' => SignedIn::class,
+        'truck-driver'=>TruckDriver::class,
     ];
 }

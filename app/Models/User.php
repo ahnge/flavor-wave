@@ -49,12 +49,18 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
+    public function truck()
+    {
+        return $this->hasOne(Truck::class);
+    }
+
     public function getRedirectRoute()
     {
         return match ((int)$this->role_id) {
             2 => 'preorder.preorderList',
             3 => 'logistic.index',
             4 => 'warehouse.productList',
+            6 => 'trucks.show',
         };
     }
 
@@ -64,6 +70,7 @@ class User extends Authenticatable
             2 => 'Preorder',
             3 => 'Logistic',
             4 => 'Warehouse',
+            6 => 'Driver',
         };
     }
 }

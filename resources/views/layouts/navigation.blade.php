@@ -1,11 +1,22 @@
 <nav class="bg-neutral-100 border-gray-200 dark:bg-gray-800">
   <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
 
-    <a href="{{ route(Illuminate\Support\Facades\Auth::guard('admin')->user()->getRedirectRoute()) }}"
+    @if (Illuminate\Support\Facades\Auth::guard('admin')->user()->role_id == 6)
+    <a href="{{route(Illuminate\Support\Facades\Auth::guard('admin')->user()->getRedirectRoute(),['truck_id'=>Illuminate\Support\Facades\Auth::guard('admin')->user()->truck])}}"
       class="flex items-center space-x-3 rtl:space-x-reverse">
       <img src="{{ asset('assets/images/sig.png') }}" class="w-8  " alt="Flowbite Logo">
       <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Flavor Wave</span>
     </a>
+    @else
+    <a href="{{
+        route(Illuminate\Support\Facades\Auth::guard('admin')->user()->getRedirectRoute())
+
+         }}"
+      class="flex items-center space-x-3 rtl:space-x-reverse">
+      <img src="{{ asset('assets/images/sig.png') }}" class="w-8  " alt="Flowbite Logo">
+      <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Flavor Wave</span>
+    </a>
+    @endif
 
     <div class="hidden w-full md:block md:w-auto" id="navbar-default">
 

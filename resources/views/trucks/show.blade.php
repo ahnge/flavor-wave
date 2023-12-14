@@ -48,7 +48,7 @@
           @else
             @foreach ($assignOrders as $order)
               @if ($order->status !== \App\Constants\OrderStatusEnum::Delivered->value)
-                <tr onclick="window.location.href='{{ route('trucks.orderDetail', ['id' => $order->id]) }}'"
+                <tr onclick="window.location.href='{{ route('trucks.orderDetail', ['truck_id'=>$truck->id,'id' => $order->id]) }}'"
                   class="bg-white cursor-pointer border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                   <td class="px-6 py-4">
                     {{ $order->order_no }}
