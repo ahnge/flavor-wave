@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('phone_number');
             $table->string('password');
-            $table->string('email');
-            $table->string('address')->unique();
+            $table->string('email')->unique();
+            $table->string('address');
             $table->string('region_code');
             $table->foreign('region_code')->references('code')->on('regions');
             $table->timestamps();

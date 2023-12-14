@@ -18,7 +18,7 @@ class AuthenticatedSessionController extends Controller
     public function create(): View | RedirectResponse
     {
         if(Auth::guard('web')->check()){
-            return redirect(Auth::guard('web')->user()->getRedirectRoute());
+            return redirect()->route(Auth::guard('web')->user()->getRedirectRoute());
         }
         elseif(Auth::guard('admin')->check()){
             return redirect()->route(Auth::guard('admin')->user()->getRedirectRoute());
@@ -38,7 +38,7 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
 
-        return redirect(Auth::guard('web')->user()->getRedirectRoute());
+        return redirect()->route(Auth::guard('web')->user()->getRedirectRoute());
     }
 
     /**

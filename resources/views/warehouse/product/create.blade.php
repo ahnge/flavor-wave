@@ -13,7 +13,7 @@
 
             <h2 class="text-2xl font-semibold mb-6 dark:text-white">Add New Product</h2>
 
-            <form action="{{ route('warehouse.storeProduct') }}" method="post" enctype="multipart/form-data">
+            <form id="myForm" action="{{ route('warehouse.storeProduct') }}" method="post" enctype="multipart/form-data">
                 @csrf
 
                 <div class="mb-4">
@@ -73,7 +73,7 @@
 @endsection
 
 @section('scripts')
-    <script>
+    <script type="module">
         document.addEventListener("DOMContentLoaded", function() {
             const productPhoto = document.querySelector('#product_photo');
             const placeholder = document.querySelector('#product-photo-placeholder');
@@ -87,5 +87,13 @@
             })
 
         });
+        $('form').on('submit', function (e) {
+     $('button[type=submit], input[type=submit]', $(this)).blur().addClass('disabled is-submited');
+});
+
+$(document).on('click', 'button[type=submit].is-submited, input[type=submit].is-submited', function(e) {
+    e.preventDefault();
+});
+
     </script>
 @endsection
