@@ -16,47 +16,46 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
-use Maatwebsite\Excel\Facades\Excel;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\File;
 
-class AssignTruckOrder implements ShouldQueue
-{
+class AssignTruckOrder implements ShouldQueue {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     // public $user;
     /**
-     * Create a new job instance.
-     */
-    public function __construct()
-    {
+    * Create a new job instance.
+    */
+
+    public function __construct() {
         //
     }
 
     /**
-     * Execute the job.
-     */
-    public function handle(): void
-    {
-        $truckOrders = TruckOrders::select('truck_id', DB::raw('GROUP_CONCAT(order_id) as order_ids'))
-        ->groupBy('truck_id')
+    * Execute the job.
+    */
+
+    public function handle(): void {
+        $truckOrders = TruckOrders::select( 'truck_id', DB::raw( 'GROUP_CONCAT(order_id) as order_ids' ) )
+        ->groupBy( 'truck_id' )
         ->get();
 
-        $truckIds = $truckOrders->pluck('truck_id');
+        $truckIds = $truckOrders->pluck( 'truck_id' );
 
-        $trucks = Truck::whereIn('id',$truckIds)->with('user')->get();
-        $orders  =[];
+        $trucks = Truck::whereIn( 'id', $truckIds )->with( 'user' )->get();
+        $orders  = [];
 
-        foreach($trucks as  $i=> $driver){
-            $orders  = Order::whereIn('id',explode(',',$truckOrders->where('truck_id',$driver->id)->first()->order_ids))->where('status',OrderStatusEnum::Assigned->value)
-            ->with('distributor')
+        foreach ( $trucks as  $i=> $driver ) {
+            $orders  = Order::whereIn( 'id', explode( ',', $truckOrders->where( 'truck_id', $driver->id )->first()->order_ids ) )->where( 'status', OrderStatusEnum::Assigned->value )
+            ->with( 'distributor' )
             ->get();
+            if ( count( $orders ) >  0 ) {
+                $folderPath = storage_path( 'app/public/pdf/' . now()->format( 'dmY' ) . '/' );
+                File::makeDirectory( $folderPath, 0777, true, true );
 
-            // Excel::store(
-            //     new TruckOrderAssign($orders,$truck),
-            //     'public/pdf/' . now()->format('dmY') . '/' . str_replace(' ', '_', ($truck->user->name ?? 'unknown')) . '-orders.pdf'
-            // );
-            $path  =  storage_path('app/public/pdf/' . now()->format('dmY') . '/' . str_replace(' ', '_', ($driver->user->name ?? 'unknown')) . '-orders.pdf');
-           Pdf::loadView('mail.table',compact('orders','driver'))->save($path);
+                $filePath = $folderPath . str_replace( ' ', '_', ( $driver->user->name ?? 'unknown' ) ) . '-orders.pdf';
+
+                Pdf::loadView( 'mail.table', compact( 'orders', 'driver' ) )->save( $filePath );
+            }
         }
     }
 }

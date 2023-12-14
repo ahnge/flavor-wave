@@ -12,7 +12,7 @@ use App\Mail\SendOrderAlert;
 use App\Models\Order;
 use App\Models\Truck;
 use App\Models\TruckOrders;
-use App\Models\User;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -51,23 +51,27 @@ Route::get('/export/excel',function(){
 
 
 Route::get('/test',function(){
+
+
+    $orderIds  = Order::where('status',OrderStatusEnum::Assigned->value)->pluck('id');
+
     $truckOrders = TruckOrders::select('truck_id', DB::raw('GROUP_CONCAT(order_id) as order_ids'))
+    ->whereIn('order_id', $orderIds) // Add this line to filter by status
     ->groupBy('truck_id')
     ->get();
 
+
     $truckIds = $truckOrders->pluck('truck_id');
 
-    $driver = Truck::whereIn('id',$truckIds)->with('user')->first();
-    $orders  =[];
+    $trucks = Truck::
+    whereIn('id',$truckIds)
+    ->with('user','orders')->get();
 
-        $orders  = Order::whereIn('id',explode(',',$truckOrders->where('truck_id',3)->first()->order_ids))->where('status',OrderStatusEnum::Assigned->value)
-        ->with('distributor')
-        ->get();
+    $a =  [];
+    foreach ( $trucks as $driver ) {
+        $path = 'public/pdf/' . now()->format( 'dmY' ) . '/' . str_replace( ' ', '_', ( $driver->user->name ?? 'unknown' ) ) . '-orders.pdf';
+        $a['em']= $driver;
+    }
 
-        // Excel::store(
-        //     new TruckOrderAssign($orders,$truck),
-        //     'public/pdf/' . now()->format('dmY') . '/' . str_replace(' ', '_', ($truck->user->name ?? 'unknown')) . '-orders.pdf'
-        // );
-       $pdf   =PDF::loadView('mail.table',compact('orders','driver'));
-       return $pdf->stream();
+    return $trucks;
 });

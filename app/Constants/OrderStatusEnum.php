@@ -25,6 +25,8 @@ enum OrderStatusEnum: int
                 return 'Assigned';
             case self::Shipped->value:
                 return 'Shipped';
+            case self::Returned->value:
+                return 'Returned';
             case self::Delivered->value:
                 return 'Delivered';
             case self::Returned->value:
@@ -48,6 +50,8 @@ enum OrderStatusEnum: int
                 return 'Shipping';
             case self::Shipped->value:
                 return 'Shipped';
+            case self::Returned->value:
+                return 'Returned';
             case self::Delivered->value:
                 return 'Delivered';
             case self::Returned->value:
