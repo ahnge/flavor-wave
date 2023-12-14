@@ -37,8 +37,8 @@ class PreorderController extends Controller
                 });
             })
             // ->latest("is_urgent")
+            ->orderBy('is_urgent','desc')
             ->latest('id')
-            ->orderBy('is_urgent','asc')
             ->paginate(10)
             ->withQueryString();
 

@@ -20,7 +20,7 @@ class LogisticController extends Controller
                 $sortType = $request->id ?? 'asc';
                 $query->orderBy("id", $sortType);
             })
-            ->latest("id")
+            // ->latest("id")
             ->paginate(10)
             ->withQueryString();
 

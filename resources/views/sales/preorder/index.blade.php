@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="max-w-screen-lg p-8 mx-auto">
+    <div class="max-w-screen-lg  mx-auto">
 
         <a href="{{ route('preorder.preorderList') }}">
             <button type="button"
@@ -18,13 +18,14 @@
             </p>
 
             @if (count($valids) > 0)
-            <div class="p-4 mb-4 flex flex-col text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                @forelse ($valids as $valid)
-                  <span class="font-medium">{{ $valid['name'] }}'s total avaiable quantity is not enough for this  order</span>
-                @empty
-
-                @endforelse
-            </div>
+                <div class="p-4 mb-4 flex flex-col text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+                    role="alert">
+                    @forelse ($valids as $valid)
+                        <span class="font-medium">{{ $valid['name'] }}'s total avaiable quantity is not enough for this
+                            order</span>
+                    @empty
+                    @endforelse
+                </div>
             @endif
 
         </div>
@@ -52,10 +53,9 @@
                 <tbody>
                     @foreach ($preorder->products as $product)
                         <tr
-                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            class="bg-white border-b  dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                             <td class="p-4">
-                                <img class="w-16 max-w-full max-h-full" src="{{ $product->product_photo }}"
-                                    alt="Jese image">
+                                <img class="w-32 h-28 object-cover" src="{{ $product->product_photo }}" alt="Jese image">
                             </td>
                             <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
                                 {{ $product->title }}
