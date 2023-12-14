@@ -179,8 +179,8 @@ class ProductController extends Controller
             ->setDataLabelsEnabled(true)
             ->setSeries($weeklyBestProductQuantity)
             ->setLabels($weeklyBestProductNames);
-
-        return view('warehouse.charts', compact("productChart", "weeklyBestProductChart"));
+        $chartsData = [$weeklyBestProductNames, $weeklyBestProductQuantity, $productNames, $productQuantity];
+        return view('warehouse.charts')->with("chartsData", $chartsData);
     }
 
     // To create new product

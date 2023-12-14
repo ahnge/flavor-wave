@@ -38,7 +38,7 @@
                                     {{ $order->order_no }}
                                 </th>
                                 <td class="px-6 py-4">{{ $order->totalProductQuantity }}</td>
-                                <td class="px-6 py-4">
+                                <td class="px-6 py-4 flex">
                                     <form action="{{ route('logistic.addOrderToTruck', ['id' => $truck->id]) }}"
                                         method="post">
                                         @csrf
@@ -47,10 +47,12 @@
                                         <input type="hidden" name="total_quantity"
                                             value="{{ $order->totalProductQuantity }}">
                                         <button type="submit"
-                                            class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Add</button>
+                                            class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Add To
+                                            Truck</button>
                                     </form>
+                                    <a href="{{ route('logistic.preOrderDetails', ['id' => $order->id]) }}"
+                                        class="font-medium text-blue-600 ms-3 dark:text-blue-500 hover:underline">Details</a>
                                 </td>
-
                             </tr>
                         @endforeach
                     </tbody>
