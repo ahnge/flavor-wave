@@ -38,4 +38,15 @@ class Order extends Model
         });
     }
 
+    public function trucks()
+    {
+        return $this->belongsToMany(Truck::class, 'truck_orders')
+            ->withPivot('total_quantity')
+            ->withTimestamps();
+    }
+
+    public function region()
+    {
+        return $this->belongsTo(Region::class, 'region_code', 'code');
+    }
 }
