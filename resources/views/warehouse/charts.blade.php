@@ -56,21 +56,34 @@
         console.log(chartsData);
 
         const pieChartData = {};
-        pieChartData.labels = chartsData[0].slice(0,9);
-        pieChartData.data = chartsData[1].slice(0,9);
+        pieChartData.labels = chartsData[0].slice(0, 9);
+        pieChartData.data = chartsData[1].slice(0, 9);
 
         const circleChartData = {};
         // get  only 4 element
         circleChartData.labels = chartsData[2].slice(0, 4);
         circleChartData.data = chartsData[3].slice(0, 4);
 
+        const textColor = localStorage.getItem('color-theme') ==  "light" ? "#000"  : "#fff" ;
+
         window.addEventListener("load", function() {
             const getChartOptions = () => {
                 return {
                     series: pieChartData.data,
+                    noData: {
+                        text: "no data",
+                        align: 'start',
+                        verticalAlign: 'top',
+                        offsetX: 0,
+                        offsetY: 0,
+                        style: {
+                            color: textColor,
+                            fontSize: '30px',
+                        }
+                    },
                     // colors:
                     chart: {
-                        height: 420,
+                        height: 360,
                         width: "130%",
                         type: "pie",
                     },
@@ -212,7 +225,8 @@
             }
 
             if (document.getElementById("circle-chart") && typeof ApexCharts !== 'undefined') {
-                const circleChart = new ApexCharts(document.getElementById("circle-chart"), getCircleChartOptions());
+                const circleChart = new ApexCharts(document.getElementById("circle-chart"),
+            getCircleChartOptions());
                 circleChart.render();
             }
         });

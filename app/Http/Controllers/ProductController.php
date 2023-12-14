@@ -105,17 +105,6 @@ class ProductController extends Controller
             return $item['quantity'];
         })->toArray();
 
-        $productChart = (new Chart)
-            ->setWidth('100%')
-            ->setHeight(400)
-            ->setTitle("Product")
-            ->setSubtitle("Products")
-            ->setType("donut")
-            ->setDataLabelsEnabled(true)
-            ->setSeries($productQuantity)
-            ->setLabels($productNames);
-
-
         /////////////////////////////////////////////////////////////////////////////////
         /* For weekly best seller products  */
         $startDate = Carbon::now()->startOfWeek()->format("Y-m-d H:i:s");
@@ -135,7 +124,6 @@ class ProductController extends Controller
         $weeklyBestSellerProducts = [];
         foreach ($weeklyBestSellerProduct as $prodID => $quantity) {
             $productName = Product::where("id", $prodID)
-                ->get()
                 ->pluck("title")
                 ->toArray();
 
@@ -169,20 +157,13 @@ class ProductController extends Controller
             return intval($item['quantity']);
         })->toArray();
 
-        //dd($weeklyBestProductNames, $weeklyBestProductQuantity, $productQuantity, $productNames);
+        if(count($weeklyBestProductNames) == 0)
+        {
+            $weeklyBestProductNames = ['No Data'];
+            $weeklyBestProductQuantity = [100];
+        }
 
 
-
-
-        $weeklyBestProductChart = (new Chart)
-            ->setWidth('100%')
-            ->setHeight(400)
-            ->setTitle("Best Sale Products of last week")
-            ->setSubtitle("Top 7 Products")
-            ->setType("pie")
-            ->setDataLabelsEnabled(true)
-            ->setSeries($weeklyBestProductQuantity)
-            ->setLabels($weeklyBestProductNames);
         $chartsData = [$weeklyBestProductNames, $weeklyBestProductQuantity, $productNames, $productQuantity];
         return view('warehouse.charts')->with("chartsData", $chartsData);
     }

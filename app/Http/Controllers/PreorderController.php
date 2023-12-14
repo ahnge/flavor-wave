@@ -146,59 +146,36 @@ class PreorderController extends Controller
 
     public function charts()
     {
-        $currentDate = Carbon::now();
+        $currentDate = \Carbon\Carbon::now();
         // return $currentDate;
-        $startOfMonth = $currentDate->startOfMonth();
-        // return $startOfMonth;
+        $startOfMonth = $currentDate->copy()->startOfMonth();
 
-        if ($currentDate->isLastOfMonth()) {
-            // If today is the last day of the current month, retrieve sales for the entire month.
-            $endOfMonth = $currentDate->endOfMonth();
-        } else {
-            // If today is not the last day of the current month, set the end date to today.
-            $endOfMonth = Carbon::now();
-        }
+        $endOfMonth = $currentDate->copy()->endOfMonth();
 
-        // return $endOfMonth;
 
-        $monthlySales = DB::table('orders')
-            ->select(DB::raw("DATE_FORMAT(created_at, '%d/%m/%Y') as date"), DB::raw('CAST(SUM(total) AS SIGNED) as total_sales'))
+
+        $monthlySales = Order::select(DB::raw("DATE_FORMAT(created_at, '%d/%m/%Y') as date"), DB::raw('CAST(SUM(total) AS SIGNED) as total_sales'))
             ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
-            ->groupBy(DB::raw("DATE_FORMAT(created_at, '%d/%m/%Y')"))
             ->where('status',OrderStatusEnum::Delivered->value)
+
+            ->groupBy(DB::raw("DATE_FORMAT(created_at, '%d/%m/%Y')"))
             ->get();
 
-        // return $monthlySales;
-
         $monthly = collect($monthlySales);
-
-        $total = $monthly->sum('total_sales');
-        // return $total;
-
-        //Highest Sales
         $highest = $monthly->max('total_sales');
-        // return $highest;
         $highestSellingDate = $monthly->where('total_sales', $highest)->pluck('date')->first();
-        // return $highestSellingDate;
 
         $highestSellingDateOfMonth = [
             "highestSaleAmount" => $highest,
             "highestSellingDateOfMonth" => $highestSellingDate
         ];
 
-        // return $highestSellingDateOfMonth;
-
-
-        //Lowest Sales
         $lowest = $monthly->min('total_sales');
-        // return $lowest;
 
         if ($lowest == 0) {
             $lowestSellingDates = $monthly->where('total_sales', $lowest)->pluck('date');
-            // return $lowestSellingDates;
             $lowestDays = [];
             foreach ($lowestSellingDates as $day) {
-                // $date = $day->format('m/d/Y');
                 $lowestSaleAmount = $lowest;
                 $lowestSellingDateOfMonth[] = [
                     'lowestSaleAmount' => $lowestSaleAmount,
@@ -215,21 +192,9 @@ class PreorderController extends Controller
                 "lowestSellingDateOfMonth" => $lowestSellingDate
             ];
         }
-
-        // return $lowestDays;
-
         $average = $monthly->avg('total_sales');
         $averageAmount = round($average, 2);
         $dates = $monthlySales->pluck('date')->toArray();
-        //dd($monthlySales);
-        // dd([
-        //     "monthlySales" => $monthlySales,
-        //     "totalMonthlySalesAmount" => $total,
-        //     "averageAmount" => $averageAmount,
-        //     "highestSale" => $highestSellingDateOfMonth,
-        //     "lowestSale" => $lowestSellingDateOfMonth
-        // ]);
-
 
         $dateValuesArray = $monthlySales->map(function ($item) {
             return $item->date;
@@ -238,11 +203,6 @@ class PreorderController extends Controller
             return $item->total_sales;
         })->toArray();
 
-        //dd($dateValuesArray);
-
-
-        ////////////////////////////////////////////////////////////////////
-        // for weekly
         $weeklySales = Order::select(
             DB::raw('DATE(created_at) as sale_date'),
             DB::raw('CAST(SUM(total) AS SIGNED) as total_sales')
@@ -252,32 +212,23 @@ class PreorderController extends Controller
                 now()->endOfWeek()
             ])
             ->where('status',OrderStatusEnum::Delivered->value)
+
             ->groupBy('sale_date')
             ->get();
-        // return $weeklySales;
-        // dd($weeklySales);
 
-        // Calculate the best-selling day
         $bestSellingDay = $weeklySales->max('total_sales');
 
-        // Find the date of the best-selling day
         $bestSellingDate = $weeklySales->where('total_sales', $bestSellingDay)->pluck('sale_date')->first();
-        // return $bestSellingDate; //2023-09-09
 
-        // Convert the date to a Carbon instance
         $bestSellingDateFormatted = Carbon::parse($bestSellingDate);
+        $bestSellingDayName = $bestSellingDateFormatted->formatLocalized('%A');
 
         $daysOfWeek = [];
 
-        // Loop through the week and get day names
         for ($i = 0; $i < 7; $i++) {
             $day = Carbon::parse($bestSellingDate)->startOfWeek()->addDays($i);
             $dayName = $day->formatLocalized('%A');
-            // $date = $day->format("m/d/Y");
-
-            // Calculate sales for the current day
             $daySales = $weeklySales->where('sale_date', $day->format('Y-m-d'))->first()?->total_sales ?? 0;
-            // return $daySales;
 
             $daysOfWeek[] = [
                 'dayName' => $dayName,
@@ -285,34 +236,20 @@ class PreorderController extends Controller
                 'date' => $day
             ];
         }
-        // return $daysOfWeek;
-        // dd($daysOfWeek);
-
-        // dd(collect($daysOfWeek));
 
         $all = collect($daysOfWeek);
 
 
         $total = $weeklySales->sum('total_sales');
-        // return $total;
 
-        //Highest Sales
         $highest = $all->max('daySales');
-        // return $highest;
         $highestSellingDate = $all->where('daySales', $highest)->pluck('date')->first();
-        // return  $highestSellingDate;
         $highestSellingDateFormat = $highestSellingDate->format('m/d/Y');
         $highestDay = [
             "highestSaleAmount" => $highest,
             "highestSellingDate" => $highestSellingDateFormat
         ];
-
-        // return $highestSellingDateFormat;
-        // return $highestDay;
-
-        //Lowest Sales
         $lowest = $all->min('daySales');
-        // return $lowest;
 
         if ($lowest == 0) {
             $lowestSellingDays = $all->where('daySales', $lowest)->pluck('date');
@@ -341,10 +278,6 @@ class PreorderController extends Controller
 
         $average = $weeklySales->avg('total_sales');
         $averageAmount = round($average, 2);
-        // return $average;
-        // dd(
-        //     $all
-        // );
 
         $dayValuesArray = $all->map(function ($item) {
             return $item['dayName'];
@@ -353,9 +286,7 @@ class PreorderController extends Controller
             return $item['daySales'];
         })->toArray();
 
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        //yearly chart
         $monthlySales = Order::select(
             DB::raw('MONTH(created_at) as sale_month'),
             DB::raw('CAST(SUM(total) AS SIGNED) as total_sales')
@@ -383,19 +314,18 @@ class PreorderController extends Controller
             return $item;
         });
 
+
         // return $monthlySales;
 
-
+        if($monthlySales->count() > 0){
         // Calculate the best-selling month
-        $bestSellingMonth = $monthlySales->max('total_sales')  ?? 0;
+        $bestSellingMonth = $monthlySales->max('total_sales');
 
         // Find the date of the best-selling month
-        $bestSellingDate = $monthlySales->where('total_sales', $bestSellingMonth)->pluck('sale_month')->first()  ;
+        $bestSellingDate = $monthlySales->where('total_sales', $bestSellingMonth)->pluck('sale_month')->first();
         // return $bestSellingDate; //2023-08-01
-        if($bestSellingDate)
-        {
 
-        $date = Carbon::createFromFormat('Y-m-d', $bestSellingDate)  ;
+        $date = Carbon::createFromFormat('Y-m-d', $bestSellingDate);
         // return $date;
         $monthName = $date->format('F');
         // return $monthName;
@@ -498,12 +428,12 @@ class PreorderController extends Controller
             return $item['monthSales'];
         })->toArray();
 
-
         $chartsData = [$yearMonthValuesArray, $yearSaleValuesArray, $dateValuesArray, $totalSalesValuesArray, $dayValuesArray, $daySalesValuesArray];
         }
         else{
             $chartsData = [[],[],[],[],[],[],[]];
         }
+
 
         return view('sales.charts')->with("chartsData", $chartsData);
     }

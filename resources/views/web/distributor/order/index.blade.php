@@ -32,9 +32,9 @@
                             <label for="underline_select" class="sr-only">Underline select</label>
                             <select id="statusSelect"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option value="none">None</option>
+                                <option value="all">None</option>
                                 <option @selected(request()->status == \App\Constants\OrderStatusEnum::Pending->value)
-                                    value="{{ \App\Constants\OrderStatusEnum::Pending->value }}">Pending</option>
+                                    value="{{  \App\Constants\OrderStatusEnum::Pending->value }}">Pending</option>
                                 <option @selected(request()->status == \App\Constants\OrderStatusEnum::Approved->value)
                                     value="{{ \App\Constants\OrderStatusEnum::Approved->value }}">Approved</option>
                                 <option @selected(request()->status == \App\Constants\OrderStatusEnum::Delivered->value)
@@ -131,8 +131,8 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="6" class="text-center">
-                                        <div class="flex flex-col items-center justify-center h-40 ">
+                                    <td colspan="12" class="text-center">
+                                        <div class="flex flex-col   items-center justify-center h-40 ">
 
                                             <svg class="w-20 h-20 dark:fill-gray-700 f" version="1.1" id="Capa_1"
                                                 xmlns="http://www.w3.org/2000/svg"

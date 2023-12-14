@@ -202,7 +202,7 @@
                         intitalChart.labels = ThisWeekLabel;
                         intitalChart.data = ThisWeekData;
                         // last index of  data
-                        let lastData = Math.max(...ThisWeekData)
+                        let lastData = Math.max(...ThisWeekData) <= 0 ? "0" : Math.max(...ThisWeekData);
 
                         $("#totalAmount").text(lastData  + "Ks");
 
@@ -210,14 +210,14 @@
                         $("#dropdownDefaultButton").text('This Month')
                         intitalChart.labels = ThisMonthLabel;
                         intitalChart.data = ThisMonthData;
-                        let lastData = ThisMonthData.slice(-1);
+                        let lastData = ThisMonthData.slice(-1) <= 0 ? "0" : ThisMonthData.slice(-1);
 
                         $("#totalAmount").text(lastData  + "Ks");
                     } else if (period == 'year') {
                         $("#dropdownDefaultButton").text('This Year')
                         intitalChart.labels = thisYearLabels;
                         intitalChart.data = thisYearData;
-                        let lastData = thisYearData.slice(-1);
+                        let lastData = thisYearData.slice(-1) <= 0 ? "0" : thisYearData.slice(-1);
 
                         $("#totalAmount").text(lastData  + "Ks");
                     }

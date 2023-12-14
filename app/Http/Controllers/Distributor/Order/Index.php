@@ -11,13 +11,14 @@ class Index extends Controller
     {
 
         $status = $request->status;
-
-        $orders =
-        \App\Models\Order::
-        search($request->search)
-        ->where('distributor_id',auth()->user()->id)
-        ->when($status, function ($query, $status) {
-            return $query->where('status', $status);
+        $orders = \App\Models\Order::search($request->search)
+        ->where('distributor_id', auth()->user()->id)
+        ->when($request->has('status'), function ($query) use ($status) {
+            if ($status == "all") {
+                return  ;
+            } else {
+                return $query->where('status', $status);
+            }
         })
         // ->orderBy('status','desc')
         // ->orderBy('created_at','asc')

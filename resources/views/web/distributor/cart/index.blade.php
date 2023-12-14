@@ -2,7 +2,7 @@
 
 @section('main')
     <div class="min-h-[90vh]  min-w-[100vw] bg-white dark:bg-gray-800 pt-12 dark:text-white ">
-        <div class="min-w-full h-full bg-white dark:bg-gray-900 dark:text-white px-4 sm:px-6 lg:px-[5vw] pt-20 pb-40">
+        <div class="min-w-full  min-h-[90vh] h-full bg-white dark:bg-gray-900 dark:text-white px-4 sm:px-6 lg:px-[5vw] pt-20 pb-40">
             <h3 class="text-2xl font-bold pb-4 border-b">Cart</h3>
             <div class="flex gap-3 pt-4">
                 <div class="w-1/2">
@@ -25,14 +25,14 @@
                                         </p>
                                     </div>
                                 </div>
-                                <div class="flex gap-x-2">
-                                    <button onclick="increaseQuantity({{ $product->id }})">
+                                <div class="flex gap-x-4">
+                                    <button  class="text-4xl hover:text-gray-400  hover:dark:text-gray-500" onclick="increaseQuantity({{ $product->id }})">
                                         +
                                     </button>
                                     <input type="number" id="quantity-{{ $product->id }}" value="1"
                                         class="product-quantity bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-20 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         placeholder="John">
-                                    <button onclick="decreaseQuantity({{ $product->id }})">
+                                    <button  class="text-4xl hover:text-gray-400  hover:dark:text-gray-500" onclick="decreaseQuantity({{ $product->id }})">
                                         -
                                     </button>
                                 </div>
@@ -45,12 +45,12 @@
                                 </div>
                             </div>
                         @empty
-                            <p class="text-center">No items in cart</p>
+                            {{-- <p class="text-center">No items in cart</p> --}}
                         @endforelse
                     </div>
                 </div>
-                <div class="w-1/2 bg-[#f9f9f9] dark:bg-slate-800 rounded-lg h-[350px] ">
-                    <div class="flex flex-col px-8 py-6  gap-6">
+                <div id="orderSummary"  class="hidden w-1/2 bg-[#f9f9f9] dark:bg-slate-800 rounded-lg h-[350px] ">
+                    <div  class="flex flex-col px-8 py-6  gap-6">
                         <h3>Order summary</h3>
 
                         <div class="flex flex-col divide-y-2 divide-gray-300 dark:divide-slate-700 gap-4">
@@ -149,6 +149,12 @@
     </script>
     <script type="module">
         $(document).ready(function() {
+
+            const products =  @json($products);
+            if(products.length > 0){
+                $('#orderSummary').removeClass('hidden');
+            }
+
 
             $('#orderConfirmed').on('click', function() {
                 const cartData = [];
