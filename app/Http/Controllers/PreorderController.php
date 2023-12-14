@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\OrderProduct;
 use Illuminate\Http\Request;
 use Akaunting\Apexcharts\Chart;
+use App\Constants\OrderStatusEnum;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Builder;
 use App\Http\Resources\PreorderListsResource;
@@ -164,6 +165,7 @@ class PreorderController extends Controller
             ->select(DB::raw("DATE_FORMAT(created_at, '%d/%m/%Y') as date"), DB::raw('CAST(SUM(total) AS SIGNED) as total_sales'))
             ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
             ->groupBy(DB::raw("DATE_FORMAT(created_at, '%d/%m/%Y')"))
+            ->where('status',OrderStatusEnum::Delivered->value)
             ->get();
 
         // return $monthlySales;
@@ -249,6 +251,7 @@ class PreorderController extends Controller
                 now()->startOfWeek(),
                 now()->endOfWeek()
             ])
+            ->where('status',OrderStatusEnum::Delivered->value)
             ->groupBy('sale_date')
             ->get();
         // return $weeklySales;
@@ -264,11 +267,6 @@ class PreorderController extends Controller
         // Convert the date to a Carbon instance
         $bestSellingDateFormatted = Carbon::parse($bestSellingDate);
 
-        // Get the day name (e.g., Monday, Tuesday)
-        $bestSellingDayName = $bestSellingDateFormatted->formatLocalized('%A');
-        // return $bestSellingDayName; //Saturday
-
-        // Create an array to store day names and total sales for the entire week
         $daysOfWeek = [];
 
         // Loop through the week and get day names
@@ -366,6 +364,8 @@ class PreorderController extends Controller
                 now()->startOfYear(),
                 now()->endOfYear()
             ])
+            ->where('status',OrderStatusEnum::Delivered->value)
+
             ->groupBy('sale_month')
             ->get();
 
@@ -387,13 +387,15 @@ class PreorderController extends Controller
 
 
         // Calculate the best-selling month
-        $bestSellingMonth = $monthlySales->max('total_sales');
+        $bestSellingMonth = $monthlySales->max('total_sales')  ?? 0;
 
         // Find the date of the best-selling month
-        $bestSellingDate = $monthlySales->where('total_sales', $bestSellingMonth)->pluck('sale_month')->first();
+        $bestSellingDate = $monthlySales->where('total_sales', $bestSellingMonth)->pluck('sale_month')->first()  ;
         // return $bestSellingDate; //2023-08-01
+        if($bestSellingDate)
+        {
 
-        $date = Carbon::createFromFormat('Y-m-d', $bestSellingDate);
+        $date = Carbon::createFromFormat('Y-m-d', $bestSellingDate)  ;
         // return $date;
         $monthName = $date->format('F');
         // return $monthName;
@@ -498,6 +500,10 @@ class PreorderController extends Controller
 
 
         $chartsData = [$yearMonthValuesArray, $yearSaleValuesArray, $dateValuesArray, $totalSalesValuesArray, $dayValuesArray, $daySalesValuesArray];
+        }
+        else{
+            $chartsData = [[],[],[],[],[],[],[]];
+        }
 
         return view('sales.charts')->with("chartsData", $chartsData);
     }

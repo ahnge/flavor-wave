@@ -26,9 +26,9 @@ class DatabaseSeeder extends Seeder
             DistributorSeeder::class,
             TruckSeeder::class,
             ProductSeeder::class,
-            OrderSeeder::class,
-            OrderProductSeeder::class,
-            TruckOrdersSeeder::class,
+            // OrderSeeder::class,
+            // OrderProductSeeder::class,
+            // TruckOrdersSeeder::class,
         ]);
     }
 }

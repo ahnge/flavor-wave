@@ -8,9 +8,11 @@ use App\Models\OrderProduct;
 
 use Illuminate\Http\Request;
 use Akaunting\Apexcharts\Chart;
+use App\Constants\OrderStatusEnum;
 use App\Exports\ProductExport;
 use App\Http\Resources\ProductResource;
 use App\Imports\ProductImport;
+use App\Models\Order;
 use Illuminate\Database\Eloquent\Builder;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
@@ -103,9 +105,6 @@ class ProductController extends Controller
             return $item['quantity'];
         })->toArray();
 
-
-
-
         $productChart = (new Chart)
             ->setWidth('100%')
             ->setHeight(400)
@@ -121,8 +120,9 @@ class ProductController extends Controller
         /* For weekly best seller products  */
         $startDate = Carbon::now()->startOfWeek()->format("Y-m-d H:i:s");
         $endDate = Carbon::now()->endOfWeek()->format("Y-m-d H:i:s");
-
+        $soldOrders  = Order::where('status',OrderStatusEnum::Delivered->value)->pluck('id');
         $weeklyBestSellerProduct = OrderProduct::selectRaw("sum(quantity) as quantity, product_id")
+            ->whereIn('order_id',$soldOrders)
             ->whereBetween("created_at", [$startDate, $endDate])
             ->groupBy("product_id")
             ->orderBy("quantity", "desc")

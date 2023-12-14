@@ -12,7 +12,7 @@ use App\Mail\SendOrderAlert;
 use App\Models\Order;
 use App\Models\Truck;
 use App\Models\TruckOrders;
-use App\Models\User;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -49,3 +49,29 @@ Route::get('/export/excel',function(){
       return 'success';
 });
 
+
+Route::get('/test',function(){
+
+
+    $orderIds  = Order::where('status',OrderStatusEnum::Assigned->value)->pluck('id');
+
+    $truckOrders = TruckOrders::select('truck_id', DB::raw('GROUP_CONCAT(order_id) as order_ids'))
+    ->whereIn('order_id', $orderIds) // Add this line to filter by status
+    ->groupBy('truck_id')
+    ->get();
+
+
+    $truckIds = $truckOrders->pluck('truck_id');
+
+    $trucks = Truck::
+    whereIn('id',$truckIds)
+    ->with('user','orders')->get();
+
+    $a =  [];
+    foreach ( $trucks as $driver ) {
+        $path = 'public/pdf/' . now()->format( 'dmY' ) . '/' . str_replace( ' ', '_', ( $driver->user->name ?? 'unknown' ) ) . '-orders.pdf';
+        $a['em']= $driver;
+    }
+
+    return $trucks;
+});

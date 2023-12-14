@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\OrderStatusEnum;
+use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\Product;
 use App\Models\TruckOrders;
@@ -14,6 +16,7 @@ class ChartController extends Controller
     //all products quantity that have been sold until now
     public function ProductSale()
     {
+
         $products = Product::withCount('product')->get();
         // return $products;
 
@@ -40,7 +43,10 @@ class ChartController extends Controller
         $startDate = Carbon::now()->startOfWeek()->format("Y-m-d H:i:s");
         $endDate = Carbon::now()->endOfWeek()->format("Y-m-d H:i:s");
 
+        $soldOrders  = Order::where('status',OrderStatusEnum::Delivered->value)->pluck('id');
+
         $weeklyBestSellerProduct = OrderProduct::selectRaw("sum(quantity) as quantity, product_id")
+            ->whereIn('order_id',$soldOrders)
             ->whereBetween("created_at", [$startDate, $endDate])
             ->groupBy("product_id")
             ->orderBy("quantity", "desc")
