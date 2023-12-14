@@ -86,6 +86,26 @@ Just remove the ";" .
 
 Done!! The application should now be running on your localhost at port 8000.
 
+## Accounts
+
+(1)Admin Accounts
+
+- sale@gmail.com
+- warehouse@gmail.com
+- truckDriver@gmail.com
+- logistics@gmail.com
+
+  Default password is 12345678 for all admin accounts.
+  Login route for admin accounts is '/admin'.
+
+
+(2)Distributor Account
+
+- test@gmail.com
+
+  Or just register to create a distributor account.
+  Login route for distributors is '/login'.
+
     
 ## Features
 
