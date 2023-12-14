@@ -80,7 +80,16 @@ class PreorderController extends Controller
     public function showOrder(Order $preorder)
     {
         $isAvailable = $preorder->orderProducts->load('product');
-        return view('sales.preorder.index', ['preorder' => $preorder]);
+        $valids = [];
+
+        forEach($isAvailable as $product){
+            if($product->product->available_box_count < $product->quantity){
+                $valids['product']['valid'] = false;
+                $valids['product']['name'] = $product->product->title;
+            }
+        }
+
+        return view('sales.preorder.index', ['preorder' => $preorder,'valids' => $valids]);
     }
 
     public function changeOrderStatus(Order $preorder)
