@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Constants\OrderStatusEnum;
+use App\Exports\OrdersExport;
 use App\Models\Order;
 use App\Models\Truck;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class TruckController extends Controller
 {
@@ -39,11 +41,11 @@ class TruckController extends Controller
 
     public function orderDetail($truck_id, $orderId)
     {
-       
-    
+
+
         $order = Order::findOrFail($orderId);
 
-        return view('trucks.order-detail', compact('truck_id','order'));
+        return view('trucks.order-detail', compact('truck_id', 'order'));
     }
 
     public function updateTruckStatus(Request $request, $truckId)
@@ -72,5 +74,10 @@ class TruckController extends Controller
         // Update the warehouse inventory
 
         return redirect()->back()->with("success", "Success!");
+    }
+
+    public function exportAssignedOrders($truckId)
+    {
+        return Excel::download(new OrdersExport($truckId), 'assigned_orders.xlsx');
     }
 }
