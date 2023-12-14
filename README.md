@@ -30,9 +30,7 @@ The app allows for the company's data to be flowed seamlessly with integrity acr
   npm run dev
 ```
 
-(2)
-
-Enable extensions gd, zip in php.ini config file.
+(2)Enable extensions gd, zip in php.ini config file.
 
 ```bash
   ;extension=gd
@@ -41,6 +39,32 @@ Enable extensions gd, zip in php.ini config file.
 Just remove the ";" .
 
 Done!! The application should now be running on your localhost at port 8000.
+
+(3)Edit Mail_Mailer and AWS configs in your .env file accordingly.
+
+Change here-
+
+```bash
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=yourusername
+MAIL_PASSWORD=yourpassword
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=yourgmail
+MAIL_FROM_NAME="your name"
+```
+
+And here-
+
+
+```bash
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+AWS_DEFAULT_REGION=us-east-1
+AWS_BUCKET=
+AWS_USE_PATH_STYLE_ENDPOINT=false
+```
     
 ## Features
 
@@ -60,7 +84,7 @@ PHP, Javascript, Mysql
 
 ## Tech Stack
 
-Laravel Framework, JQuery
+Laravel Framework, JQuery, Gmail Service, Amazon S3 Bucket
 
 ## Authors
 

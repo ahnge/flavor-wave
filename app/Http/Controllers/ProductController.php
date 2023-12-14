@@ -49,6 +49,11 @@ class ProductController extends Controller
             "type" => ["required"],
         ]);
 
+        if(request('type') == '')
+        {
+            return redirect()->back()->with('error');
+        }
+
         $product = Product::find($id);
 
         $productTotalBoxCount = $product->total_box_count;
@@ -244,17 +249,25 @@ class ProductController extends Controller
             'title' => ['required', 'min:2'],
             'price' => ['required'],
             'ppb' => ['required'],
-            'product_photo' => ['required'],
         ]);
 
-        $path = $request->file('product_photo')->store('images/products', 's3');
+        if($request->file('product_photo'))
+        {
+            $path = $request->file('product_photo')->store('images/products', 's3');
+            $product->update([
+                'title' => request('title'),
+                'price' => request('price'),
+                'ppb' => request('ppb'),
+                'product_photo' => Storage::disk('s3')->url($path),
+            ]);
+        }
 
         $product->update([
             'title' => request('title'),
             'price' => request('price'),
             'ppb' => request('ppb'),
-            'product_photo' => Storage::disk('s3')->url($path),
         ]);
+
 
         return redirect()->back();
     }
