@@ -129,9 +129,7 @@ class ProductController extends Controller
 
         $weeklyBestSellerProducts = [];
         foreach ($weeklyBestSellerProduct as $prodID => $quantity) {
-            $productName = Product::whereHas("product", function (Builder $query) use ($prodID) {
-                $query->where("id", $prodID);
-            })
+            $productName = Product::where("id", $prodID)
                 ->get()
                 ->pluck("title")
                 ->toArray();
@@ -149,6 +147,7 @@ class ProductController extends Controller
             $total_amount = $price * $quantity;
             $weeklyBestSellerTotalAmount += $total_amount;
         }
+
 
         //dd(collect($weeklyBestSellerProducts));
         // return response()->json(
@@ -179,8 +178,8 @@ class ProductController extends Controller
             ->setDataLabelsEnabled(true)
             ->setSeries($weeklyBestProductQuantity)
             ->setLabels($weeklyBestProductNames);
-
-        return view('warehouse.charts', compact("productChart", "weeklyBestProductChart"));
+        $chartsData = [$weeklyBestProductNames, $weeklyBestProductQuantity, $productNames, $productQuantity];
+        return view('warehouse.charts')->with("chartsData", $chartsData);
     }
 
     // To create new product
@@ -241,15 +240,23 @@ class ProductController extends Controller
         return Excel::download(new ProductExport, 'products.xlsx');
     }
 
-    public function editDetails(Product $product)
+    public function editDetails(Request $request, Product $product)
     {
         $updatedDetail = request()->validate([
             'title' => ['required', 'min:2'],
             'price' => ['required'],
-            'ppb' => ['required']
+            'ppb' => ['required'],
+            'product_photo' => ['required'],
         ]);
 
-        $product->update($updatedDetail);
+        $path = $request->file('product_photo')->store('images/products', 's3');
+
+        $product->update([
+            'title' => request('title'),
+            'price' => request('price'),
+            'ppb' => request('ppb'),
+            'product_photo' => Storage::disk('s3')->url($path),
+        ]);
 
         return redirect()->back();
     }

@@ -27,7 +27,6 @@ class PreorderController extends Controller
                     });
             });
         })
-
             ->when(request()->has("orderStatus"), function ($query) {
                 $query->where(function (Builder $builder) {
                     $status = request()->orderStatus;
@@ -36,9 +35,9 @@ class PreorderController extends Controller
                     }
                 });
             })
-
-            ->latest("is_urgent")
-            ->orderBy("due_date", "asc")
+            // ->latest("is_urgent")
+            ->latest('id')
+            ->orderBy('is_urgent','asc')
             ->paginate(10)
             ->withQueryString();
 
@@ -80,7 +79,17 @@ class PreorderController extends Controller
 
     public function showOrder(Order $preorder)
     {
-        return view('sales.preorder.index', ['preorder' => $preorder]);
+        $isAvailable = $preorder->orderProducts->load('product');
+        $valids = [];
+
+        forEach($isAvailable as $product){
+            if($product->product->available_box_count < $product->quantity){
+                $valids['product']['valid'] = false;
+                $valids['product']['name'] = $product->product->title;
+            }
+        }
+
+        return view('sales.preorder.index', ['preorder' => $preorder,'valids' => $valids]);
     }
 
     public function changeOrderStatus(Order $preorder)
@@ -230,15 +239,6 @@ class PreorderController extends Controller
         //dd($dateValuesArray);
 
 
-        $monthlyChart = (new Chart)
-            ->setWidth('100%')
-            ->setHeight(500)
-            ->setTitle("Preorder Trends by Month")
-            ->setSubtitle("Line chart")
-            ->setDataset('Order count', 'area', $totalSalesValuesArray)
-
-            ->setXaxisCategories($dateValuesArray);
-
         ////////////////////////////////////////////////////////////////////
         // for weekly
         $weeklySales = Order::select(
@@ -355,21 +355,6 @@ class PreorderController extends Controller
             return $item['daySales'];
         })->toArray();
 
-
-
-
-
-
-
-        $weeklyChart = (new Chart)
-            ->setWidth('100%')
-            ->setHeight(500)
-            ->setTitle("Preorder Trends by Daily")
-            ->setSubtitle("Line chart")
-            ->setDataset('Order count', 'bar', $daySalesValuesArray)
-            ->setDataLabelsEnabled(true)
-
-            ->setXaxisCategories($dayValuesArray);
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         //yearly chart
@@ -511,15 +496,15 @@ class PreorderController extends Controller
             return $item['monthSales'];
         })->toArray();
 
-        $yearlyChart = (new Chart)
-            ->setWidth('100%')
-            ->setHeight(500)
-            ->setTitle("Preorder Trends by Yearly")
-            ->setSubtitle("Line chart")
-            ->setDataset('Order count', 'area', $yearSaleValuesArray)
 
-            ->setXaxisCategories($yearMonthValuesArray);
+        $chartsData = [$yearMonthValuesArray, $yearSaleValuesArray, $dateValuesArray, $totalSalesValuesArray, $dayValuesArray, $daySalesValuesArray];
 
-        return view('sales.charts', compact("monthlyChart", "weeklyChart", "yearlyChart"));
+        return view('sales.charts')->with("chartsData", $chartsData);
+    }
+
+    public function preorderDetails(Request $request)
+    {
+        $order = Order::findOrFail($request->id);
+        return view("logistic.approvedProducts", compact('order'));
     }
 }
