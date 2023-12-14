@@ -2,12 +2,12 @@
 
 @section('content')
     <section
-        class="pb-8 pt-3 px-5 lg:pb-16 lg:pt-5  border dark:border-gray-700 border-neutral-300 mx-auto max-w-screen-md dark:bg-gray-800 bg-neutral-50  rounded-lg">
-        <button onclick="history.back()"
-            class=" text-black bg-gray-300 hover:bg-gray-400 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-md text-sm px-5 py-2.5 text-center dark:text-white dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800 mt-4">
-            Back
-        </button>
-        <div class="py-8 lg:py-16  mx-auto max-w-screen-md">
+        class="pb-8 pt-3 px-10 lg:pb-16 lg:pt-5  border dark:border-gray-700 border-neutral-300 mx-auto max-w-screen-lg dark:bg-gray-800 bg-neutral-50  rounded-lg">
+        <a href="{{ route('warehouse.productList') }}"
+            class=" text-black bg-gray-300 hover:bg-gray-400 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-md text-sm px-5 py-2.5 text-center dark:text-white dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800 mt-6">
+             Back
+        </a>
+        <div class="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
             <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-center dark:text-white text-gray-900">
                 {{ $product->title }}
             </h2>
