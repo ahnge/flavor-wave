@@ -37,6 +37,6 @@ html {
 
   50% {
     transform: scale(1.5, 2);
-    opacity: .3;
+    opacity: 1;
   }
 }

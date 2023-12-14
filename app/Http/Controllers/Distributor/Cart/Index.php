@@ -59,7 +59,7 @@ class Index extends Controller {
     {
         $order = new Order();
             $order->order_no  = 'ORD-'.rand( 100000, 999999 );
-            $order->is_urgent = $request->isUrgent ? 0 : 1;
+            $order->is_urgent = $request->isUrgent ? 1 : 0;
             $order->distributor_id = $user->id;
             $order->address = $request->address;
             $order->phone_no= $request->phone_number;

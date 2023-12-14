@@ -93,6 +93,7 @@
             <th scope="col" class="px-6 py-3">Distributor</th>
             <th scope="col" class="px-6 py-3">Price</th>
             <th scope="col" class="px-6 py-3">Region</th>
+            <th scope="col" class="px-6 py-3">Urgent</th>
             <th scope="col" class="px-6 py-3">Due Date</th>
             <th scope="col" class="px-6 py-3">Status</th>
 
@@ -113,8 +114,14 @@
                 {{ $preorder->total . 'ks' }}
               </td>
               <td class="px-6 py-4 dark:text-white">
-                {{ $preorder->distributor->region_code }}
+                {{ getRegionName($preorder->distributor->region_code) }}
               </td>
+
+              <td class="px-6 py-4 dark:text-white">
+                {{ $preorder->is_urgent ? "Yes" : "No" }}
+              </td>
+
+
               <td class="px-6 py-4 dark:text-white">
                 {{ Illuminate\Support\Carbon::parse($preorder->due_date)->toDateString() }}
               </td>
