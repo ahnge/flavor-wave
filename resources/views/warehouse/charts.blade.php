@@ -24,7 +24,7 @@
             <h1 class="text-2xl font-semibold mt-3 dark:text-white">Best Sellers of All Time</h1>
 
 
-            <div class="flex justify-center items-start w-full">s
+            <div class="flex justify-center items-start w-full">
                 <div class="flex-col items-center">
                     <div class="py-3" id="circle-chart"></div>
                 </div>
