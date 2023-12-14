@@ -88,7 +88,7 @@ PHP, Javascript, Mysql
 
 ## Tech Stack
 
-Laravel Framework, JQuery
+Laravel Framework, JQuery, Gmail Service, Amazon S3 Bucket
 
 ## Authors
 
