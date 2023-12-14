@@ -30,12 +30,22 @@ class ProductController extends Controller
                     ->orWhere("price", "LIKE", "%" . $keyword . "%");
             });
         })
+            ->latest("id")
             ->paginate(5)
             ->withQueryString();
 
+        $allProducts = Product::all();
+
+        $totalQty = 0;
+
+        foreach ($allProducts as $product) {
+            $totalQty += $product->total_box_count;
+        }
+
+
         $productLists = ProductResource::collection($products);
 
-        return view('warehouse.index', ['products' => $productLists->resource]);
+        return view('warehouse.index', ['products' => $productLists->resource, 'totalProducts'=> Product::all()->count(), 'totalQty'=>$totalQty]);
     }
 
     public function changeQty(Product $product)
@@ -71,7 +81,7 @@ class ProductController extends Controller
             $product->update(['total_box_count' => $productTotalBoxCount]);
         }
 
-        return redirect()->back();
+        return redirect()->back()->with('success','Quantity Updated.');
     }
 
     public function charts()
@@ -228,8 +238,8 @@ class ProductController extends Controller
     {
         $updatedDetail = request()->validate([
             'title' => ['required', 'min:2'],
-            'price' => ['required'],
-            'ppb' => ['required'],
+            'price' => ['required', 'integer'],
+            'ppb' => ['required', 'integer'],
         ]);
 
         if($request->file('product_photo'))
@@ -238,7 +248,7 @@ class ProductController extends Controller
             $product->update([
                 'title' => request('title'),
                 'price' => request('price'),
-                'ppb' => request('ppb'),
+                'pc_per_box' => request('ppb'),
                 'product_photo' => Storage::disk('s3')->url($path),
             ]);
         }
@@ -246,11 +256,11 @@ class ProductController extends Controller
         $product->update([
             'title' => request('title'),
             'price' => request('price'),
-            'ppb' => request('ppb'),
+            'pc_per_box' => request('ppb'),
         ]);
 
 
-        return redirect()->back();
+        return redirect()->back()->with('success','Details Updated.');
     }
 
     public function showInfo(Product $product)

@@ -110,10 +110,10 @@
                             <span class="sr-only">Image</span>
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Product <span class="dark:text-neutral-300 text-gray-600 ">( Total : 20 )</span>
+                            Product <span class="dark:text-neutral-300 text-gray-600 ">( Total : {{ $totalProducts }} )</span>
                         </th>
                         <th scope="col" class="px-6 py-3 dark:text-center">
-                            Boxes Quantity <span class="dark:text-neutral-300 text-gray-600 ">( Total : 24340 )</span>
+                            Boxes Quantity <span class="dark:text-neutral-300 text-gray-600 ">( Total : {{ $totalQty }} )</span>
                         </th>
                         <th scope="col" class="px-6 py-3">
 
