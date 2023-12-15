@@ -32,9 +32,9 @@
                             <label for="underline_select" class="sr-only">Underline select</label>
                             <select id="statusSelect"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option value="all">None</option>
-                                <option @selected(request()->status == \App\Constants\OrderStatusEnum::Pending->value)
-                                    value="{{  \App\Constants\OrderStatusEnum::Pending->value }}">Pending</option>
+                                <option  value="all">None</option>
+                                <option @selected(request()->status == "pending")
+                                    value="pending">Pending</option>
                                 <option @selected(request()->status == \App\Constants\OrderStatusEnum::Approved->value)
                                     value="{{ \App\Constants\OrderStatusEnum::Approved->value }}">Approved</option>
                                 <option @selected(request()->status == \App\Constants\OrderStatusEnum::Delivered->value)
