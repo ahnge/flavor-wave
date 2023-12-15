@@ -98,7 +98,10 @@ class PreorderController extends Controller
         if (request('status') == 'Approve') {
 
             $preorder->status = 1;
-
+            $preorder->orderProducts->each(function ($product) {
+                $product->product->available_box_count -= $product->quantity;
+                $product->product->save();
+            });
             $preorder->save();
         } elseif (request('status') == 'Reject') {
 

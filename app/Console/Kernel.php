@@ -17,8 +17,8 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
     //   (new AssignTruckOrder())->dispatch();
-      $schedule->job(new AssignTruckOrder())->everyFifteenSeconds();
-      $schedule->command("send:mailTruck")->everyFifteenSeconds();
+      $schedule->job(new AssignTruckOrder())->everyMinute();
+      $schedule->command("send:mailTruck")->everyMinute();
     }
 
     /**

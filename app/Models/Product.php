@@ -16,7 +16,6 @@ class Product extends Model
         'pc_per_box',
         'total_box_count',
         'available_box_count',
-        'reserving_box_count',
     ];
 
     public function orders()
