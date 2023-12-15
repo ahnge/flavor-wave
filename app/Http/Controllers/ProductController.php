@@ -37,15 +37,22 @@ class ProductController extends Controller
         $allProducts = Product::all();
 
         $totalQty = 0;
+        $availableTotal = 0;
 
         foreach ($allProducts as $product) {
             $totalQty += $product->total_box_count;
+            $availableTotal += $product->available_box_count;
         }
 
 
         $productLists = ProductResource::collection($products);
 
-        return view('warehouse.index', ['products' => $productLists->resource, 'totalProducts'=> Product::all()->count(), 'totalQty'=>$totalQty]);
+        return view('warehouse.index', [
+            'products' => $productLists->resource,
+             'totalProducts'=> Product::all()->count(),
+              'totalQty'=>$totalQty,
+               'availableTotal' => $availableTotal
+            ]);
     }
 
     public function changeQty(Product $product)
@@ -70,15 +77,19 @@ class ProductController extends Controller
 
         $productTotalBoxCount = $product->total_box_count;
 
+        $productAvailableBoxCount = $product->available_box_count;
+
         $type = $request->type;
         $quantity = intval($request->quantity);
 
         if ($type === "expire") {
             $productTotalBoxCount -=  $quantity;
-            $product->update(['total_box_count' => $productTotalBoxCount]);
-        } elseif ($type === "return" || $type === "produced") {
+            $productAvailableBoxCount -= $quantity;
+            $product->update(['total_box_count' => $productTotalBoxCount,'available_box_count'=>$productAvailableBoxCount]);
+        } elseif ($type === "produce" ) {
             $productTotalBoxCount += $quantity;
-            $product->update(['total_box_count' => $productTotalBoxCount]);
+            $productAvailableBoxCount += $quantity;
+            $product->update(['total_box_count' => $productTotalBoxCount,'available_box_count'=>$productAvailableBoxCount]);
         }
 
         return redirect()->back()->with('success','Quantity Updated.');
@@ -206,7 +217,6 @@ class ProductController extends Controller
             'pc_per_box' => $request->input('pc_per_box'),
             'total_box_count' => $request->input('total_box_count'),
             'available_box_count' => $request->input('total_box_count'),
-            'reserving_box_count' => 0,
         ]);
 
         return redirect()->route('warehouse.productList')->with('success', 'Product created successfully!');
@@ -259,8 +269,16 @@ class ProductController extends Controller
             'pc_per_box' => request('ppb'),
         ]);
 
+        /* if($product->isDirty(['title','price','pc_per_box'])){
+
+            return redirect()->back()->with('success','Details Updated.');
+
+        }
+
+        return redirect()->back()->with('error','Details not updated.'); */
 
         return redirect()->back()->with('success','Details Updated.');
+
     }
 
     public function showInfo(Product $product)

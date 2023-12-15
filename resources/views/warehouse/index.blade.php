@@ -146,8 +146,11 @@
               Product <span class="dark:text-neutral-300 text-gray-600 ">( Total : {{ $totalProducts }} )</span>
             </th>
             <th scope="col" class="px-6 py-3 dark:text-center">
-              Boxes Quantity <span class="dark:text-neutral-300 text-gray-600 ">( Total : {{ $totalQty }} )</span>
+              Total Quantity <span class="dark:text-neutral-300 text-gray-600 ">( Total : {{ $totalQty }} )</span>
             </th>
+            <th scope="col" class="px-6 py-3 dark:text-center">
+                Available Quantity <span class="dark:text-neutral-300 text-gray-600 ">( Total : {{ $availableTotal }} )</span>
+              </th>
             <th scope="col" class="px-6 py-3">
 
             </th>
@@ -172,6 +175,9 @@
               </td>
               <td class="px-6 text-center dark:text-white text-black">
                 {{ $product->total_box_count }}
+              </td>
+              <td class="px-6 text-center dark:text-white text-black">
+                {{ $product->available_box_count }}
               </td>
               <td>
                 <a href="{{ route('warehouse.productQtyChange', ['product' => $product]) }}">
