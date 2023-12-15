@@ -1,4 +1,3 @@
-
 # Flavor Wave
 
 The solution to fix various problems affecting the FlavorWave company's data flow and operability.
@@ -6,6 +5,8 @@ The solution to fix various problems affecting the FlavorWave company's data flo
 One of the biggest problems of the FlavorWave is that there are inconsistencies in details of order and products between its five departments.
 
 The app allows for the company's data to be flowed seamlessly with integrity across multiple departments.
+
+![Main Ui](https://github.com/ahnge/flavor-wave/blob/develop/public/assets/highlights/main.png)
 
 
 ## Installation
