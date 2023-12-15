@@ -18,16 +18,11 @@ class AdminAuthenticatedSessionController extends Controller
     public function create(): View | RedirectResponse
     {
         if(Auth::guard('web')->check()){
-            return redirect()->route(Auth::guard('web')->user()->getRedirectRoute());
+            return redirect()->back()->with('error', "You don't have access to this route!");
         }
         elseif(Auth::guard('admin')->check()){
 
-        if(Auth::guard('admin')->user()->role_id == 6)
-        {
-            return redirect()->route(Auth::guard('admin')->user()->getRedirectRoute(),['truck_id'=>Auth::guard('admin')->user()->truck]);
-        }
-
-            return redirect()->route(Auth::guard('admin')->user()->getRedirectRoute());
+            return redirect()->back()->with('error','You are already logged in!');
         }
 
 

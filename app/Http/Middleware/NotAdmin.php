@@ -18,12 +18,7 @@ class NotAdmin
     {
         if(Auth::guard('admin')->check()){
 
-            if(Auth::guard('admin')->user()->role_id == 6)
-            {
-                return redirect()->route(Auth::guard('admin')->user()->getRedirectRoute(),['truck_id'=>Auth::guard('admin')->user()->truck]);
-            }
-
-            return redirect()->route(Auth::guard('admin')->user()->getRedirectRoute());
+            return redirect()->back()->with('error', 'No access to this route.');
         }
 
         return $next($request);

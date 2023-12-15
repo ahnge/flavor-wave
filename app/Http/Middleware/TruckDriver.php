@@ -23,11 +23,11 @@ class TruckDriver
         {
             if(Auth::guard('admin')->user()->truck->id != $request->route()->parameter('truck_id'))
         {
-            return redirect()->route(Auth::guard('admin')->user()->getRedirectRoute(),['id'=>Auth::guard('admin')->user()->truck->id]);
+            return redirect()->back()->with('error', "You don't have access to this truck.");
         }
         }else
         {
-            return redirect()->route(Auth::guard('admin')->user()->getRedirectRoute());
+            return redirect()->back()->with('error', 'No access to this route.');
         }
         }
 
