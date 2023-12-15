@@ -147,7 +147,7 @@
                 <form method="POST" action="{{ route('trucks.returnOrder', ['truck_id' => $truck_id, 'order_id' => $order->id]) }}"> @csrf
                   @method('PUT')
                   <input type="hidden" name="dummy">
-                  <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded">Return Order</button>
+                  <button type="submit" class="bg-red-500 text-white py-2 px-4 rounded">Return Order</button>
                 </form>
               `;
             }
