@@ -32,6 +32,17 @@ class Order extends Model
         return $this->hasMany(OrderProduct::class);
     }
 
+    public function totalProductQuantity()
+    {
+        $qty = 0;
+        
+        foreach($this->orderProducts as $product){
+            $qty += $product->quantity;
+        }
+
+        return $qty;
+    }
+
     public function scopeSearch($query, $search)
     {
         return $query->when($search, function ($query, $search) {
