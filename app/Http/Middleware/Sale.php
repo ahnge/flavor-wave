@@ -17,9 +17,7 @@ class Sale
     public function handle(Request $request, Closure $next): Response
     {
         if(Auth::guard('admin')->user()->role_id != 2){
-
-            return redirect()->back()->with('error', 'No access to this route.');
-
+            return redirect()->route(Auth::guard('admin')->user()->getRedirectRoute());
         }
         return $next($request);
     }

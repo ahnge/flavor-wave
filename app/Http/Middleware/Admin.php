@@ -18,7 +18,9 @@ class Admin
     {
         if(!Auth::guard('admin')->check()){
 
-            return redirect()->back()->with('error',"You don't have access to this route!");
+            Auth::guard('web')->logout();
+
+            return redirect()->route('admin');
         }
         return $next($request);
     }

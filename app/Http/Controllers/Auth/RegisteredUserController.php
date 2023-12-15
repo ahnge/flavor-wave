@@ -22,10 +22,12 @@ class RegisteredUserController extends Controller
      */
     public function create(): View | RedirectResponse
     {
-        if(Auth::guard('admin')->check() || Auth::guard('web')->check()){
-            return redirect()->back()->with('error','You are already logged in!');
+        if(Auth::guard('admin')->check()){
+            return redirect(Auth::guard('admin')->user()->getRedirectRoute());
         }
-
+        elseif(Auth::guard('web')->check()){
+            return redirect(Auth::guard('web')->user()->getRedirectRoute());
+        }
 
         return view('auth.register',['regions'=>Region::all()]);
     }

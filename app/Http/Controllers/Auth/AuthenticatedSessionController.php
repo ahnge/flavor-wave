@@ -18,10 +18,10 @@ class AuthenticatedSessionController extends Controller
     public function create(): View | RedirectResponse
     {
         if(Auth::guard('web')->check()){
-            return redirect()->back()->with('error','You are already logged in!');
+            return redirect()->route(Auth::guard('web')->user()->getRedirectRoute());
         }
         elseif(Auth::guard('admin')->check()){
-            Auth::guard('admin')->logout();
+            return redirect()->route(Auth::guard('admin')->user()->getRedirectRoute());
         }
 
         return view('auth.login');
