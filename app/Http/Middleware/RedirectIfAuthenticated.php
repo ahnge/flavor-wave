@@ -20,10 +20,12 @@ class RedirectIfAuthenticated
         $guards = empty($guards) ? [null] : $guards;
 
         foreach ($guards as $guard) {
-            if (Auth::guard($guard)->check()) {
-                return redirect()->back()->with('error','test');
+            if ($guard == 'admin' && Auth::guard($guard)->check()) {
+                return redirect()->route(Auth::guard('admin')->user()->getRedirectRoute);
             }
-
+            elseif($guard == 'web' && Auth::guard($guard)->check()){
+                return redirect()->route(Auth::guard('web')->user()->getRedirectRoute);
+            }
         }
 
         return $next($request);

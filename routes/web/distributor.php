@@ -19,6 +19,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 
 Route::middleware(['distributor'])->group(function (){
+    Route::get('/', [Index::class,'index'])->middleware('notAdmin')->name("distributor.index");
 
     Route::get('/distributor/cart', [CartIndex::class,'index'])->name("distributor.cart.index");
 
@@ -28,8 +29,6 @@ Route::middleware(['distributor'])->group(function (){
     Route::get('/distributor/order/list/{id}', [OrderIndex::class,'show'])->name("distributor.order.show");
 
 });
-
-Route::get('/', [Index::class,'index'])->name("distributor.index");
 
 Route::get('/distributor/index', [Index::class,'index'])->name("distributor.index");
 

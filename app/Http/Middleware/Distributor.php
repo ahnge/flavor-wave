@@ -18,7 +18,7 @@ class Distributor
     {
         if(!Auth::guard('web')->check()){
 
-            return redirect()->back()->with('error',"You don't have access to this route");
+            return redirect()->route('login');
         }
 
         return $next($request);
