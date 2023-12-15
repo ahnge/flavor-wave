@@ -6,6 +6,7 @@ use App\Constants\OrderStatusEnum;
 use App\Exports\OrdersExport;
 use App\Models\Order;
 use App\Models\Truck;
+use App\Models\TruckOrders;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -35,13 +36,49 @@ class TruckController extends Controller
 
         // Update order status
         $order->status = $request->status;
-        if($request->status == OrderStatusEnum::Delivered->value){
+        if ($request->status == OrderStatusEnum::Delivered->value) {
             $order->completed_at = now();
         }
         $order->update();
 
-        // TODO: make the total_quantity of 'truck_orders' tables right on 'Delivered'
-        //  just substract 'quantity' of 'order_products' from 'total_quantity' of 'truck_orders'
+        // make the total_quantity of 'truck_orders' tables right on 'Delivered' or 'Returned'
+        //  just substract 'quantity' of 'order_products' from 'total_quantity' of 'truck_orders' 
+        $truckOrder = TruckOrders::where('truck_id', $truck_id)
+            ->where('order_id', $orderId)
+            ->first();
+
+        foreach ($order->orderProducts as $orderProduct) {
+            $truckOrder->total_quantity -= $orderProduct->quantity;
+        };
+
+
+        // update the product quantity on 'Returned' or 'Shipped'.
+        if ($request->status == OrderStatusEnum::Shipped->value) {
+            $orderProducts = $order->orderProducts;
+
+            foreach ($orderProducts as $orderProduct) {
+                // Get the related product
+                $product = $orderProduct->product;
+
+                // Subtract the quantity from the total_box_count
+                $product->total_box_count -= $orderProduct->quantity;
+                $product->save();
+            }
+        }
+
+        if ($request->status == OrderStatusEnum::Returned->value) {
+            $orderProducts = $order->orderProducts;
+
+            foreach ($orderProducts as $orderProduct) {
+                // Get the related product
+                $product = $orderProduct->product;
+
+                // Add the quantity
+                $product->total_box_count += $orderProduct->quantity;
+                $product->available_box_count += $orderProduct->quantity;
+                $product->save();
+            }
+        }
 
         return response()->json(['message' => 'Order status updated successfully.']);
     }
