@@ -28,6 +28,11 @@ class Product extends Model
         return $this->hasMany(OrderProduct::class);
     }
 
+    public function orderProducts()
+    {
+        return $this->hasMany(OrderProduct::class);
+    }
+
 
     // public function productSaleAmount()
     // {
