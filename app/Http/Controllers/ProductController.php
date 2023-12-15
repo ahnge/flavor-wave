@@ -49,10 +49,10 @@ class ProductController extends Controller
 
         return view('warehouse.index', [
             'products' => $productLists->resource,
-             'totalProducts'=> Product::all()->count(),
-              'totalQty'=>$totalQty,
-               'availableTotal' => $availableTotal
-            ]);
+            'totalProducts' => Product::all()->count(),
+            'totalQty' => $totalQty,
+            'availableTotal' => $availableTotal
+        ]);
     }
 
     public function changeQty(Product $product)
@@ -68,8 +68,7 @@ class ProductController extends Controller
             "type" => ["required"],
         ]);
 
-        if(request('type') == '')
-        {
+        if (request('type') == '') {
             return redirect()->back()->with('error');
         }
 
@@ -85,14 +84,14 @@ class ProductController extends Controller
         if ($type === "expire") {
             $productTotalBoxCount -=  $quantity;
             $productAvailableBoxCount -= $quantity;
-            $product->update(['total_box_count' => max(0,$productTotalBoxCount),'available_box_count'=>max(0,$productAvailableBoxCount)]);
-        } elseif ($type === "produce" ) {
+            $product->update(['total_box_count' => max(0, $productTotalBoxCount), 'available_box_count' => max(0, $productAvailableBoxCount)]);
+        } elseif ($type === "produce") {
             $productTotalBoxCount += $quantity;
             $productAvailableBoxCount += $quantity;
-            $product->update(['total_box_count' => $productTotalBoxCount,'available_box_count'=>$productAvailableBoxCount]);
+            $product->update(['total_box_count' => $productTotalBoxCount, 'available_box_count' => $productAvailableBoxCount]);
         }
 
-        return redirect()->back()->with('success','Quantity Updated.');
+        return redirect()->back()->with('success', 'Quantity Updated.');
     }
 
     public function charts()
@@ -100,12 +99,14 @@ class ProductController extends Controller
         $products = Product::withCount('product')
             // ->withSum('productSaleAmount', 'total')
             ->get();
-        // return $products;
+
+        if ($products->empty()) {
+            return redirect()->back()->with('success', "There is not products currently in warehouse.");
+        };
 
         foreach ($products as $product) {
             $productName = $product->title;
             $productCount = $product->product_count;
-
 
             $productInfo[] = [
                 'name' => $productName,
@@ -113,11 +114,6 @@ class ProductController extends Controller
 
             ];
         }
-
-
-        // return response()->json([
-        //     'productsInfo' => $productInfo
-        // ], 200);
 
         $productNames = collect($productInfo)->map(function ($item) {
             return $item['name'];
@@ -130,9 +126,9 @@ class ProductController extends Controller
         /* For weekly best seller products  */
         $startDate = Carbon::now()->startOfWeek()->format("Y-m-d H:i:s");
         $endDate = Carbon::now()->endOfWeek()->format("Y-m-d H:i:s");
-        $soldOrders  = Order::where('status',OrderStatusEnum::Delivered->value)->pluck('id');
+        $soldOrders  = Order::where('status', OrderStatusEnum::Delivered->value)->pluck('id');
         $weeklyBestSellerProduct = OrderProduct::selectRaw("sum(quantity) as quantity, product_id")
-            ->whereIn('order_id',$soldOrders)
+            ->whereIn('order_id', $soldOrders)
             ->whereBetween("created_at", [$startDate, $endDate])
             ->groupBy("product_id")
             ->orderBy("quantity", "desc")
@@ -178,8 +174,7 @@ class ProductController extends Controller
             return intval($item['quantity']);
         })->toArray();
 
-        if(count($weeklyBestProductNames) == 0)
-        {
+        if (count($weeklyBestProductNames) == 0) {
             $weeklyBestProductNames = ['No Data'];
             $weeklyBestProductQuantity = [100];
         }
@@ -247,7 +242,7 @@ class ProductController extends Controller
     public function editDetails(Request $request, Product $product)
     {
 
-        $oldData = [$product->title, $product->price, $product->pc_per_box,$product->product_photo];
+        $oldData = [$product->title, $product->price, $product->pc_per_box, $product->product_photo];
 
         $updatedDetail = request()->validate([
             'title' => ['required', 'min:2'],
@@ -255,30 +250,28 @@ class ProductController extends Controller
             'ppb' => ['required', 'integer'],
         ]);
 
-            $path = $request->file('product_photo')?$request->file('product_photo')->store('images/products', 's3') : '';
-           $product->update([
-                'title' => request('title'),
-                'price' => request('price'),
-                'pc_per_box' => request('ppb'),
-                'product_photo' => $path ? Storage::disk('s3')->url($path) : $product->product_photo,
-            ]);
+        $path = $request->file('product_photo') ? $request->file('product_photo')->store('images/products', 's3') : '';
+        $product->update([
+            'title' => request('title'),
+            'price' => request('price'),
+            'pc_per_box' => request('ppb'),
+            'product_photo' => $path ? Storage::disk('s3')->url($path) : $product->product_photo,
+        ]);
 
-            $newData = [$product->title, $product->price, $product->pc_per_box,$product->product_photo];
+        $newData = [$product->title, $product->price, $product->pc_per_box, $product->product_photo];
 
-      /*   $product->update([
+        /*   $product->update([
             'title' => request('title'),
             'price' => request('price'),
             'pc_per_box' => request('ppb'),
         ]); */
 
-        if($oldData != $newData){
+        if ($oldData != $newData) {
 
-            return redirect()->back()->with('success','Details Updated.');
-
+            return redirect()->back()->with('success', 'Details Updated.');
         }
 
-        return redirect()->back()->with('error','No details changed.');
-
+        return redirect()->back()->with('error', 'No details changed.');
     }
 
     public function showInfo(Product $product)
