@@ -1,3 +1,9 @@
+# Main Page
+![Main Ui](https://github.com/ahnge/flavor-wave/blob/develop/public/assets/highlights/main.png)
+
+# Detail Page
+![Main Ui](https://github.com/ahnge/flavor-wave/blob/develop/public/assets/highlights/show.png)
+
 # Flavor Wave
 
 The solution to fix various problems affecting the FlavorWave company's data flow and operability.
@@ -6,7 +12,7 @@ One of the biggest problems of the FlavorWave is that there are inconsistencies 
 
 The app allows for the company's data to be flowed seamlessly with integrity across multiple departments.
 
-![Main Ui](https://github.com/ahnge/flavor-wave/blob/develop/public/assets/highlights/main.png)
+
 
 
 ## Installation
