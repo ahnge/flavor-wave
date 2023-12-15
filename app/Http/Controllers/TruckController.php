@@ -29,6 +29,10 @@ class TruckController extends Controller
     {
         $order = Order::findOrFail($orderId);
 
+        $truckOrder = TruckOrders::where('truck_id', $truck_id)
+            ->where('order_id', $orderId)
+            ->first();
+
         // Check if the requested status is valid
         if (!in_array(intval($request->status), [0, 1, 2, 3, 4, 5])) {
             return response()->json(['message' => 'Invalid order status.'], 422);
@@ -38,21 +42,13 @@ class TruckController extends Controller
         $order->status = $request->status;
         if ($request->status == OrderStatusEnum::Delivered->value) {
             $order->completed_at = now();
+
+            $truckOrder->total_quantity = 0;
+            $truckOrder->save();
         }
         $order->update();
 
-        // make the total_quantity of 'truck_orders' tables right on 'Delivered' or 'Returned'
-        //  just substract 'quantity' of 'order_products' from 'total_quantity' of 'truck_orders' 
-        $truckOrder = TruckOrders::where('truck_id', $truck_id)
-            ->where('order_id', $orderId)
-            ->first();
-
-        foreach ($order->orderProducts as $orderProduct) {
-            $truckOrder->total_quantity -= $orderProduct->quantity;
-        };
-
-
-        // update the product quantity on 'Returned' or 'Shipped'.
+        // update the product quantity on 'Shipped'.
         if ($request->status == OrderStatusEnum::Shipped->value) {
             $orderProducts = $order->orderProducts;
 
@@ -62,20 +58,6 @@ class TruckController extends Controller
 
                 // Subtract the quantity from the total_box_count
                 $product->total_box_count -= $orderProduct->quantity;
-                $product->save();
-            }
-        }
-
-        if ($request->status == OrderStatusEnum::Returned->value) {
-            $orderProducts = $order->orderProducts;
-
-            foreach ($orderProducts as $orderProduct) {
-                // Get the related product
-                $product = $orderProduct->product;
-
-                // Add the quantity
-                $product->total_box_count += $orderProduct->quantity;
-                $product->available_box_count += $orderProduct->quantity;
                 $product->save();
             }
         }
@@ -112,10 +94,29 @@ class TruckController extends Controller
     {
         $order = Order::findOrFail($orderId);
 
+        $truckOrder = TruckOrders::where('truck_id', $truckId)
+            ->where('order_id', $orderId)
+            ->first();
+
+        // Update truckOrder capicity to 0
+        $truckOrder->total_quantity = 0;
+        $truckOrder->save();
+
         // Update order status
         $order->update(['status' => OrderStatusEnum::Returned->value]);
 
         // Update the warehouse inventory
+        $orderProducts = $order->orderProducts;
+
+        foreach ($orderProducts as $orderProduct) {
+            // Get the related product
+            $product = $orderProduct->product;
+
+            // Add the quantity
+            $product->total_box_count += $orderProduct->quantity;
+            $product->available_box_count += $orderProduct->quantity;
+            $product->save();
+        }
 
         return redirect()->back()->with("success", "Success!");
     }
