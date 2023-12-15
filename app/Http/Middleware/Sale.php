@@ -17,6 +17,10 @@ class Sale
     public function handle(Request $request, Closure $next): Response
     {
         if(Auth::guard('admin')->user()->role_id != 2){
+            if(Auth::guard('admin')->user()->role_id == 6)
+            {
+                return redirect()->route(Auth::guard('admin')->user()->getRedirectRoute(),['truck_id'=>Auth::guard('admin')->user()->truck]);
+            }
             return redirect()->route(Auth::guard('admin')->user()->getRedirectRoute());
         }
         return $next($request);

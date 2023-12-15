@@ -2,6 +2,7 @@
 
 @section('content')
   <div class="max-w-screen-lg mx-auto">
+  {{ Auth::guard('admin')->user()->truck->driver_name}}
     @if (Auth::guard('admin')->check() && auth('admin')->user()->role_id !== \App\Constants\RoleEnum::Driver->value)
       <a href="{{ route('logistic.index') }}">
         <button type="button"

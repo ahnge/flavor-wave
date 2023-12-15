@@ -18,6 +18,10 @@ class Distributor
     {
         if(!Auth::guard('web')->check()){
 
+            if(Auth::guard('admin')->check())
+            {
+                Auth::guard('admin')->logout();
+            }
             return redirect()->route('login');
         }
 
