@@ -80,6 +80,7 @@ class PreorderController extends Controller
 
     public function showOrder(Order $preorder)
     {
+        $preorder->load('distributor');
         $isAvailable = $preorder->orderProducts->load('product');
         $valids = [];
 
