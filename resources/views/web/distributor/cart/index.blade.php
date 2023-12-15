@@ -10,7 +10,7 @@
                         @forelse ($products as $product)
                             <div id="productItem-{{ $product->id }}" data-id="{{ $product->id }}"
                                 data-price="{{ $product->price }}"
-                                class="productItem flex border-gray-200 dark:border-gray-700 shadow h-40 min-w-[250px] pt-4 rounded-md border items-center justify-between px-4 py-3 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-700 gap-10  relative">
+                                class="productItem flex border-gray-200 dark:border-gray-700 shadow h-40 min-w-[250px] min-h-[180px] pt-4 rounded-md border items-center justify-between px-4 py-3 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-700 gap-10  relative">
                                 <div class="flex gap-5 items-center">
                                     <img src="{{ $product->product_photo }}" alt="Coffee Image"
                                         class="w-24 h-24 rounded-md object-cover" width="200" height="200"
@@ -29,9 +29,10 @@
                                     <button  class="text-4xl hover:text-gray-400  hover:dark:text-gray-500" onclick="increaseQuantity({{ $product->id }})">
                                         +
                                     </button>
-                                    <input type="number" id="quantity-{{ $product->id }}" value="1"
+                                    <input type="number" id="quantity-{{ $product->id }}" value="1"  data-price="{{ $product->price }}"
                                         class="product-quantity bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-20 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                        placeholder="John">
+                                        onchange="changeQty({{ $product->id }})"
+                                        placeholder="Qty">
                                     <button  class="text-4xl hover:text-gray-400  hover:dark:text-gray-500" onclick="decreaseQuantity({{ $product->id }})">
                                         -
                                     </button>
@@ -142,9 +143,26 @@
                 subTotal -= parseInt(productPrice);
                 orderTotal -= parseInt(productPrice);
 
-                subTotalElement.innerHTML = subTotal + ' Ks';
-                orderTotalElement.innerHTML = orderTotal + ' Ks';
+                subTotalElement.innerHTML = subTotal ;
+                orderTotalElement.innerHTML = orderTotal;
             }
+        }
+
+        function changeQty(productId)
+        {
+            const quantityInput = document.querySelectorAll('.product-quantity');
+            let total =0
+            quantityInput.forEach(element => {
+                let currentValue = parseInt(element.value);
+                let productPrice = element.getAttribute('data-price');
+                console.log(element);
+                console.log(currentValue,productPrice)
+                total += currentValue * productPrice;
+            });
+
+            subTotalElement.innerHTML = total ;
+            orderTotalElement.innerHTML = total;
+
         }
     </script>
     <script type="module">

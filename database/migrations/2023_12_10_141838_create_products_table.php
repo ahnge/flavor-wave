@@ -17,9 +17,8 @@ return new class extends Migration
             $table->unsignedBigInteger('price');
             $table->string('product_photo');
             $table->integer('pc_per_box');
-            $table->integer('total_box_count');
-            $table->integer('available_box_count');
-            $table->integer('reserving_box_count');
+            $table->integer('total_box_count')->default(0);
+            $table->integer('available_box_count')->default(0);
             $table->timestamps();
         });
     }

@@ -14,7 +14,6 @@ class ProductData
                 "pc_per_box"  =>  15,
                 "total_box_count" =>  220,
                 "available_box_count" =>  170,
-                "reserving_box_count" => 30,
             ],
             [
                 'title' => "Golden Sunshine Tea",
@@ -23,7 +22,6 @@ class ProductData
                 "pc_per_box"  =>  20,
                 "total_box_count" =>  180,
                 "available_box_count" =>  150,
-                "reserving_box_count" => 14,
             ],
             [
                 'title' => "Mango Tango Delight",
@@ -32,7 +30,6 @@ class ProductData
                 "pc_per_box"  =>  25,
                 "total_box_count" =>  400,
                 "available_box_count" =>  350,
-                "reserving_box_count" => 15,
             ],
             [
                 'title' => "Rangoon Rosewater Elixir",
@@ -41,7 +38,6 @@ class ProductData
                 "pc_per_box"  =>  18,
                 "total_box_count" =>  603,
                 "available_box_count" =>  354,
-                "reserving_box_count" => 22,
             ],
             [
                 'title' => "Golden Sunshine Tea",
@@ -50,7 +46,6 @@ class ProductData
                 "pc_per_box"  =>  22,
                 "total_box_count" =>  424,
                 "available_box_count" =>  33,
-                "reserving_box_count" => 10,
             ],
             [
                 'title' => "Coconut Cream Dmrea",
@@ -59,7 +54,6 @@ class ProductData
                 "pc_per_box"  =>  28,
                 "total_box_count" =>  339,
                 "available_box_count" =>  154,
-                "reserving_box_count" => 40,
             ],
             [
                 'title' => "Citrus Fusion Fizz",
@@ -68,7 +62,6 @@ class ProductData
                 "pc_per_box"  =>  12,
                 "total_box_count" =>  302,
                 "available_box_count" =>  60,
-                "reserving_box_count" => 33,
             ],
             [
                 'title' => "Coconut Cream Dream",
@@ -77,7 +70,6 @@ class ProductData
                 "pc_per_box"  =>  28,
                 "total_box_count" =>  452,
                 "available_box_count" =>  80,
-                "reserving_box_count" => 43,
             ],
             [
                 'title' => "Jasmine Serenade Soda",
@@ -86,7 +78,6 @@ class ProductData
                 "pc_per_box"  =>  28,
                 "total_box_count" =>  2220,
                 "available_box_count" =>  1199,
-                "reserving_box_count" => 455,
             ],
             [
                 'title' => "Papaya Paradise Punch",
@@ -95,7 +86,6 @@ class ProductData
                 "pc_per_box"  =>  28,
                 "total_box_count" =>  10,
                 "available_box_count" =>  6,
-                "reserving_box_count" => 2,
             ],
             [
                 'title' => "Lychee Lullaby",
@@ -104,7 +94,6 @@ class ProductData
                 "pc_per_box"  =>  25,
                 "total_box_count" =>  22,
                 "available_box_count" =>  9,
-                "reserving_box_count" => 4,
             ],
             [
                 'title' => "Tropical Twilight Nectar",
@@ -113,7 +102,6 @@ class ProductData
                 "pc_per_box"  =>  25,
                 "total_box_count" =>  15,
                 "available_box_count" =>  22,
-                "reserving_box_count" => 4,
             ],
             [
                 'title' => "Orchid Oasis Euphoria",
@@ -122,7 +110,6 @@ class ProductData
                 "pc_per_box"  =>  12,
                 "total_box_count" =>  399,
                 "available_box_count" =>  23,
-                "reserving_box_count" => 43,
             ],
             [
                 'title' => "Ruby Red Guava Gusto",
@@ -131,7 +118,6 @@ class ProductData
                 "pc_per_box"  =>  20,
                 "total_box_count" =>  440,
                 "available_box_count" =>  33,
-                "reserving_box_count" => 50,
             ],
 
 
