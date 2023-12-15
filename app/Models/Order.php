@@ -14,6 +14,7 @@ class Order extends Model
 
     protected $casts = [
         'due_date' => 'datetime:Y-m-d',
+        'completed_at' => 'datetime:Y-m-d',
     ];
 
     public function distributor()
