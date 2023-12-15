@@ -22,11 +22,10 @@ class ProductFactory extends Factory
             'price' => fake()->randomFloat(2, 10, 100),
             'product_photo' => fake()->imageUrl(),
             'pc_per_box' => fake()->numberBetween(1, 10),
-            'total_box_count' => fake()->numberBetween(10, 100),
-            'effective_box_count' => fake()->numberBetween(5, 50),
-            'reserve_box_count' => fake()->numberBetween(1, 10),
-            'created_at'=>now(),
-            'updated_at'=>now()
+            'total_box_count' => 100,
+            'available_box_count' => 100,
+            'created_at' => now(),
+            'updated_at' => now()
         ];
     }
 }
