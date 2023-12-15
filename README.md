@@ -32,13 +32,8 @@ The app allows for the company's data to be flowed seamlessly with integrity acr
 (2)Migration and seeding
 
 
-Configure your database in the .env file.
+Configure your database in the .env file.otherwise copy .env.example .
 
-
-```bash
-  npm install my-project
-  cd my-project
-```
 
 Then, run the following command -
 
