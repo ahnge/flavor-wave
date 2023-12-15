@@ -52,6 +52,8 @@
 
       <div class=""><span class="font-bold ">Company name :</span> {{ $order->distributor->name }}</div>
       <div class=""><span class="font-bold ">Phone number :</span> {{ $order->distributor->phone_number }}</div>
+      <div class=""><span class="font-bold ">Region :</span> {{ getRegionName($order->region_code) }}</div>
+
       <div class=""><span class="font-bold ">Deliver to :</span> {{ $order->distributor->address }}</div>
     </div>
 
