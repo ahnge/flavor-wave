@@ -24,8 +24,6 @@ class Index extends Controller {
 
     public function order( Request $request ) {
 
-        sleep(1);
-
         DB::beginTransaction();
         try {
 

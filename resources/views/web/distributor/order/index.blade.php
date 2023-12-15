@@ -79,6 +79,10 @@
                                 </th>
 
                                 <th scope="col" class="px-6 py-3  text-center">
+                                    Urgent
+                                </th>
+
+                                <th scope="col" class="px-6 py-3  text-center">
                                     Order Status
                                 </th>
                             </tr>
@@ -115,6 +119,10 @@
                                     <td class="px-6 py-4 text-center">
                                         {{ $order->due_date->format('Y-m-d') }}
                                     </td>
+                                    <td class="px-6 py-4 text-center">
+                                        {{ $order->is_urgent  ? "Yes" : "No" }}
+                                    </td>
+
                                     <td class="px-6 py-4 text-center">
 
                                         <div

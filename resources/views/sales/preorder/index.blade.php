@@ -18,10 +18,10 @@
             </p>
 
             @if (count($valids) > 0)
-                <div class="p-4 mb-4 flex flex-col text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+                <div class="p-4 mb-4 flex flex-col text-sm text-red-800 rounded-lg sbg-red-50 dark:bg-gray-800 dark:text-red-400"
                     role="alert">
                     @forelse ($valids as $valid)
-                        <span class="font-medium">{{ $valid['name'] }}'s total avaiable quantity is not enough for this
+                        <span class="font-medium"> only avaiable {{ $valid['qty'] }} quantity of {{ $valid['name'] }} in ware house is not enough for this
                             order</span>
                     @empty
                     @endforelse

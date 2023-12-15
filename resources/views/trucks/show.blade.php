@@ -2,9 +2,14 @@
 
 @section('content')
   <div class="max-w-screen-lg mx-auto">
-    <a href="{{ route('logistic.index') }}"> <button type="button"
-        class="py-2.5 px-5  text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-md border border-gray-200 hover:bg-gray-100 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Back</button>
+    @if (Auth::guard('admin')->check() &&  auth('admin')->user()->role_id !== \App\Constants\RoleEnum::Driver->value)
+    <a href="{{ route('logistic.index') }}">
+        <button type="button" class="py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-md border border-gray-200 hover:bg-gray-100 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+            Back
+        </button>
     </a>
+    @endif
+
 
     <!-- Truck information -->
     <p class="text-xl my-6 text-gray-900 dark:text-white font-semibold">
