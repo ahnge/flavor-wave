@@ -14,6 +14,12 @@ class UserSeeder extends Seeder
     {
         $data =  [
             [
+                "name" =>  "Sale2",
+                "email" =>  "sale2@gmail.com",
+                "password" =>  bcrypt("12345678"),
+                "role_id" =>  RoleEnum::Sale->value
+            ],
+            [
                 "name" =>  "Sale",
                 "email" =>  "sale@gmail.com",
                 "password" =>  bcrypt("12345678"),
@@ -32,10 +38,10 @@ class UserSeeder extends Seeder
                 "role_id" =>  RoleEnum::Warehouse->value
             ],
             [
-                "name" =>  "Factory",
-                "email" =>  "factory@gmail.com",
+                "name" =>  "Warehouse2",
+                "email" =>  "warehouse2@gmail.com",
                 "password" =>  bcrypt("12345678"),
-                "role_id" =>  RoleEnum::Factory->value
+                "role_id" =>  RoleEnum::Warehouse->value
             ],
             [
                 "name" =>  "Driver Ko Kyaw",
