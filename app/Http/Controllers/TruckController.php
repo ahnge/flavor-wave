@@ -6,6 +6,7 @@ use App\Constants\OrderStatusEnum;
 use App\Exports\OrdersExport;
 use App\Models\Order;
 use App\Models\Truck;
+use App\Models\TruckOrders;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -36,8 +37,15 @@ class TruckController extends Controller
         // Update order status
         $order->update(['status' => $request->status]);
 
-        // TODO: make the total_quantity of 'truck_orders' tables right on 'Delivered'
+        // make the total_quantity of 'truck_orders' tables right on 'Delivered' or 'Returned'
         //  just substract 'quantity' of 'order_products' from 'total_quantity' of 'truck_orders' 
+        $truckOrder = TruckOrders::where('truck_id', $truck_id)
+            ->where('order_id', $orderId)
+            ->first();
+
+        foreach ($order->orderProducts as $orderProduct) {
+            $truckOrder->total_quantity -= $orderProduct->quantity;
+        };
 
 
         // update the product quantity on 'Returned' or 'Shipped'.
