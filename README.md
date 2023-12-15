@@ -103,6 +103,8 @@ Done!! The application should now be running on your localhost at port 8000.
 
 - test@gmail.com
 
+  Default password is "password".
+
   Or just register to create a distributor account.
   Login route for distributors is '/login'.
 
