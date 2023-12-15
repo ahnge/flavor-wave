@@ -1,7 +1,7 @@
 # Main Page
 ![Main Ui](https://github.com/ahnge/flavor-wave/blob/develop/public/assets/highlights/main.png)
 
-# Detail Page
+# Well Designed Table
 ![Main Ui](https://github.com/ahnge/flavor-wave/blob/develop/public/assets/highlights/show.png)
 
 # Flavor Wave
@@ -134,7 +134,7 @@ PHP, Javascript, Mysql
 
 ## Tech Stack
 
-Laravel Framework, JQuery, Gmail Service, Amazon S3 Bucket
+Laravel Framework, JQuery, Gmail Service, Amazon S3 Bucket , Flowbite , Tailwind
 
 ## Authors
 
