@@ -138,5 +138,5 @@ Laravel Framework, JQuery, Gmail Service, Amazon S3 Bucket , Flowbite , Tailwind
 - [@HeinZarNe](https://github.com/HeinZarNe)
 - [@LinnPyaePyae](https://github.com/LinnPyaePyae)
 - [@inhibitor255](https://github.com/inhibitor255)
-- [@Dede182](https://github.com/Dede182)
+- [@Htetshinehtwe]([https://github.com/Dede182](https://github.com/Htet-Shine-Htwe))
 - [@WinThiha](https://github.com/WinThiha)
