@@ -35,7 +35,11 @@ class TruckController extends Controller
         }
 
         // Update order status
-        $order->update(['status' => $request->status]);
+        $order->status = $request->status;
+        if ($request->status == OrderStatusEnum::Delivered->value) {
+            $order->completed_at = now();
+        }
+        $order->update();
 
         // make the total_quantity of 'truck_orders' tables right on 'Delivered' or 'Returned'
         //  just substract 'quantity' of 'order_products' from 'total_quantity' of 'truck_orders' 

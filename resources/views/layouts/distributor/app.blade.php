@@ -45,6 +45,12 @@
     <script src="{{ asset('distributor/index.js') }}"></script>
 
     <script>
+
+        function logout()
+        {
+            localStorage.removeItem('cart');
+            window.location.href = "{{ route('logout') }}";
+        }
         if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia(
                 '(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark');

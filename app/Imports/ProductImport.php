@@ -22,6 +22,7 @@ class ProductImport implements ToModel, WithHeadingRow, WithValidation
 
         if ($product) {
             $product->total_box_count += $row['count'];
+            $product->available_box_count += $row['count'];
             $product->save();
         }
 
