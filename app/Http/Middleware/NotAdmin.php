@@ -18,7 +18,7 @@ class NotAdmin
     {
         if(Auth::guard('admin')->check()){
 
-            return redirect(Auth::guard('admin')->user()->getRedirectRoute());
+            return redirect()->back()->with('error', 'No access to this route.');
         }
 
         return $next($request);
