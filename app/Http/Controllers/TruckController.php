@@ -39,6 +39,35 @@ class TruckController extends Controller
         // TODO: make the total_quantity of 'truck_orders' tables right on 'Delivered'
         //  just substract 'quantity' of 'order_products' from 'total_quantity' of 'truck_orders' 
 
+
+        // update the product quantity on 'Returned' or 'Shipped'.
+        if ($request->status == OrderStatusEnum::Shipped->value) {
+            $orderProducts = $order->orderProducts;
+
+            foreach ($orderProducts as $orderProduct) {
+                // Get the related product
+                $product = $orderProduct->product;
+
+                // Subtract the quantity from the total_box_count
+                $product->total_box_count -= $orderProduct->quantity;
+                $product->save();
+            }
+        }
+
+        if ($request->status == OrderStatusEnum::Returned->value) {
+            $orderProducts = $order->orderProducts;
+
+            foreach ($orderProducts as $orderProduct) {
+                // Get the related product
+                $product = $orderProduct->product;
+
+                // Add the quantity
+                $product->total_box_count += $orderProduct->quantity;
+                $product->available_box_count += $orderProduct->quantity;
+                $product->save();
+            }
+        }
+
         return response()->json(['message' => 'Order status updated successfully.']);
     }
 
