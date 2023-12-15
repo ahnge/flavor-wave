@@ -14,12 +14,6 @@ class UserSeeder extends Seeder
     {
         $data =  [
             [
-                "name" =>  "Admin",
-                "email" =>  "admin@gmail.com",
-                "password" =>  bcrypt("12345678"),
-                "role_id" =>  RoleEnum::Admin->value
-            ],
-            [
                 "name" =>  "Sale",
                 "email" =>  "sale@gmail.com",
                 "password" =>  bcrypt("12345678"),
@@ -44,7 +38,7 @@ class UserSeeder extends Seeder
                 "role_id" =>  RoleEnum::Factory->value
             ],
             [
-                "name" =>  "Driver",
+                "name" =>  "Driver Ko Kyaw",
                 "email" =>  "truckDriver@gmail.com",
                 "password" =>  bcrypt("12345678"),
                 "role_id" =>  RoleEnum::Driver->value
@@ -77,6 +71,5 @@ class UserSeeder extends Seeder
         ];
 
         \App\Models\User::insert($data);
-
     }
 }

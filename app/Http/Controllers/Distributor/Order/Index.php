@@ -16,7 +16,9 @@ class Index extends Controller
         ->when($request->has('status'), function ($query) use ($status) {
             if ($status == "all") {
                 return  ;
-            } else {
+            } else if($status == "pending") {
+                return $query->where('status',0);
+            } else{
                 return $query->where('status', $status);
             }
         })
