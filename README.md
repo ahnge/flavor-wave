@@ -117,10 +117,11 @@ Done!! The application should now be running on your localhost at port 8000.
 - Data charts
 - Light/dark mode toggle
 - Authenthication & Authorization
-- Emails automation
+- Emails Notifications
 - Alert Manager
 - Preordering system
 - Products and Preorders data manipulation
+- Daily Schedule Cron jobs
 
 
 ## Languages
