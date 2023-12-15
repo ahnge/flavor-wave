@@ -80,6 +80,7 @@ class PreorderController extends Controller
 
     public function showOrder(Order $preorder)
     {
+        $preorder->load('distributor');
         $isAvailable = $preorder->orderProducts->load('product');
         $valids = [];
 
@@ -87,6 +88,7 @@ class PreorderController extends Controller
             if($product->product->available_box_count < $product->quantity){
                 $valids['product']['valid'] = false;
                 $valids['product']['name'] = $product->product->title;
+                $valids['product']['qty'] = $product->product->available_box_count;
             }
         }
 

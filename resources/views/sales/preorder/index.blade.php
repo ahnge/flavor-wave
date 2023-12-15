@@ -8,6 +8,24 @@
                 class="py-2.5 px-5  text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-md border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Back</button>
         </a>
 
+        <p class="text-xl mt-6 mb-4 text-gray-900 dark:text-white font-semibold">
+            Distributor information
+          </p>
+          <div class="w-1/3  text-black dark:text-white bg-gray-50 mb-5 rounded-lg  dark:bg-gray-800 p-6 flex flex-col gap-3 ">
+            <div id="status">
+                <span class="font-bold ">Name :  {{ $preorder->distributor->name }}</span>
+              </div>
+            <div class=""><span class="font-bold ">Email :</span>  {{ $preorder->distributor->email }}</div>
+
+
+            <div class=""><span class="font-bold ">Phone Number :</span>  {{ $preorder->distributor->phone_number }}</div>
+            <div class=""><span class="font-bold">Region:</span>
+              <span id="truck-status"> {{   getRegionName($preorder->distributor->region_code)  }}</span>
+            </div>
+            <div class=""><span class="font-bold ">Address :</span> {{ $preorder->distributor->address }}</div>
+
+          </div>
+
         <div class="flex justify-between items-center">
             <p class="text-xl my-6 text-gray-900 dark:text-white font-semibold">
                 {{ $preorder->order_no }} Details
@@ -18,10 +36,10 @@
             </p>
 
             @if (count($valids) > 0)
-                <div class="p-4 mb-4 flex flex-col text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+                <div class="p-4 mb-4 flex flex-col text-sm text-red-800 rounded-lg sbg-red-50 dark:bg-gray-800 dark:text-red-400"
                     role="alert">
                     @forelse ($valids as $valid)
-                        <span class="font-medium">{{ $valid['name'] }}'s total avaiable quantity is not enough for this
+                        <span class="font-medium"> only avaiable {{ $valid['qty'] }} quantity of {{ $valid['name'] }} in ware house is not enough for this
                             order</span>
                     @empty
                     @endforelse
