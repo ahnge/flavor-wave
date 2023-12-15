@@ -1,3 +1,8 @@
+# Main Page
+![Main Ui](https://github.com/ahnge/flavor-wave/blob/develop/public/assets/highlights/main.png)
+
+# Well Designed Table
+![Main Ui](https://github.com/ahnge/flavor-wave/blob/develop/public/assets/highlights/show.png)
 
 # Flavor Wave
 
@@ -6,6 +11,8 @@ The solution to fix various problems affecting the FlavorWave company's data flo
 One of the biggest problems of the FlavorWave is that there are inconsistencies in details of order and products between its five departments.
 
 The app allows for the company's data to be flowed seamlessly with integrity across multiple departments.
+
+
 
 
 ## Installation
@@ -25,13 +32,8 @@ The app allows for the company's data to be flowed seamlessly with integrity acr
 (2)Migration and seeding
 
 
-Configure your database in the .env file.
+Configure your database in the .env file.otherwise copy .env.example .
 
-
-```bash
-  npm install my-project
-  cd my-project
-```
 
 Then, run the following command -
 
@@ -115,10 +117,11 @@ Done!! The application should now be running on your localhost at port 8000.
 - Data charts
 - Light/dark mode toggle
 - Authenthication & Authorization
-- Emails automation
+- Emails Notifications
 - Alert Manager
 - Preordering system
 - Products and Preorders data manipulation
+- Daily Schedule Cron jobs
 
 
 ## Languages
@@ -127,7 +130,7 @@ PHP, Javascript, Mysql
 
 ## Tech Stack
 
-Laravel Framework, JQuery, Gmail Service, Amazon S3 Bucket
+Laravel Framework, JQuery, Gmail Service, Amazon S3 Bucket , Flowbite , Tailwind
 
 ## Authors
 
@@ -135,5 +138,5 @@ Laravel Framework, JQuery, Gmail Service, Amazon S3 Bucket
 - [@HeinZarNe](https://github.com/HeinZarNe)
 - [@LinnPyaePyae](https://github.com/LinnPyaePyae)
 - [@inhibitor255](https://github.com/inhibitor255)
-- [@Dede182](https://github.com/Dede182)
+- [@Htetshinehtwe]([https://github.com/Dede182](https://github.com/Htet-Shine-Htwe))
 - [@WinThiha](https://github.com/WinThiha)

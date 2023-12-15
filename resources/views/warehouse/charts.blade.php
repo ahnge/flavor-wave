@@ -175,7 +175,7 @@
                                         fontFamily: "Inter, sans-serif",
                                         offsetY: -20,
                                         formatter: function(value) {
-                                            return value + "k"
+                                            return value
                                         },
                                     },
                                 },
