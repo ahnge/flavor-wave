@@ -14,12 +14,12 @@ class ProductExport implements FromCollection, WithHeadings, WithMapping
      */
     public function collection()
     {
-        return Product::select('title', 'price', 'total_box_count', 'updated_at')->get();
+        return Product::select('title', 'price', 'total_box_count', 'available_box_count', 'updated_at')->get();
     }
 
     public function headings(): array
     {
-        return ['Title', 'Price', 'Total Box Count', 'Updated At'];
+        return ['Title', 'Price', 'Total Box Count', 'Available Box Count', 'Updated At'];
     }
 
     public function map($product): array
@@ -28,6 +28,7 @@ class ProductExport implements FromCollection, WithHeadings, WithMapping
             $product->title,
             $product->price,
             $product->total_box_count,
+            $product->available_box_count,
             $product->updated_at,
         ];
     }
